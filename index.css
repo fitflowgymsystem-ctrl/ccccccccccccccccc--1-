@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. تم إضافة خط Almarai للرابط ليظهر في التصميم */
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+}
+
+/* إعدادات أساسية */
+body {
+  transition: background-color 0.5s ease;
+  -webkit-font-smoothing: antialiased;
+  /* تم تعديل ارتفاع السطر ليكون مريحاً للعين */
+  line-height: 1.5;
+}
+
+/* تخصيص الخطوط حسب اللغة */
+
+/* 1. اللغة العربية: نستخدم المراعي ثم القاهرة */
+[dir="rtl"] body {
+  font-family: 'Almarai', 'Cairo', sans-serif;
+}
+
+/* 2. اللغة الإنجليزية: نستخدم Inter ليكون شكل الأرقام والإنجليزي مضبوط */
+[dir="ltr"] body {
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* تقليل سمك العناوين قليلاً ليكون شكلها أنيقاً (Semi-Bold) بدلاً من ضخمة جداً */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] b,
+[dir="rtl"] strong,
+[dir="rtl"] .font-bold,
+[dir="ltr"] h1,
+[dir="ltr"] h2,
+[dir="ltr"] h3,
+[dir="ltr"] h4,
+[dir="ltr"] h5,
+[dir="ltr"] h6,
+[dir="ltr"] b,
+[dir="ltr"] strong,
+[dir="ltr"] .font-bold {
+  font-weight: 700 !important;
+  /* تم التغيير من 700 إلى 600 */
+}
+
+/* --- Smart Font Resizing (تكبير الخطوط) --- */
+
+/* تكبير الخطوط الصغيرة جداً */
+[dir="rtl"] .text-\[7px\],
+[dir="ltr"] .text-\[7px\] {
+  font-size: 10px;
+}
+
+[dir="rtl"] .text-\[8px\],
+[dir="ltr"] .text-\[8px\] {
+  font-size: 11px;
+}
+
+/* جعلتها 11 لتكون أوضح */
+[dir="rtl"] .text-\[9px\],
+[dir="ltr"] .text-\[9px\] {
+  font-size: 12px;
+}
+
+[dir="rtl"] .text-\[10px\],
+[dir="ltr"] .text-\[10px\] {
+  font-size: 13px;
+}
+
+/* تكبير الخطوط الأساسية */
+[dir="rtl"] .text-xs,
+[dir="ltr"] .text-xs {
+  font-size: 0.9rem;
+}
+
+/* تكبير الخط الصغير */
+[dir="rtl"] .text-sm,
+[dir="ltr"] .text-sm {
+  font-size: 1rem;
+}
+
+/* الخط العادي أصبح 16px */
+
+/* --- Glass Effect & Scrollbar --- */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.code-scroll::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+.code-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.code-scroll::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+.dark .code-scroll::-webkit-scrollbar-thumb {
+  background: #334155;
+}

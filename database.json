@@ -1,0 +1,67 @@
+{
+  "gyms": [],
+  "users": [],
+  "logs": [],
+  "financials": [],
+  "trainers": [],
+  "products": [],
+  "plans": [
+    {
+      "id": "1",
+      "type": "Daily",
+      "price": 50,
+      "durationDays": 1
+    },
+    {
+      "id": "2",
+      "type": "Monthly",
+      "price": 400,
+      "durationDays": 30
+    },
+    {
+      "id": "3",
+      "type": "Quarterly",
+      "price": 1000,
+      "durationDays": 90
+    },
+    {
+      "id": "4",
+      "type": "Biannual",
+      "price": 1800,
+      "durationDays": 180
+    },
+    {
+      "id": "5",
+      "type": "Yearly",
+      "price": 3200,
+      "durationDays": 365
+    },
+    {
+      "id": "6",
+      "type": "Lifetime",
+      "price": 10000,
+      "durationDays": 9999
+    }
+  ],
+  "offers": [],
+  "equipment": [],
+  "broadcasts": [],
+  "saas_config": {
+    "prices": {
+      "TRIAL": 0,
+      "BASIC": 80,
+      "PRO": 150,
+      "ELITE": 300,
+      "ENTERPRISE": 500
+    },
+    "planDurationDays": {
+      "TRIAL": 14,
+      "BASIC": 30,
+      "PRO": 90,
+      "ELITE": 180,
+      "ENTERPRISE": 365
+    },
+    "trialDurationDays": 14
+  },
+  "priceChangeLogs": []
+}

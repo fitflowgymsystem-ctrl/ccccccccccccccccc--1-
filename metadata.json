@@ -1,0 +1,7 @@
+{
+  "name": "FitFlow SaaS - Multi-Tenant Cloud Gym System",
+  "description": "Enterprise-grade Gym Management SaaS with Supabase RLS isolation, Biometric IoT sync, and Developer Nexus Control Plane.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

@@ -1,0 +1,42 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // دالة للتحقق من تسجيل الدخول
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // قاعدة بيانات المنشآت (Gyms)
+    match /gyms/{gymId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // قاعدة مخصصة لمجموعة البثوث
+    match /broadcasts/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // الأرشيف الشهري (New)
+    match /monthly_stats/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // الإشعارات (Notifications)
+    match /notifications/{docId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // القواعد العامة
+    match /{collection}/{docId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.gym_id != null;
+      allow update: if isSignedIn() && resource.data.gym_id == request.resource.data.gym_id;
+      allow delete: if isSignedIn();
+    }
+  }
+}

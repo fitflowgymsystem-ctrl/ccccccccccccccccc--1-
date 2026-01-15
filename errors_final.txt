@@ -1,0 +1,26 @@
+components/AppRouter.tsx(74,21): error TS2322: Type '{ trainers: any; users: any; employees: any; logs: any; lang: Language; onAddTrainer: any; onUpdateTrainer: any; onDeleteTrainer: any; onAddEmployee: any; onUpdateEmployee: any; onDeleteEmployee: any; onUpdateUser: any; onUsePerk: any; onLogSession: any; isSidebarOpen: boolean; }' is not assignable to type 'IntrinsicAttributes & TrainersProps'.
+  Property 'isSidebarOpen' does not exist on type 'IntrinsicAttributes & TrainersProps'.
+components/login/ResetPasswordForm.tsx(3,10): error TS2305: Module '"../../services/authService"' has no exported member 'resetPassword'.
+components/login/VerifyOtpForm.tsx(3,10): error TS2305: Module '"../../services/authService"' has no exported member 'verifyOtp'.
+components/shared/CredentialsSuccessModal.tsx(3,26): error TS2307: Cannot find module '../utils/translations' or its corresponding type declarations.
+pages/Logs.tsx(60,26): error TS2552: Cannot find name 'employees'. Did you mean 'employee'?
+pages/Logs.tsx(69,32): error TS2304: Cannot find name 'onUpdateTrainer'.
+pages/Logs.tsx(69,52): error TS2304: Cannot find name 'onUpdateEmployee'.
+pages/Logs.tsx(81,47): error TS2304: Cannot find name 'onUpdateTrainer'.
+pages/Logs.tsx(82,14): error TS2304: Cannot find name 'onUpdateEmployee'.
+pages/Logs.tsx(88,32): error TS2304: Cannot find name 'onUpdateTrainer'.
+pages/Logs.tsx(88,52): error TS2304: Cannot find name 'onUpdateEmployee'.
+pages/Logs.tsx(97,47): error TS2304: Cannot find name 'onUpdateTrainer'.
+pages/Logs.tsx(98,14): error TS2304: Cannot find name 'onUpdateEmployee'.
+pages/Logs.tsx(425,18): error TS2739: Type '{ trainer: any; assignedMembers: User[]; lang: Language; onClose: () => void; onUpdateSchedule: (day: string, type: "startTime" | "endTime", value: string) => void; onBulkSchedule: (days: string[], start: string, end: string) => void; }' is missing the following properties from type 'TrainerDetailsModalProps': attendanceLogs, onViewMember
+pages/Members.tsx(39,47): error TS2339: Property 'role' does not exist on type 'User'.
+pages/Members.tsx(39,73): error TS2339: Property 'role' does not exist on type 'User'.
+pages/Trainers.tsx(69,45): error TS2339: Property 'role' does not exist on type 'User'.
+pages/Trainers.tsx(69,74): error TS2339: Property 'role' does not exist on type 'User'.
+services/firebase.ts(7,23): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+services/firebase.ts(8,27): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+services/firebase.ts(9,26): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+services/firebase.ts(10,30): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+services/firebase.ts(11,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+services/firebase.ts(12,22): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+services/memberService.ts(64,15): error TS2741: Property 'gymId' is missing in type '{ id: number; userId: any; userName: any; timestamp: string; status: AccessStatus; reason: string; deviceId: string; userPhoto: any; }' but required in type 'AccessLog'.
