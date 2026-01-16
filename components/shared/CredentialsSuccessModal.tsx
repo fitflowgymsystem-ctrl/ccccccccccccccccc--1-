@@ -16,7 +16,7 @@ interface CredentialsSuccessModalProps {
 import { useToast } from '../../hooks/useToast';
 
 export const CredentialsSuccessModal: React.FC<CredentialsSuccessModalProps> = ({
-    lang, userName, phone, email, password, gymName, appUrl = window.location.origin, onClose
+    lang, userName, phone, email, password, gymName, appUrl = 'https://long-pond-80a0.fitflow-gymsystem.workers.dev/', onClose
 }) => {
     const { showToast } = useToast();
 
@@ -45,7 +45,7 @@ export const CredentialsSuccessModal: React.FC<CredentialsSuccessModalProps> = (
 
 يمكنك الآن متابعة تمارينك واشتراكك عبر تطبيقنا.
 
-🔗 *رابط الدخول للموقع:* ${appUrl}
+🔗 *رابط التطبيق:* ${appUrl}
 
 *بيانات الدخول الخاصة بك:*
 📱 *رقم الهاتف أو الإيميل:* ${phone}
@@ -99,7 +99,7 @@ You can now track your workouts and membership via our app.
 
                 {/* Body */}
                 <div className="p-6 space-y-4">
-                    <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-xl border border-blue-200 dark:border-blue-800/30 space-y-3">
+                    <div className="bg-blue-50 dark:bg-slate-950 p-4 rounded-xl border border-blue-200 dark:border-slate-700 space-y-3">
                         <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">
                             {lang === 'ar' ? 'بيانات الدخول المسجلة' : 'Login Credentials'}
                         </p>

@@ -16,9 +16,9 @@ export const Toast: React.FC<ToastProps> = ({ toast, onRemove }) => {
     }, [toast.id, onRemove]);
 
     const styles = {
-        success: 'bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400',
-        error: 'bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400',
-        info: 'bg-blue-500/10 border-blue-500/20 text-blue-700 dark:text-blue-400',
+        success: 'bg-white dark:bg-slate-900/90 border-green-500 text-green-700 dark:text-green-400 shadow-[0_0_15px_-3px_rgba(34,197,94,0.6)] dark:shadow-[0_0_20px_-5px_rgba(34,197,94,0.5)]',
+        error: 'bg-white dark:bg-slate-900/90 border-red-500 text-red-700 dark:text-red-400 shadow-[0_0_15px_-3px_rgba(239,68,68,0.6)] dark:shadow-[0_0_20px_-5px_rgba(239,68,68,0.5)]',
+        info: 'bg-white dark:bg-slate-900/90 border-blue-500 text-blue-700 dark:text-blue-400 shadow-[0_0_15px_-3px_rgba(59,130,246,0.6)] dark:shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)]',
     };
 
     const icons = {

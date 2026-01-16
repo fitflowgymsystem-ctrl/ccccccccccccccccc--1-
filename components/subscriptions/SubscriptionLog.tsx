@@ -18,6 +18,17 @@ export const SubscriptionLog: React.FC<SubscriptionLogProps> = ({ subscriptions,
         return user ? user.name : 'Unknown User';
     };
 
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const itemsPerPage = 15;
+
+    // Reset to page 1 if subscriptions change
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [subscriptions.length]);
+
+    const totalPages = Math.ceil(subscriptions.length / itemsPerPage);
+    const paginatedSubscriptions = subscriptions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
     return (
         <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] border dark:border-slate-700 overflow-hidden shadow-xl animate-fade-in">
             <div className="p-6 border-b dark:border-slate-700 bg-gray-50/50 dark:bg-slate-900/50 flex justify-between items-center">
@@ -47,8 +58,8 @@ export const SubscriptionLog: React.FC<SubscriptionLogProps> = ({ subscriptions,
                         </tr>
                     </thead>
                     <tbody className="divide-y dark:divide-slate-700">
-                        {subscriptions.length > 0 ? (
-                            subscriptions.map(sub => (
+                        {paginatedSubscriptions.length > 0 ? (
+                            paginatedSubscriptions.map(sub => (
                                 <tr key={sub.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/30 transition-all group">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
@@ -119,6 +130,31 @@ export const SubscriptionLog: React.FC<SubscriptionLogProps> = ({ subscriptions,
                     </tbody>
                 </table>
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="p-4 border-t dark:border-slate-700 flex items-center justify-between bg-gray-50/50 dark:bg-slate-900/50">
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="px-3 py-1.5 rounded-lg border dark:border-slate-700 text-[10px] font-bold dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors uppercase tracking-widest"
+                    >
+                        {lang === 'ar' ? 'السابق' : 'Previous'}
+                    </button>
+
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">
+                        {lang === 'ar' ? 'صفحة' : 'Page'} {currentPage} {lang === 'ar' ? 'من' : 'of'} {totalPages}
+                    </span>
+
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-1.5 rounded-lg border dark:border-slate-700 text-[10px] font-bold dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors uppercase tracking-widest"
+                    >
+                        {lang === 'ar' ? 'التالي' : 'Next'}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

@@ -146,23 +146,6 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
                                 onPurchase={(s) => setPurchasingService(s)}
                             />
                         </div>
-
-                        {/* Subscription Log Section */}
-                        <div className="space-y-4 pt-4">
-                            <div className="flex items-center gap-2 px-1">
-                                <Clock size={16} className="text-blue-500" />
-                                <h3 className="text-[10px] font-black text-gray-800 dark:text-white uppercase tracking-widest">Purchase History</h3>
-                            </div>
-                            <SubscriptionLog
-                                subscriptions={serviceSubscriptions}
-                                users={users}
-                                lang={lang}
-                                onDelete={(id) => {
-                                    const sub = serviceSubscriptions.find(s => s.id === id);
-                                    if (sub) setSubToDelete(sub);
-                                }}
-                            />
-                        </div>
                     </div>
 
                     <div className="xl:col-span-4 space-y-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
@@ -193,6 +176,23 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
                             )}
                         </div>
                     </div>
+                </div>
+
+                {/* Subscription Log Section - Moved to Full Width */}
+                <div className="space-y-4 pt-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                    <div className="flex items-center gap-2 px-1">
+                        <Clock size={16} className="text-blue-500" />
+                        <h3 className="text-[10px] font-black text-gray-800 dark:text-white uppercase tracking-widest">Purchase History</h3>
+                    </div>
+                    <SubscriptionLog
+                        subscriptions={serviceSubscriptions}
+                        users={users}
+                        lang={lang}
+                        onDelete={(id) => {
+                            const sub = serviceSubscriptions.find(s => s.id === id);
+                            if (sub) setSubToDelete(sub);
+                        }}
+                    />
                 </div>
             </div>
 

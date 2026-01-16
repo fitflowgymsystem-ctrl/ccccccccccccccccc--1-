@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // تم التحديث ببيانات مشروعك يا كابتن: fitflow-gym-89774
@@ -18,3 +18,12 @@ const app = initializeApp(firebaseConfig);
 // تصدير الخدمات لاستخدامها في apiClient
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+// Enable Offline Persistence
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == 'failed-precondition') {
+    console.warn('Multiple tabs open, persistence can only be enabled in one tab at a a time.');
+  } else if (err.code == 'unimplemented') {
+    console.warn('The current browser does not support all of the features required to enable persistence');
+  }
+});
