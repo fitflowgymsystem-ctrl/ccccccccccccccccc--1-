@@ -54,11 +54,30 @@ export interface AccessDevice {
   lastSync?: string;
 }
 
+export interface EquipmentLog {
+  id: number;
+  equipmentId: number;
+  date: string;
+  type: 'Maintenance' | 'breakdown' | 'Inspection' | 'Other';
+  description: string;
+  cost?: number;
+  performer?: string; // Technician or Staff name
+}
+
 export interface Equipment {
   id: number;
   gymId: string;
   name: string;
+  brand?: string;
+  model?: string;
+  serialNumber?: string;
+  purchaseDate?: string;
+  price?: number;
+  image?: string;
+  maintenanceFrequency?: number; // in days
+  notes?: string;
   status: 'Operational' | 'Under Maintenance' | 'Broken';
   lastMaintenance: string;
   nextMaintenance: string;
+  logs?: EquipmentLog[];
 }

@@ -42,12 +42,12 @@ export const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (
                     </div>
 
                     <div className="bg-red-50 dark:bg-red-900/10 p-4 rounded-xl border border-red-500/10 text-start space-y-2">
-                        <label className="text-[10px] font-black uppercase text-red-400 tracking-widest block">Type "DELETE" to confirm</label>
+                        <label className="text-xs font-black uppercase text-red-400 tracking-widest block">Type "DELETE" to confirm</label>
                         <input
                             type="text"
                             value={confirmText}
                             onChange={(e) => setConfirmText(e.target.value)}
-                            className="w-full bg-white dark:bg-slate-950 border border-red-200 dark:border-red-500/20 rounded-lg px-3 py-2 text-sm font-bold outline-none focus:ring-2 focus:ring-red-500/50 dark:text-white placeholder-slate-400"
+                            className="w-full bg-white dark:bg-slate-950 border border-red-200 dark:border-red-500/20 rounded-lg px-3 py-2 text-base font-bold outline-none focus:ring-2 focus:ring-red-500/50 dark:text-white placeholder-slate-400"
                             placeholder="DELETE"
                         />
                     </div>
@@ -56,16 +56,16 @@ export const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (
                 <div className="p-4 bg-gray-50 dark:bg-slate-950 border-t dark:border-white/5 flex gap-3">
                     <button
                         onClick={onClose}
-                        className="flex-1 py-3 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-xl font-black uppercase tracking-widest text-[10px] border dark:border-white/10 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                        className="flex-1 py-3 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-xl font-black uppercase tracking-widest text-sm border dark:border-white/10 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleConfirm}
                         disabled={confirmText !== 'DELETE'}
-                        className="flex-[2] py-3 bg-red-600 disabled:bg-red-600/50 disabled:cursor-not-allowed text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-red-500/20 hover:bg-red-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+                        className="flex-[2] py-3 bg-red-600 disabled:bg-red-600/50 disabled:cursor-not-allowed text-white rounded-xl font-black uppercase tracking-widest text-sm shadow-lg shadow-red-500/20 hover:bg-red-700 transition-all active:scale-95 flex items-center justify-center gap-2"
                     >
-                        <Trash2 size={14} /> Terminate Permanently
+                        <Trash2 size={18} /> Terminate Permanently
                     </button>
                 </div>
             </div>

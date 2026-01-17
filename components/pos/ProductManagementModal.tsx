@@ -41,77 +41,77 @@ export const ProductManagementModal: React.FC<ProductManagementModalProps> = ({ 
       >
         <div className="px-4 py-3 border-b dark:border-slate-700 flex justify-between items-center bg-gray-50 dark:bg-slate-900/50">
           <div className="flex items-center gap-2">
-            <Package size={14} className="text-blue-600" />
-            <h3 className="font-black text-[10px] uppercase tracking-widest dark:text-white">{editingId ? t.edit_product : t.add_product}</h3>
+            <Package size={18} className="text-blue-600" />
+            <h3 className="font-black text-lg uppercase tracking-widest dark:text-white">{editingId ? t.edit_product : t.add_product}</h3>
           </div>
           <button onClick={onClose} className="text-gray-400 p-1 hover:text-gray-600 transition-all"><X size={16} /></button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 space-y-3">
           <div className="space-y-1">
-            <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.product_name}</label>
+            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.product_name}</label>
             <div className="relative">
               <Tag className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" size={12} />
               <input
                 type="text" required placeholder="Product Name..." value={formData.name || ''} onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="w-full pl-8 pr-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-xs font-bold dark:text-white outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full pl-8 pr-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-bold dark:text-white outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.buy_price}</label>
+              <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.buy_price}</label>
               <input
                 type="number" required placeholder="--" value={formData.buyPrice ?? ''}
                 onChange={e => setFormData({ ...formData, buyPrice: e.target.value === '' ? undefined : Number(e.target.value) })}
-                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-xs font-bold dark:text-white outline-none"
+                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-bold dark:text-white outline-none"
               />
             </div>
             <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.sell_price}</label>
+              <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.sell_price}</label>
               <input
                 type="number" required placeholder="--" value={formData.sellPrice ?? ''}
                 onChange={e => setFormData({ ...formData, sellPrice: e.target.value === '' ? undefined : Number(e.target.value) })}
-                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-xs font-black text-blue-600 outline-none"
+                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-black text-blue-600 outline-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.stock}</label>
+              <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.stock}</label>
               <input
                 type="number" required placeholder="--" value={formData.stock ?? ''}
                 onChange={e => setFormData({ ...formData, stock: e.target.value === '' ? undefined : Number(e.target.value) })}
-                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-xs font-bold dark:text-white outline-none"
+                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-bold dark:text-white outline-none"
               />
             </div>
             <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.min_stock}</label>
+              <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.min_stock}</label>
               <input
                 type="number" required placeholder="--" value={formData.minStockAlert ?? ''}
                 onChange={e => setFormData({ ...formData, minStockAlert: e.target.value === '' ? undefined : Number(e.target.value) })}
-                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-xs font-bold dark:text-white outline-none"
+                className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-bold dark:text-white outline-none"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.barcode}</label>
+            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.barcode}</label>
             <div className="relative">
               <ScanBarcode className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" size={12} />
               <input
                 type="text" placeholder="Scan or type..."
                 value={formData.barcode || ''} onChange={e => setFormData({ ...formData, barcode: e.target.value })}
-                className="w-full pl-8 pr-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-xs font-mono font-bold dark:text-white outline-none"
+                className="w-full pl-8 pr-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-mono font-bold dark:text-white outline-none"
               />
             </div>
           </div>
 
           <div className="pt-3 flex gap-2">
-            <button type="button" onClick={onClose} className="flex-1 py-2 bg-gray-100 dark:bg-slate-700 text-[10px] font-black uppercase tracking-widest text-gray-400 rounded-xl active:scale-95 transition-all">{t.cancel}</button>
-            <button type="submit" className="flex-[2] py-2 bg-blue-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-600/20 active:scale-95 transition-all flex items-center justify-center gap-2">
+            <button type="button" onClick={onClose} className="flex-1 py-3 bg-gray-100 dark:bg-slate-700 text-sm font-black uppercase tracking-widest text-gray-400 rounded-xl active:scale-95 transition-all">{t.cancel}</button>
+            <button type="submit" className="flex-[2] py-3 bg-blue-600 text-white rounded-xl font-black uppercase tracking-widest text-sm shadow-lg shadow-blue-600/20 active:scale-95 transition-all flex items-center justify-center gap-2">
               <Save size={14} /> {t.save}
             </button>
           </div>

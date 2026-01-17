@@ -47,8 +47,8 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
               <DollarSign size={18} />
             </div>
             <div>
-              <h3 className="font-black text-xs dark:text-white uppercase tracking-widest leading-none">{t.add_expense}</h3>
-              <p className="text-[8px] font-bold text-gray-400 mt-1 uppercase tracking-tighter">Financial Transaction Record</p>
+              <h3 className="font-black text-lg dark:text-white uppercase tracking-widest leading-none">{t.add_expense}</h3>
+              <p className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-tighter">Financial Transaction Record</p>
             </div>
           </div>
           <button onClick={onClose} className="text-gray-400 p-2 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 rounded-xl transition-all"><X size={20} /></button>
@@ -76,7 +76,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
                 type="number" required
                 value={formData.amount === 0 ? '' : formData.amount}
                 onChange={e => setFormData({ ...formData, amount: e.target.value === '' ? 0 : Number(e.target.value) })}
-                className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-xs font-black outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
+                className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-base font-black outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
                 placeholder="0.00"
               />
             </div>
@@ -107,7 +107,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
               </select>
             </div>
             <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الفرع' : 'Branch'}</label>
+              <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الفرع' : 'Branch'}</label>
               <select
                 value={formData.branch}
                 onChange={e => setFormData({ ...formData, branch: e.target.value })}
@@ -119,7 +119,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
           </div>
 
           <div className="space-y-1 relative">
-            <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'العضو المرتبط (اختياري)' : 'Linked Member (Optional)'}</label>
+            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'العضو المرتبط (اختياري)' : 'Linked Member (Optional)'}</label>
             <div className="relative">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
@@ -131,7 +131,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
                   setShowMemberDropdown(true);
                 }}
                 placeholder={lang === 'ar' ? 'ابحث بالاسم أو الرقم...' : 'Search by name or phone...'}
-                className="w-full pl-9 pr-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-xs font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
+                className="w-full pl-9 pr-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-base font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
               />
               {formData.memberId && (
                 <button
@@ -160,8 +160,8 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
                     className="w-full text-left px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-900/20 flex items-center justify-between border-b last:border-0 dark:border-slate-700"
                   >
                     <div>
-                      <p className="text-[10px] font-black dark:text-white uppercase">{m.name}</p>
-                      <p className="text-[8px] text-gray-400 font-bold">{m.phone}</p>
+                      <p className="text-sm font-black dark:text-white uppercase">{m.name}</p>
+                      <p className="text-[10px] text-gray-400 font-bold">{m.phone}</p>
                     </div>
                     <User size={14} className="text-blue-600" />
                   </button>
@@ -179,13 +179,13 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
               type="text" required
               value={formData.description}
               onChange={e => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-xs font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
+              className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-base font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
               placeholder="Record details..."
             />
           </div>
 
           <div className="space-y-1">
-            <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'المرفقات (اختياري)' : 'Attachment (Optional)'}</label>
+            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'المرفقات (اختياري)' : 'Attachment (Optional)'}</label>
             <div className="flex gap-4">
               <div className="relative w-24 h-24 shrink-0">
                 <div className="w-full h-full rounded-2xl bg-gray-50 dark:bg-slate-950 border-2 border-dashed border-gray-300 dark:border-slate-700 flex items-center justify-center overflow-hidden shadow-inner group">
@@ -214,20 +214,20 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
               <div className="flex-1 bg-blue-50/30 dark:bg-blue-900/5 rounded-2xl p-3 border dark:border-slate-700 flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-1">
                   <Info size={12} className="text-blue-600" />
-                  <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">{lang === 'ar' ? 'بصمة العملية' : 'Transaction Stamp'}</span>
+                  <span className="text-xs font-black text-blue-600 uppercase tracking-widest">{lang === 'ar' ? 'بصمة العملية' : 'Transaction Stamp'}</span>
                 </div>
-                <p className="text-[8px] text-gray-500 font-bold">{lang === 'ar' ? 'سوف يتم تسجيل اسم الموظف والفرع والتاريخ تلقائياً لضمان الشفافية والتدقيق المالي.' : 'Staff name, branch, and timestamp will be recorded automatically for financial audit'}</p>
+                <p className="text-xs text-gray-500 font-bold">{lang === 'ar' ? 'سوف يتم تسجيل اسم الموظف والفرع والتاريخ تلقائياً لضمان الشفافية والتدقيق المالي.' : 'Staff name, branch, and timestamp will be recorded automatically for financial audit'}</p>
                 <div className="mt-2 flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                  <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">Operator: {currentUser?.name || 'System Auto'}</span>
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Operator: {currentUser?.name || 'System Auto'}</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="pt-4 flex gap-4">
-            <button type="button" onClick={onClose} className="flex-1 py-4 text-[10px] font-black uppercase text-gray-400 rounded-[1.5rem] bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 transition-all active:scale-95 shadow-sm border dark:border-slate-600">Cancel</button>
-            <button type="submit" className="flex-[2] py-4 text-[11px] font-black uppercase text-white bg-blue-600 rounded-[1.5rem] shadow-2xl shadow-blue-600/30 active:scale-95 flex items-center justify-center gap-3 transition-all hover:bg-blue-700 tracking-[0.2em]">
+            <button type="button" onClick={onClose} className="flex-1 py-4 text-sm font-black uppercase text-gray-400 rounded-[1.5rem] bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 transition-all active:scale-95 shadow-sm border dark:border-slate-600">Cancel</button>
+            <button type="submit" className="flex-[2] py-4 text-sm font-black uppercase text-white bg-blue-600 rounded-[1.5rem] shadow-2xl shadow-blue-600/30 active:scale-95 flex items-center justify-center gap-3 transition-all hover:bg-blue-700 tracking-[0.2em]">
               <Save size={18} /> {t.save}
             </button>
           </div>

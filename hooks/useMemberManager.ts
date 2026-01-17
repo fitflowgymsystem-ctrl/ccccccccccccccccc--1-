@@ -46,13 +46,13 @@ export const useMemberManager = (users: User[], onUpdate?: () => void) => {
 
   const closeModals = () => setActiveModal('NONE');
 
-  const handleUsePerk = (userId: number, type: 'InBody' | 'Guest Pass' | 'PT Session' | 'Free Group Class') => {
-    useMockPerk(userId, type);
+  const handleUsePerk = async (userId: number, type: 'InBody' | 'Guest Pass' | 'PT Session' | 'Free Group Class') => {
+    await useMockPerk(userId, type);
     if (onUpdate) onUpdate();
   };
 
-  const handleLogSession = (userId: number, trainerId: number, price: number) => {
-    logPrivateSession(userId, trainerId, price);
+  const handleLogSession = async (userId: number, trainerId: number, price: number) => {
+    await logPrivateSession(userId, trainerId, price);
     if (onUpdate) onUpdate();
   };
 

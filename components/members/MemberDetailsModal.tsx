@@ -226,13 +226,13 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                 <ShieldCheck size={18} />
                             </div>
                             <div>
-                                <h3 className="font-black text-xs dark:text-white uppercase tracking-widest leading-none">Member Dossier</h3>
+                                <h3 className="font-black text-lg dark:text-white uppercase tracking-widest leading-none">Member Dossier</h3>
                                 <p
                                     onClick={() => {
                                         navigator.clipboard.writeText(member.id.toString());
                                         showToast(lang === 'ar' ? 'تم نسخ معرف العضو' : 'Member ID copied to clipboard', 'info');
                                     }}
-                                    className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-tighter cursor-copy hover:text-blue-500 transition-colors"
+                                    className="text-sm font-bold text-gray-400 mt-1 uppercase tracking-tighter cursor-copy hover:text-blue-500 transition-colors"
                                     title="Click to copy"
                                 >
                                     UID: {member.id}
@@ -266,24 +266,24 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                             <div className="flex-1 text-center sm:text-start space-y-2">
                                 <div>
                                     <h2 className="text-xl sm:text-2xl font-black dark:text-white uppercase tracking-tighter leading-tight">{member.name}</h2>
-                                    <p className="text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-[0.2em]">{member.membershipType}</p>
+                                    <p className="text-blue-600 dark:text-blue-400 text-sm font-black uppercase tracking-[0.2em]">{member.membershipType}</p>
                                 </div>
                                 <div className="flex flex-wrap justify-center sm:justify-start gap-2 pt-1">
                                     {member.isFrozen ? (
-                                        <span className="px-3 py-1 rounded-xl text-[9px] font-black uppercase shadow-sm bg-cyan-500 text-white flex items-center gap-1">
+                                        <span className="px-3 py-1 rounded-xl text-[11px] font-black uppercase shadow-sm bg-cyan-500 text-white flex items-center gap-1">
                                             <Snowflake size={10} /> FROZEN
                                         </span>
                                     ) : (
-                                        <span className={`px-3 py-1 rounded-xl text-[9px] font-black uppercase shadow-sm ${member.isActive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+                                        <span className={`px-3 py-1 rounded-xl text-[11px] font-black uppercase shadow-sm ${member.isActive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
                                             {member.isActive ? t.active : t.inactive}
                                         </span>
                                     )}
                                     {member.isPrivate && (
-                                        <span className="bg-amber-500 text-white px-3 py-1 rounded-xl text-[9px] font-black uppercase shadow-sm flex items-center gap-1">
+                                        <span className="bg-amber-500 text-white px-3 py-1 rounded-xl text-[11px] font-black uppercase shadow-sm flex items-center gap-1">
                                             <Crown size={10} /> VIP PRIVATE
                                         </span>
                                     )}
-                                    <span className="bg-slate-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 px-3 py-1 rounded-xl text-[9px] font-black uppercase shadow-sm">
+                                    <span className="bg-slate-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300 px-3 py-1 rounded-xl text-[11px] font-black uppercase shadow-sm">
                                         {member.phone}
                                     </span>
                                 </div>
@@ -296,7 +296,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`flex-1 py-4 text-[10px] font-black uppercase tracking-widest transition-all relative ${activeTab === tab ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                                    className={`flex-1 py-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === tab ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
                                 >
                                     {tab === 'INFO' ? (lang === 'ar' ? 'المعلومات' : 'Info') :
                                         tab === 'ATTENDANCE' ? (lang === 'ar' ? 'الحضور' : 'Attendance') :
@@ -315,50 +315,50 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                     {/* Basic Info Group */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="bg-white dark:bg-slate-800 p-4 rounded-3xl border dark:border-slate-700 shadow-sm space-y-3">
-                                            <h4 className="text-[9px] font-black text-blue-600 uppercase tracking-widest flex items-center gap-2">
+                                            <h4 className="text-sm font-black text-blue-600 uppercase tracking-widest flex items-center gap-2">
                                                 <UserIcon size={14} /> {lang === 'ar' ? 'المعلومات الأساسية' : 'Basic Info'}
                                             </h4>
                                             <div className="grid grid-cols-2 gap-y-3">
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.email}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white truncate">{member.email || '-'}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.email}</span>
+                                                    <span className="text-base font-bold dark:text-white truncate">{member.email || '-'}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.gender}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white uppercase">{member.gender === Gender.MALE ? t.male : t.female}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.gender}</span>
+                                                    <span className="text-base font-bold dark:text-white uppercase">{member.gender === Gender.MALE ? t.male : t.female}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.dob}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white">{member.dob || '-'}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.dob}</span>
+                                                    <span className="text-base font-bold dark:text-white">{member.dob || '-'}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.branch}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white uppercase">{member.branch || '-'}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.branch}</span>
+                                                    <span className="text-base font-bold dark:text-white uppercase">{member.branch || '-'}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.join_date}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white">{member.joinDate}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.join_date}</span>
+                                                    <span className="text-base font-bold dark:text-white">{member.joinDate}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.fingerprint_id}</span>
-                                                    <span className="text-[10px] font-mono font-bold dark:text-white">{member.fingerprintId || '-'}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.fingerprint_id}</span>
+                                                    <span className="text-base font-mono font-bold dark:text-white">{member.fingerprintId || '-'}</span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         {/* Emergency Info Group */}
                                         <div className="bg-white dark:bg-slate-800 p-4 rounded-3xl border dark:border-slate-700 shadow-sm space-y-3">
-                                            <h4 className="text-[9px] font-black text-red-600 uppercase tracking-widest flex items-center gap-2">
+                                            <h4 className="text-sm font-black text-red-600 uppercase tracking-widest flex items-center gap-2">
                                                 <AlertTriangle size={14} /> {lang === 'ar' ? 'طوارئ' : 'Emergency'}
                                             </h4>
                                             <div className="space-y-3">
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.emergency_name}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white uppercase">{member.emergencyContactName || '-'}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.emergency_name}</span>
+                                                    <span className="text-base font-bold dark:text-white uppercase">{member.emergencyContactName || '-'}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest">{t.emergency_phone}</span>
-                                                    <span className="text-[10px] font-bold dark:text-white font-mono">{member.emergencyContactPhone || '-'}</span>
+                                                    <span className="text-xs text-gray-400 font-black uppercase tracking-widest">{t.emergency_phone}</span>
+                                                    <span className="text-base font-bold dark:text-white font-mono">{member.emergencyContactPhone || '-'}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -366,24 +366,24 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
 
                                     {/* Health Info Group */}
                                     <div className="bg-white dark:bg-slate-800 p-5 rounded-3xl border dark:border-slate-700 shadow-sm space-y-4">
-                                        <h4 className="text-[9px] font-black text-green-600 uppercase tracking-widest flex items-center gap-2">
+                                        <h4 className="text-sm font-black text-green-600 uppercase tracking-widest flex items-center gap-2">
                                             <Activity size={14} /> {t.health_info}
                                         </h4>
                                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                             <div className="flex flex-col p-3 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl border dark:border-slate-700/50">
-                                                <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest mb-1">{t.weight}</span>
+                                                <span className="text-xs text-gray-400 font-black uppercase tracking-widest mb-1">{t.weight}</span>
                                                 <span className="text-sm font-black dark:text-white truncate">{member.weight ? `${member.weight} kg` : '-'}</span>
                                             </div>
                                             <div className="flex flex-col p-3 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl border dark:border-slate-700/50">
-                                                <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest mb-1">{t.height}</span>
+                                                <span className="text-xs text-gray-400 font-black uppercase tracking-widest mb-1">{t.height}</span>
                                                 <span className="text-sm font-black dark:text-white truncate">{member.height ? `${member.height} cm` : '-'}</span>
                                             </div>
                                             <div className="flex flex-col p-3 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl border dark:border-slate-700/50">
-                                                <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest mb-1">{t.fat_percentage}</span>
+                                                <span className="text-xs text-gray-400 font-black uppercase tracking-widest mb-1">{t.fat_percentage}</span>
                                                 <span className="text-sm font-black dark:text-white truncate">{member.fatPercentage ? `${member.fatPercentage} %` : '-'}</span>
                                             </div>
                                             <div className="flex flex-col p-3 bg-gray-50/50 dark:bg-slate-900/50 rounded-2xl border dark:border-slate-700/50">
-                                                <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest mb-1">{t.blood_type}</span>
+                                                <span className="text-xs text-gray-400 font-black uppercase tracking-widest mb-1">{t.blood_type}</span>
                                                 <span className="text-sm font-black dark:text-white truncate">{member.bloodType || '-'}</span>
                                             </div>
                                         </div>
@@ -391,7 +391,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                             <div className="flex flex-col gap-1">
                                                 <span className="text-[8px] text-gray-400 font-black uppercase tracking-widest ps-1">{t.fitness_goal}</span>
                                                 <div className="p-3 bg-blue-50/30 dark:bg-blue-900/5 rounded-2xl border dark:border-slate-700/50 min-h-[40px] flex items-center">
-                                                    <span className="text-[10px] font-bold dark:text-white">{member.fitnessGoal || '-'}</span>
+                                                    <span className="text-base font-bold dark:text-white">{member.fitnessGoal || '-'}</span>
                                                 </div>
                                             </div>
                                             <div className="flex flex-col gap-1">
@@ -407,7 +407,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
 
                             {activeTab === 'ATTENDANCE' && (
                                 <div className="space-y-2">
-                                    <h4 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                    <h4 className="text-sm font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                                         <History size={14} className="text-blue-500" /> Recent Entry Logs
                                     </h4>
                                     {userLogs.length > 0 ? userLogs.slice(0, 15).map(log => {
@@ -419,15 +419,15 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                         <Clock size={14} />
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="text-[11px] font-black dark:text-gray-200 uppercase tracking-tighter">{date}</span>
-                                                        <span className="text-[9px] text-gray-400 font-mono font-bold">{time}</span>
+                                                        <span className="text-sm font-black dark:text-gray-200 uppercase tracking-tighter">{date}</span>
+                                                        <span className="text-[11px] text-gray-400 font-mono font-bold">{time}</span>
                                                     </div>
                                                 </div>
                                                 <div className="text-end">
-                                                    <span className={`text-[8px] font-black px-2 py-0.5 rounded-lg uppercase tracking-widest ${log.status === 'GRANTED' ? 'bg-green-500 text-white shadow-sm shadow-green-500/20' : 'bg-red-500 text-white shadow-sm shadow-red-500/20'}`}>
+                                                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg uppercase tracking-widest ${log.status === 'GRANTED' ? 'bg-green-500 text-white shadow-sm shadow-green-500/20' : 'bg-red-500 text-white shadow-sm shadow-red-500/20'}`}>
                                                         {log.status}
                                                     </span>
-                                                    <p className="text-[7px] text-gray-400 mt-1 font-bold uppercase">{log.deviceId}</p>
+                                                    <p className="text-[9px] text-gray-400 mt-1 font-bold uppercase">{log.deviceId}</p>
                                                 </div>
                                             </div>
                                         );
@@ -448,27 +448,27 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                             <div className="p-3 bg-purple-100 dark:bg-purple-900/30 text-purple-600 rounded-2xl mb-2 shadow-inner">
                                                 <Activity size={20} />
                                             </div>
-                                            <p className="text-[8px] font-black text-purple-600 uppercase tracking-widest mb-1">{t.perks_inbody}</p>
-                                            <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{member.perks.inbodySessions} <span className="text-[10px] text-gray-400">Left</span></h3>
-                                            <button disabled={member.perks.inbodySessions <= 0} onClick={() => onUsePerk(member.id, 'InBody')} className="w-full py-2 bg-purple-600 text-white rounded-xl text-[9px] font-black uppercase shadow-lg shadow-purple-600/20 hover:bg-purple-700 active:scale-95 transition-all disabled:opacity-30">Use Now</button>
+                                            <p className="text-xs font-black text-purple-600 uppercase tracking-widest mb-1">{t.perks_inbody}</p>
+                                            <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{(member.perks.inbodySessions || 0)} <span className="text-[10px] text-gray-400">Left</span></h3>
+                                            <button disabled={!(member.perks.inbodySessions || 0)} onClick={() => onUsePerk(member.id, 'InBody')} className="w-full py-2 bg-purple-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-purple-600/20 hover:bg-purple-700 active:scale-95 transition-all disabled:opacity-30">Use Now</button>
                                         </div>
 
                                         <div className="p-4 bg-white dark:bg-slate-800 rounded-3xl border dark:border-slate-700 shadow-sm flex flex-col items-center text-center">
                                             <div className="p-3 bg-orange-100 dark:bg-orange-900/30 text-orange-600 rounded-2xl mb-2 shadow-inner">
                                                 <Gift size={20} />
                                             </div>
-                                            <p className="text-[8px] font-black text-orange-600 uppercase tracking-widest mb-1">{t.perks_guest}</p>
-                                            <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{member.perks.guestPasses} <span className="text-[10px] text-gray-400">Left</span></h3>
-                                            <button disabled={member.perks.guestPasses <= 0} onClick={() => onUsePerk(member.id, 'Guest Pass')} className="w-full py-2 bg-orange-600 text-white rounded-xl text-[9px] font-black uppercase shadow-lg shadow-orange-600/20 hover:bg-orange-700 active:scale-95 transition-all disabled:opacity-30">Invite Guest</button>
+                                            <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">{t.perks_guest}</p>
+                                            <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{(member.perks.guestPasses || 0)} <span className="text-[10px] text-gray-400">Left</span></h3>
+                                            <button disabled={!(member.perks.guestPasses || 0)} onClick={() => onUsePerk(member.id, 'Guest Pass')} className="w-full py-2 bg-orange-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-orange-600/20 hover:bg-orange-700 active:scale-95 transition-all disabled:opacity-30">Invite Guest</button>
                                         </div>
 
                                         <div className="p-4 bg-white dark:bg-slate-800 rounded-3xl border dark:border-slate-700 shadow-sm flex flex-col items-center text-center">
                                             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-2xl mb-2 shadow-inner">
                                                 <Dumbbell size={20} />
                                             </div>
-                                            <p className="text-[8px] font-black text-blue-600 uppercase tracking-widest mb-1">{t.pt_sessions}</p>
-                                            <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{member.perks.ptSessions || 0} <span className="text-[10px] text-gray-400">Left</span></h3>
-                                            <button disabled={!member.perks.ptSessions} onClick={() => onUsePerk(member.id, 'PT Session')} className="w-full py-2 bg-blue-600 text-white rounded-xl text-[9px] font-black uppercase shadow-lg shadow-blue-600/20 hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-30">Record PT</button>
+                                            <p className="text-xs font-black text-blue-600 uppercase tracking-widest mb-1">{t.pt_sessions}</p>
+                                            <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{(member.perks.ptSessions || 0)} <span className="text-[10px] text-gray-400">Left</span></h3>
+                                            <button disabled={!(member.perks.ptSessions || 0)} onClick={() => onUsePerk(member.id, 'PT Session')} className="w-full py-2 bg-blue-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-blue-600/20 hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-30">Record PT</button>
                                         </div>
 
                                         {(member.perks.freeGroupClassCount || 0) > 0 && (
@@ -476,12 +476,12 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                 <div className="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-2xl mb-2 shadow-inner">
                                                     <Users size={20} />
                                                 </div>
-                                                <p className="text-[8px] font-black text-green-600 uppercase tracking-widest mb-1">
+                                                <p className="text-xs font-black text-green-600 uppercase tracking-widest mb-1">
                                                     {lang === 'ar' ? 'حصص مجانية' : 'Free Classes'}
                                                     {member.perks.freeGroupClassId && services.find(s => String(s.id) === String(member.perks.freeGroupClassId)) ? ` - ${services.find(s => String(s.id) === String(member.perks.freeGroupClassId))?.name}` : ''}
                                                 </p>
                                                 <h3 className="text-xl font-black dark:text-white mb-3 tracking-tighter">{member.perks.freeGroupClassCount} <span className="text-[10px] text-gray-400">Left</span></h3>
-                                                <button onClick={() => onUsePerk(member.id, 'Free Group Class')} className="w-full py-2 bg-green-600 text-white rounded-xl text-[9px] font-black uppercase shadow-lg shadow-green-600/20 hover:bg-green-700 active:scale-95 transition-all">Log Use</button>
+                                                <button onClick={() => onUsePerk(member.id, 'Free Group Class')} className="w-full py-2 bg-green-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-green-600/20 hover:bg-green-700 active:scale-95 transition-all">Log Use</button>
                                             </div>
                                         )}
                                     </div>
@@ -522,8 +522,8 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                     return (
                                                         <div key={pLog.id} className="flex justify-between items-center p-3 bg-white/50 dark:bg-slate-800/50 rounded-2xl border dark:border-slate-700 text-[10px]">
                                                             <div className="flex items-center gap-3">
-                                                                <div className={`p-1.5 rounded-lg ${pLog.type === 'InBody' ? 'bg-purple-100 text-purple-600' : pLog.type === 'Free Group Class' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600'}`}>
-                                                                    {pLog.type === 'InBody' ? <Activity size={12} /> : pLog.type === 'Free Group Class' ? <Users size={12} /> : <Gift size={12} />}
+                                                                <div className={`p-1.5 rounded-lg ${pLog.type === 'InBody' ? 'bg-purple-100 text-purple-600' : pLog.type === 'Free Group Class' ? 'bg-green-100 text-green-600' : pLog.type === 'PT Session' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'}`}>
+                                                                    {pLog.type === 'InBody' ? <Activity size={12} /> : pLog.type === 'Free Group Class' ? <Users size={12} /> : pLog.type === 'PT Session' ? <Dumbbell size={12} /> : <Gift size={12} />}
                                                                 </div>
                                                                 <div className="flex flex-col">
                                                                     <span className="font-black dark:text-gray-200 uppercase tracking-tighter">{pLog.type} Used</span>
@@ -555,9 +555,9 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-125 transition-transform"><Sparkles size={60} /></div>
                                                 <div className="relative z-10">
                                                     <div className="flex items-center gap-2 mb-1">
-                                                        <p className="text-[8px] font-black text-indigo-600 uppercase tracking-widest">{lang === 'ar' ? 'خدمة مفعّلة' : 'Active Service'}</p>
+                                                        <p className="text-xs font-black text-indigo-600 uppercase tracking-widest">{lang === 'ar' ? 'خدمة مفعّلة' : 'Active Service'}</p>
                                                         {isUnpaid && (
-                                                            <span className="px-2 py-0.5 bg-red-500 text-white rounded-lg text-[7px] font-black uppercase animate-pulse">
+                                                            <span className="px-2 py-0.5 bg-red-500 text-white rounded-lg text-[9px] font-black uppercase animate-pulse">
                                                                 {lang === 'ar' ? 'لم يتم الدفع' : 'Unpaid'}
                                                             </span>
                                                         )}
@@ -568,12 +568,12 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                             <DollarSign size={14} />
                                                             <span className="text-lg">{sessionPrice}</span>
                                                         </div>
-                                                        <span className="text-[8px] text-gray-400 font-bold uppercase">{lang === 'ar' ? 'للحصة' : 'Rate / Session'}</span>
+                                                        <span className="text-xs text-gray-400 font-bold uppercase">{lang === 'ar' ? 'للحصة' : 'Rate / Session'}</span>
                                                         <div className="h-4 w-[1px] bg-gray-200 dark:bg-slate-700 ml-2"></div>
                                                         {sub.totalSessions === 0 ? (
-                                                            <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{lang === 'ar' ? 'اشتراك مفتوح' : 'Unlimited Access'}</span>
+                                                            <span className="text-sm font-black text-blue-600 uppercase tracking-widest">{lang === 'ar' ? 'اشتراك مفتوح' : 'Unlimited Access'}</span>
                                                         ) : (
-                                                            <span className="text-[10px] font-black text-blue-600">{sub.remainingSessions} / {sub.totalSessions} {lang === 'ar' ? 'متبقي' : 'Left'}</span>
+                                                            <span className="text-sm font-black text-blue-600">{sub.remainingSessions} / {sub.totalSessions} {lang === 'ar' ? 'متبقي' : 'Left'}</span>
                                                         )}
                                                     </div>
                                                 </div>
@@ -585,7 +585,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                         }
                                                         onLogServiceSession?.(member.id, sub.serviceId, sessionPrice, sub.serviceName);
                                                     }}
-                                                    className={`relative z-10 px-6 py-3 rounded-2xl text-[10px] font-black uppercase shadow-lg active:scale-95 transition-all ${isUnpaid ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-indigo-600 text-white shadow-indigo-600/20 hover:bg-indigo-700'}`}
+                                                    className={`relative z-10 px-6 py-3 rounded-2xl text-sm font-black uppercase shadow-lg active:scale-95 transition-all ${isUnpaid ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-indigo-600 text-white shadow-indigo-600/20 hover:bg-indigo-700'}`}
                                                 >
                                                     {isUnpaid ? (lang === 'ar' ? 'لم يتم الدفع' : 'Unpaid') : (lang === 'ar' ? 'تسجيل حصة' : 'Record Session')}
                                                 </button>
@@ -598,17 +598,17 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                             <div className="p-5 bg-white dark:bg-slate-800 rounded-3xl border border-amber-200 dark:border-amber-900/30 shadow-md flex justify-between items-center relative overflow-hidden group">
                                                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-125 transition-transform"><Crown size={60} /></div>
                                                 <div className="relative z-10">
-                                                    <p className="text-[8px] font-black text-amber-600 uppercase tracking-widest mb-1">{t.assigned_trainer}</p>
+                                                    <p className="text-xs font-black text-amber-600 uppercase tracking-widest mb-1">{t.assigned_trainer}</p>
                                                     <h3 className="text-lg font-black dark:text-white uppercase tracking-tighter">{assignedTrainer?.name || 'Pro Coach'}</h3>
                                                     <div className="flex items-center gap-3 mt-2">
                                                         <div className="flex items-center gap-1 text-blue-600 font-black">
                                                             <DollarSign size={14} />
                                                             <span className="text-lg">{member.privateSessionPrice}</span>
                                                         </div>
-                                                        <span className="text-[8px] text-gray-400 font-bold uppercase">Rate / Session</span>
+                                                        <span className="text-xs text-gray-400 font-bold uppercase">Rate / Session</span>
                                                     </div>
                                                 </div>
-                                                <button onClick={() => onLogSession(member.id, member.assignedTrainerId!, member.privateSessionPrice!)} className="relative z-10 px-6 py-3 bg-amber-600 text-white rounded-2xl text-[10px] font-black uppercase shadow-lg shadow-amber-600/20 active:scale-95 transition-all hover:bg-amber-700">Record Session</button>
+                                                <button onClick={() => onLogSession(member.id, member.assignedTrainerId!, member.privateSessionPrice!)} className="relative z-10 px-6 py-3 bg-amber-600 text-white rounded-2xl text-sm font-black uppercase shadow-lg shadow-amber-600/20 active:scale-95 transition-all hover:bg-amber-700">Record Session</button>
                                             </div>
                                         </>
                                     )}
@@ -625,24 +625,24 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
 
                                     {(member.privateLogs && member.privateLogs.length > 0) && (
                                         <div className="space-y-2">
-                                            <h4 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                            <h4 className="text-sm font-black text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                                                 <CalendarDays size={14} className="text-amber-500" /> Session Log
                                             </h4>
                                             <div className="space-y-1.5">
                                                 {[...member.privateLogs].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(pLog => {
                                                     const { date, time } = formatDate(pLog.date);
                                                     return (
-                                                        <div key={pLog.id} className="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-2xl border dark:border-slate-700 text-[10px] hover:border-amber-200 transition-all">
+                                                        <div key={pLog.id} className="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-2xl border dark:border-slate-700 text-sm hover:border-amber-200 transition-all">
                                                             <div className="flex items-center gap-3">
                                                                 <div className="p-2 bg-amber-50 dark:bg-amber-900/20 text-amber-600 rounded-xl">
                                                                     <Activity size={14} />
                                                                 </div>
                                                                 <div className="flex flex-col">
                                                                     <span className="font-black dark:text-gray-200 uppercase tracking-tighter">Session: {pLog.trainerName}</span>
-                                                                    <span className="text-[8px] text-gray-400 font-bold uppercase tracking-widest">{date} • {time}</span>
+                                                                    <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">{date} • {time}</span>
                                                                 </div>
                                                             </div>
-                                                            <span className="px-2 py-1 bg-green-50 text-green-600 rounded-lg font-black text-[9px] shadow-sm">${pLog.price}</span>
+                                                            <span className="px-2 py-1 bg-green-50 text-green-600 rounded-lg font-black text-sm shadow-sm">${pLog.price}</span>
                                                         </div>
                                                     );
                                                 })}
@@ -655,7 +655,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                             {activeTab === 'FINANCIALS' && (
                                 <div className="space-y-6 animate-fade-in pb-10">
                                     {/* Existing Subscriptions */}
-                                    <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                    <h4 className="text-sm font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                                         <DollarSign size={16} className="text-green-600" /> {lang === 'ar' ? 'اشتراكات الخدمات الذاتية' : 'Self-Service Subscriptions'}
                                     </h4>
                                     <div className="space-y-3">
@@ -669,27 +669,27 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                                 <DollarSign size={20} />
                                                             </div>
                                                             <div>
-                                                                <h5 className="text-[11px] font-black dark:text-white uppercase tracking-tight">{sub.serviceName}</h5>
-                                                                <p className="text-[8px] text-gray-400 font-bold uppercase tracking-widest">{sub.purchaseDate}</p>
+                                                                <h5 className="text-sm font-black dark:text-white uppercase tracking-tight">{sub.serviceName}</h5>
+                                                                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{sub.purchaseDate}</p>
                                                             </div>
                                                         </div>
                                                         <div className="flex items-center gap-6">
                                                             <div className="text-right">
-                                                                <p className="text-sm font-black text-green-600">{(sub.price || service?.price || 0)} EGP</p>
-                                                                <p className="text-[7px] text-gray-400 font-black uppercase tracking-widest">{sub.status}</p>
+                                                                <p className="text-base font-black text-green-600">{(sub.price || service?.price || 0)} EGP</p>
+                                                                <p className="text-xs text-gray-400 font-black uppercase tracking-widest">{sub.status}</p>
                                                             </div>
                                                             {sub.paymentStatus === 'unpaid' ? (
                                                                 <button
-                                                                    onClick={() => {
-                                                                        onConfirmPayment?.(sub.id);
+                                                                    onClick={async () => {
+                                                                        await onConfirmPayment?.(sub.id);
                                                                         showToast(lang === 'ar' ? `تم تسجيل مبلغ ${sub.price || service?.price} جنيه` : `Payment of ${sub.price || service?.price} EGP confirmed`, 'success');
                                                                     }}
-                                                                    className="px-5 py-2.5 bg-green-600 text-white rounded-xl text-[9px] font-black uppercase shadow-lg shadow-green-600/20 hover:bg-green-700 active:scale-95 transition-all"
+                                                                    className="px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-green-600/20 hover:bg-green-700 active:scale-95 transition-all"
                                                                 >
                                                                     {lang === 'ar' ? 'تم الدفع' : 'Confirm Paid'}
                                                                 </button>
                                                             ) : (
-                                                                <div className="px-5 py-2.5 bg-gray-100 dark:bg-slate-900 text-gray-400 rounded-xl text-[9px] font-black uppercase flex items-center gap-2">
+                                                                <div className="px-5 py-2.5 bg-gray-100 dark:bg-slate-900 text-gray-400 rounded-xl text-sm font-black uppercase flex items-center gap-2">
                                                                     <ShieldCheck size={12} /> {lang === 'ar' ? 'مدفوع' : 'Paid'}
                                                                 </div>
                                                             )}
@@ -706,7 +706,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
 
                                     {/* Installment Plans */}
                                     <div className="mt-8 pt-8 border-t dark:border-slate-700">
-                                        <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                                        <h4 className="text-sm font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                                             <History size={16} className="text-orange-500" /> {lang === 'ar' ? 'خطط التقسيط' : 'Installment Plans'}
                                         </h4>
 
@@ -716,46 +716,46 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                 <div key={plan.id} className="p-5 bg-white dark:bg-slate-800 rounded-[2rem] border-2 border-orange-100 dark:border-orange-900/20 shadow-sm">
                                                     <div className="flex justify-between items-start mb-4">
                                                         <div>
-                                                            <h5 className="text-[12px] font-black dark:text-white uppercase tracking-tight">{plan.description}</h5>
-                                                            <p className="text-[8px] text-gray-400 font-bold uppercase tracking-widest">{plan.startDate}</p>
+                                                            <h5 className="text-sm font-black dark:text-white uppercase tracking-tight">{plan.description}</h5>
+                                                            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{plan.startDate}</p>
                                                         </div>
-                                                        <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase ${plan.status === 'ACTIVE' ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}>
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-black uppercase ${plan.status === 'ACTIVE' ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}>
                                                             {plan.status}
                                                         </span>
                                                     </div>
                                                     <div className="grid grid-cols-3 gap-4 mb-4">
                                                         <div className="bg-gray-50 dark:bg-slate-900 p-3 rounded-2xl">
-                                                            <p className="text-[7px] text-gray-400 font-bold uppercase tracking-widest mb-1">{lang === 'ar' ? 'المبلغ الكلي' : 'Total'}</p>
-                                                            <p className="text-sm font-black text-gray-800 dark:text-white">{plan.totalAmount} EGP</p>
+                                                            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">{lang === 'ar' ? 'المبلغ الكلي' : 'Total'}</p>
+                                                            <p className="text-base font-black text-gray-800 dark:text-white">{plan.totalAmount} EGP</p>
                                                         </div>
                                                         <div className="bg-gray-50 dark:bg-slate-900 p-3 rounded-2xl">
-                                                            <p className="text-[7px] text-gray-400 font-bold uppercase tracking-widest mb-1">{lang === 'ar' ? 'المقدم' : 'Paid'}</p>
-                                                            <p className="text-sm font-black text-green-600">{plan.downPayment} EGP</p>
+                                                            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">{lang === 'ar' ? 'المقدم' : 'Paid'}</p>
+                                                            <p className="text-base font-black text-green-600">{plan.downPayment} EGP</p>
                                                         </div>
                                                         <div className="bg-gray-50 dark:bg-slate-900 p-3 rounded-2xl">
-                                                            <p className="text-[7px] text-gray-400 font-bold uppercase tracking-widest mb-1">{lang === 'ar' ? 'المتبقي' : 'Remain'}</p>
-                                                            <p className="text-sm font-black text-red-600">{plan.remainingAmount} EGP</p>
+                                                            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">{lang === 'ar' ? 'المتبقي' : 'Remain'}</p>
+                                                            <p className="text-base font-black text-red-600">{plan.remainingAmount} EGP</p>
                                                         </div>
                                                     </div>
                                                     <div className="space-y-2">
                                                         {plan.installments.map((inst, idx) => (
                                                             <div key={inst.id} className="flex justify-between items-center py-2 px-4 bg-white/50 dark:bg-slate-700/50 rounded-xl border dark:border-slate-700 border-dashed transition-all hover:bg-orange-50/20">
                                                                 <div className="flex items-center gap-3">
-                                                                    <span className="text-[10px] font-black text-gray-400">#{idx + 1}</span>
-                                                                    <span className="text-[10px] font-bold dark:text-gray-200">{inst.dueDate}</span>
+                                                                    <span className="text-sm font-black text-gray-400">#{idx + 1}</span>
+                                                                    <span className="text-sm font-bold dark:text-gray-200">{inst.dueDate}</span>
                                                                 </div>
                                                                 <div className="flex items-center gap-4">
-                                                                    <span className="text-[10px] font-black dark:text-white">{inst.amount} EGP</span>
+                                                                    <span className="text-sm font-black dark:text-white">{inst.amount} EGP</span>
                                                                     {inst.status === 'UNPAID' ? (
                                                                         <button
                                                                             onClick={() => handlePayInstallment(plan.id, inst.id, inst.amount)}
                                                                             disabled={isActionLoading}
-                                                                            className="px-3 py-1 bg-orange-600 text-white rounded-lg text-[8px] font-black uppercase shadow-md active:scale-95 transition-all hover:bg-orange-700 disabled:opacity-50"
+                                                                            className="px-3 py-1 bg-orange-600 text-white rounded-lg text-sm font-black uppercase shadow-md active:scale-95 transition-all hover:bg-orange-700 disabled:opacity-50"
                                                                         >
                                                                             {lang === 'ar' ? 'تأكيد الدفع' : 'Pay Now'}
                                                                         </button>
                                                                     ) : (
-                                                                        <span className="text-[8px] font-black uppercase text-green-500 flex items-center gap-1">
+                                                                        <span className="text-sm font-black uppercase text-green-500 flex items-center gap-1">
                                                                             <ShieldCheck size={10} /> {lang === 'ar' ? 'مدفوع' : 'Paid'}
                                                                         </span>
                                                                     )}
@@ -781,11 +781,11 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                     <Snowflake size={20} />
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-black text-sm uppercase tracking-tight dark:text-white">{t.freeze_membership}</h3>
+                                                    <h3 className="font-black text-base uppercase tracking-tight dark:text-white">{t.freeze_membership}</h3>
                                                     {member.isFrozen ? (
-                                                        <p className="text-[9px] font-bold text-cyan-600 dark:text-cyan-400 uppercase mt-0.5">{t.freeze_date}: {member.frozenUntil}</p>
+                                                        <p className="text-sm font-bold text-cyan-600 dark:text-cyan-400 uppercase mt-0.5">{t.freeze_date}: {member.frozenUntil}</p>
                                                     ) : (
-                                                        <p className="text-[8px] font-bold text-gray-400 uppercase mt-0.5 tracking-widest">Pause Subscription Temporarily</p>
+                                                        <p className="text-xs font-bold text-gray-400 uppercase mt-0.5 tracking-widest">Pause Subscription Temporarily</p>
                                                     )}
                                                 </div>
                                             </div>
@@ -795,7 +795,7 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                             <button
                                                 onClick={handleUnfreeze}
                                                 disabled={isActionLoading}
-                                                className="w-full py-3 bg-cyan-600 text-white rounded-xl text-[10px] font-black uppercase shadow-lg shadow-cyan-600/20 hover:bg-cyan-700 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                                                className="w-full py-3 bg-cyan-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-cyan-600/20 hover:bg-cyan-700 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                                             >
                                                 {isActionLoading ? <Loader2 size={14} className="animate-spin" /> : <PlayCircle size={14} />} {t.action_unfreeze} Now
                                             </button>

@@ -119,10 +119,10 @@ export const GymFormModal: React.FC<GymFormModalProps> = ({ editingGym, onClose,
             >
                 <div className="p-4 sm:p-5 border-b dark:border-slate-700 flex justify-between items-center bg-gray-50/50 dark:bg-slate-900/50 shrink-0">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-indigo-600 rounded-xl text-white shadow-lg"><ShieldCheck size={18} /></div>
+                        <div className="p-2 bg-indigo-600 rounded-xl text-white shadow-lg"><ShieldCheck size={20} /></div>
                         <div>
-                            <h3 className="font-black text-sm dark:text-white uppercase tracking-tighter">{t.dev_provision_unit}</h3>
-                            <p className="text-[8px] text-gray-400 font-bold uppercase tracking-widest">Instance ID: {editingGym?.id || 'NEW_NODE'}</p>
+                            <h3 className="font-black text-lg dark:text-white uppercase tracking-tighter">{t.dev_provision_unit}</h3>
+                            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Instance ID: {editingGym?.id || 'NEW_NODE'}</p>
                         </div>
                     </div>
                     <button onClick={onClose} className="text-gray-400 hover:text-white p-1.5 rounded-full transition-all bg-white dark:bg-slate-800 shadow-sm border dark:border-slate-700"><X size={20} /></button>
@@ -138,9 +138,9 @@ export const GymFormModal: React.FC<GymFormModalProps> = ({ editingGym, onClose,
                     </div>
 
                     <div className="p-4 border-t dark:border-slate-700 flex gap-3 shrink-0 bg-gray-50 dark:bg-slate-950">
-                        <button type="button" onClick={onClose} className="flex-1 py-2.5 bg-white dark:bg-slate-800 text-gray-400 rounded-xl font-black uppercase tracking-widest text-[9px] border dark:border-slate-700">Discard</button>
-                        <button type="submit" className="flex-[3] py-2.5 bg-indigo-600 text-white rounded-xl font-black shadow-lg active:scale-95 transition-all uppercase tracking-widest text-[10px] flex items-center justify-center gap-2">
-                            <Save size={14} /> {editingGym ? t.dev_commit_updates : t.dev_deploy_infra}
+                        <button type="button" onClick={onClose} className="flex-1 py-3 bg-white dark:bg-slate-800 text-gray-400 rounded-xl font-black uppercase tracking-widest text-sm border dark:border-slate-700">Discard</button>
+                        <button type="submit" className="flex-[3] py-3 bg-indigo-600 text-white rounded-xl font-black shadow-lg active:scale-95 transition-all uppercase tracking-widest text-sm flex items-center justify-center gap-2">
+                            <Save size={18} /> {editingGym ? t.dev_commit_updates : t.dev_deploy_infra}
                         </button>
                     </div>
                 </form>

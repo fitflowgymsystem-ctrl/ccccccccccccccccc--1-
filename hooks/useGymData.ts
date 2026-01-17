@@ -12,6 +12,7 @@ import {
     addFinancialRecord, updateWaterLog, useMockPerk, logPrivateSession, logServiceSession,
     purchaseServiceWithFinance, confirmSubscriptionPayment
 } from '../services/gymService';
+import { apiClient } from '../services/apiClient';
 import { addInBodyMeasurement, updateInBodyMeasurement, deleteInBodyMeasurement, updateUserFitnessSettings } from '../services/inbodyService';
 import { User, AccessLog, Equipment, MembershipPlan, Offer, FinancialRecord, Trainer, Employee, UserRole, UserSession, MembershipType, GymService, ServiceSubscription, Branch, InBodyMeasurement, ActivityLevel, FitnessGoalType } from '../types';
 
@@ -57,6 +58,28 @@ export const useGymData = (currentUser: UserSession | null, isSubExpired: boolea
             setIsLoading(false);
         }
     }, [currentUser, isSubExpired]);
+
+    // --- Real-time Listeners ---
+    useEffect(() => {
+        if (!currentUser || currentUser.gymId === 'SYSTEM') return;
+        if (isSubExpired && currentUser.role === UserRole.ADMIN) return;
+
+        console.log('[useGymData] Starting real-time listeners...');
+        const unsubUsers = apiClient.subscribe('users', (data) => setUsers(data as User[]));
+        const unsubLogs = apiClient.subscribe('logs', (data) => setLogs(data as AccessLog[]));
+        const unsubSubs = apiClient.subscribe('serviceSubscriptions', (data) => setServiceSubscriptions(data as ServiceSubscription[]));
+        const unsubEquipment = apiClient.subscribe('equipment', (data) => setEquipment(data as Equipment[]));
+        const unsubFinancials = apiClient.subscribe('financials', (data) => setFinancials(data as FinancialRecord[]));
+
+        return () => {
+            console.log('[useGymData] Cleaning up listeners...');
+            unsubUsers();
+            unsubLogs();
+            unsubSubs();
+            unsubEquipment();
+            unsubFinancials();
+        };
+    }, [currentUser?.gymId, isSubExpired]);
 
     const refreshServices = useCallback(async () => {
         if (!currentUser || currentUser.gymId === 'SYSTEM') return;
@@ -143,16 +166,16 @@ export const useGymData = (currentUser: UserSession | null, isSubExpired: boolea
             addEmployee: async (e: Employee) => { await addEmployee(e); refreshData(); },
             updateEmployee: async (e: Employee) => { await updateEmployee(e); refreshData(); },
             deleteEmployee: async (id: number) => { await deleteEmployee(id); refreshData(); },
-            addEquipment: async (e: Equipment) => { await addMockEquipment(e); refreshData(); },
-            updateEquipment: async (id: number, u: any) => { await updateMockEquipment(id, u); refreshData(); },
-            deleteEquipment: async (id: number) => { await deleteMockEquipment(id); refreshData(); },
-            updateWater: async (id: number, amt: number) => { await updateWaterLog(id, amt); refreshData(); },
+            addEquipment: async (e: Equipment) => { await addMockEquipment(e); /* Real-time will update */ },
+            updateEquipment: async (id: number, u: any) => { await updateMockEquipment(id, u); },
+            deleteEquipment: async (id: number) => { await deleteMockEquipment(id); },
+            updateWater: async (id: number, amt: number) => { await updateWaterLog(id, amt); },
             updatePlan: async (type: MembershipType, price: number) => { await updatePlanPrice(type, price); refreshData(); },
             addOffer: async (o: Offer) => { await addOffer(o); refreshData(); },
             deleteOffer: async (id: number) => { await deleteOffer(id); refreshData(); },
-            usePerk: async (userId: number, type: 'InBody' | 'Guest Pass' | 'PT Session') => { await useMockPerk(userId, type); refreshData(); },
-            logSession: async (userId: number, trainerId: number, price: number) => { await logPrivateSession(userId, trainerId, price, currentUser?.name || 'System'); refreshData(); },
-            logServiceSession: async (userId: number, serviceId: number, price: number, serviceName: string) => { await logServiceSession(userId, serviceId, price, serviceName, currentUser?.name || 'System'); refreshData(); },
+            usePerk: async (userId: number, type: 'InBody' | 'Guest Pass' | 'PT Session' | 'Free Group Class') => { await useMockPerk(userId, type); refreshData(); },
+            logSession: async (userId: number, trainerId: number, price: number) => { await logPrivateSession(userId, trainerId, price, currentUser?.name || 'System'); },
+            logServiceSession: async (userId: number, serviceId: number, price: number, serviceName: string) => { await logServiceSession(userId, serviceId, price, serviceName, currentUser?.name || 'System'); },
             confirmPayment: handleConfirmPayment,
             addService: handleAddService,
             updateService: handleUpdateService,
@@ -160,12 +183,12 @@ export const useGymData = (currentUser: UserSession | null, isSubExpired: boolea
             purchaseService: handlePurchaseService,
             updateServiceSubscription: handleUpdateServiceSubscription,
             deleteServiceSubscription: handleDeleteServiceSubscription,
-            memberPurchaseService: async (userId: number, service: GymService) => { await purchaseServiceWithFinance(userId, service, 'CASH', currentUser?.name || 'System'); refreshData(); },
+            memberPurchaseService: async (userId: number, service: GymService) => { await purchaseServiceWithFinance(userId, service, 'CASH', 'System'); },
             // InBody Actions
-            addInBodyMeasurement: async (userId: number, measurement: Omit<InBodyMeasurement, 'id'>) => { await addInBodyMeasurement(userId, measurement); refreshData(); },
-            updateInBodyMeasurement: async (userId: number, measurement: InBodyMeasurement) => { await updateInBodyMeasurement(userId, measurement); refreshData(); },
-            deleteInBodyMeasurement: async (userId: number, measurementId: number) => { await deleteInBodyMeasurement(userId, measurementId); refreshData(); },
-            updateFitnessSettings: async (userId: number, activityLevel: ActivityLevel, fitnessGoal: FitnessGoalType) => { await updateUserFitnessSettings(userId, activityLevel, fitnessGoal); refreshData(); }
+            addInBodyMeasurement: async (userId: number, measurement: Omit<InBodyMeasurement, 'id'>) => { await addInBodyMeasurement(userId, measurement); },
+            updateInBodyMeasurement: async (userId: number, measurement: InBodyMeasurement) => { await updateInBodyMeasurement(userId, measurement); },
+            deleteInBodyMeasurement: async (userId: number, measurementId: number) => { await deleteInBodyMeasurement(userId, measurementId); },
+            updateFitnessSettings: async (userId: number, activityLevel: ActivityLevel, fitnessGoal: FitnessGoalType) => { await updateUserFitnessSettings(userId, activityLevel, fitnessGoal); }
         }
     };
 };

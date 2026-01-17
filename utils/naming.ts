@@ -30,7 +30,17 @@ export const toCamel = (obj: any): any => {
     if (typeof obj !== 'object' || obj instanceof Date) return obj;
 
     const newObj: any = {};
-    Object.keys(obj).forEach(key => {
+    // Sort keys so that snake_case keys (with underscores) are processed AFTER camelCase keys.
+    // This way, if both inbodySessions and inbody_sessions exist, the snake_case one wins.
+    const keys = Object.keys(obj).sort((a, b) => {
+        const aHasUnderscore = a.includes('_');
+        const bHasUnderscore = b.includes('_');
+        if (aHasUnderscore && !bHasUnderscore) return 1;
+        if (!aHasUnderscore && bHasUnderscore) return -1;
+        return 0;
+    });
+
+    keys.forEach(key => {
         const camelKey = key.replace(/(_\w)/g, m => m[1].toUpperCase());
         newObj[camelKey] = toCamel(obj[key]);
     });

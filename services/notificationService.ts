@@ -231,3 +231,102 @@ export const subscribeToNotifications = (
         console.error('[Notification] Subscription error:', error);
     });
 };
+
+/**
+ * Check for upcoming installment payments and notify members & staff.
+ * Uses deterministic IDs to prevent duplication.
+ */
+export const checkAndNotifyInstallmentsDue = async (users: User[]) => {
+    const today = new Date();
+    const dateStr = today.toISOString().split('T')[0];
+    const threeDaysLater = new Date();
+    threeDaysLater.setDate(today.getDate() + 3);
+
+    let notifiedCount = 0;
+
+    for (const user of users) {
+        if (!user.installmentPlans || user.installmentPlans.length === 0) continue;
+
+        for (const plan of user.installmentPlans) {
+            if (plan.status === 'COMPLETED') continue;
+
+            for (const installment of plan.installments || []) {
+                if (installment.status === 'PAID') continue;
+
+                const dueDate = new Date(installment.dueDate);
+                // Check if due within next 3 days (and not past)
+                if (dueDate >= today && dueDate <= threeDaysLater) {
+                    const idPrefix = `installment-${user.id}-${installment.id}-${dateStr}`;
+
+                    // Notify the Member
+                    await sendNotification(
+                        user.id,
+                        'قسط مستحق قريباً',
+                        `لديك قسط بقيمة ${installment.amount} ج.م مستحق في ${installment.dueDate.split('T')[0]}`,
+                        'warning',
+                        user.branch || 'General',
+                        user.id,
+                        undefined,
+                        `${idPrefix}-member`
+                    );
+
+                    // Notify Staff
+                    await notifyBranchStaff(
+                        users,
+                        user.branch || '',
+                        'Installment Due',
+                        `${user.name} has an installment of ${installment.amount} EGP due on ${installment.dueDate.split('T')[0]}`,
+                        'warning',
+                        user.id,
+                        idPrefix
+                    );
+
+                    notifiedCount++;
+                }
+            }
+        }
+    }
+
+    console.log(`[Notification] Checked installments. Triggered for ${notifiedCount} upcoming payments.`);
+};
+
+/**
+ * Send a notification to a specific member.
+ */
+export const notifyMember = async (
+    memberId: string | number,
+    title: string,
+    message: string,
+    type: NotificationType = 'info',
+    branchId: string = 'General',
+    link?: string,
+    customId?: string
+) => {
+    return sendNotification(memberId, title, message, type, branchId, undefined, link, customId);
+};
+
+/**
+ * Notify a member when they subscribe to a new service.
+ */
+export const notifySubscriptionConfirmation = async (
+    memberId: string | number,
+    memberName: string,
+    serviceName: string,
+    expiryDate: string,
+    branchId: string = 'General'
+) => {
+    const customId = `sub-confirm-${memberId}-${Date.now()}`;
+
+    await sendNotification(
+        memberId,
+        'تأكيد الاشتراك',
+        `تم اشتراكك بنجاح في ${serviceName}. صالح حتى ${expiryDate.split('T')[0]}`,
+        'success',
+        branchId,
+        memberId,
+        undefined,
+        customId
+    );
+
+    console.log(`[Notification] Subscription confirmation sent to ${memberName} for ${serviceName}`);
+};

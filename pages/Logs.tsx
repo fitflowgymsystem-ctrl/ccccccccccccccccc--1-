@@ -19,9 +19,11 @@ interface LogsProps {
     onUpdateEmployee?: (e: Employee) => void;
     onUsePerk?: (userId: number, type: 'InBody' | 'Guest Pass') => void;
     onLogSession?: (userId: number, trainerId: number, price: number) => void;
+    onLogServiceSession?: (userId: number, serviceId: number, price: number, serviceName: string) => void;
+    onConfirmPayment?: (subId: number) => Promise<void>;
 }
 
-export const Logs: React.FC<LogsProps> = ({ logs, users, trainers, employees, lang, onUpdateUser, onUpdateTrainer, onUpdateEmployee, onUsePerk, onLogSession }) => {
+export const Logs: React.FC<LogsProps> = ({ logs, users, trainers, employees, lang, onUpdateUser, onUpdateTrainer, onUpdateEmployee, onUsePerk, onLogSession, onLogServiceSession, onConfirmPayment }) => {
     const t = translations[lang];
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<'ALL' | AccessStatus>('ALL');
@@ -418,6 +420,8 @@ export const Logs: React.FC<LogsProps> = ({ logs, users, trainers, employees, la
                     onUsePerk={onUsePerk || (() => { })}
                     onLogSession={onLogSession || (() => { })}
                     onUpdateMember={onUpdateUser || (() => { })}
+                    onLogServiceSession={onLogServiceSession}
+                    onConfirmPayment={onConfirmPayment}
                 />
             )}
 

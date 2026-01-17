@@ -46,9 +46,9 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                             )}
                         </div>
                         <div>
-                            <h3 className="font-black text-sm sm:text-lg dark:text-white truncate">{trainer.name}</h3>
+                            <h3 className="font-black text-sm sm:text-xl dark:text-white truncate">{trainer.name}</h3>
                             <div className="flex items-center gap-2">
-                                <span className={`px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-widest ${isTrainer ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' : 'bg-purple-100 text-purple-600 dark:bg-purple-900/30'}`}>
+                                <span className={`px-2 py-0.5 rounded-lg text-xs font-black uppercase tracking-widest ${isTrainer ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' : 'bg-purple-100 text-purple-600 dark:bg-purple-900/30'}`}>
                                     {isTrainer ? (lang === 'ar' ? 'مدرب' : 'Coach') : (lang === 'ar' ? 'موظف' : 'Staff')}
                                 </span>
                                 <span className={`w-2 h-2 rounded-full ${trainer.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`}></span>
@@ -68,7 +68,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id as any)}
-                            className={`flex-1 py-4 text-[10px] font-black uppercase tracking-widest relative transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`flex-1 py-4 text-sm font-black uppercase tracking-widest relative transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
                         >
                             {tab.label}
                             {activeTab === tab.id && <div className="absolute bottom-0 left-4 right-4 h-1 bg-blue-600 rounded-t-full shadow-[0_-2px_10px_rgba(37,99,235,0.4)]"></div>}
@@ -83,25 +83,25 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                 <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-2xl border dark:border-slate-700/50">
                                     <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">{lang === 'ar' ? 'رقم الهوية' : 'ID Card'}</p>
-                                    <p className="text-[10px] font-black dark:text-white">{(trainer as any).idCardNumber || 'N/A'}</p>
+                                    <p className="text-base font-black dark:text-white">{(trainer as any).idCardNumber || 'N/A'}</p>
                                 </div>
                                 <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-2xl border dark:border-slate-700/50">
                                     <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">{isTrainer ? (lang === 'ar' ? 'التخصص' : 'Specialty') : (lang === 'ar' ? 'المسمى الوظيفي' : 'Job Title')}</p>
-                                    <p className="text-[10px] font-black dark:text-white truncate">{isTrainer ? (trainer as any).specialty : (trainer as any).jobTitle || 'Staff'}</p>
+                                    <p className="text-base font-black dark:text-white truncate">{isTrainer ? (trainer as any).specialty : (trainer as any).jobTitle || 'Staff'}</p>
                                 </div>
                                 <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-2xl border dark:border-slate-700/50">
                                     <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">{lang === 'ar' ? 'الفرع' : 'Branch'}</p>
-                                    <p className="text-[10px] font-black dark:text-white truncate">{(trainer as any).branch || 'Main'}</p>
+                                    <p className="text-base font-black dark:text-white truncate">{(trainer as any).branch || 'Main'}</p>
                                 </div>
                                 <div className="bg-blue-50/50 dark:bg-blue-900/10 p-3 rounded-2xl border border-blue-100 dark:border-blue-900/20">
                                     <p className="text-[8px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">{lang === 'ar' ? 'الراتب الأساسي' : 'Base Salary'}</p>
-                                    <p className="text-xs font-black text-blue-700 dark:text-blue-300">{(trainer as any).baseSalary || 0} <span className="text-[8px]">EGP</span></p>
+                                    <p className="text-base font-black text-blue-700 dark:text-blue-300">{(trainer as any).baseSalary || 0} <span className="text-[10px]">EGP</span></p>
                                 </div>
                             </div>
 
                             {/* Job Details Section */}
                             <div className="p-5 bg-slate-50 dark:bg-slate-900/30 rounded-[2rem] border dark:border-slate-700/50">
-                                <h4 className="text-[9px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-4 ps-1">
+                                <h4 className="text-sm font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-4 ps-1">
                                     <Award size={14} className="text-blue-500" />
                                     {lang === 'ar' ? 'البيانات الوظيفية' : 'Employment Details'}
                                 </h4>
@@ -113,18 +113,18 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                     {isTrainer && (
                                         <>
                                             <div className="space-y-1">
-                                                <p className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'سنوات الخبرة' : 'Exp. Years'}</p>
-                                                <p className="text-[10px] font-bold dark:text-white">{(trainer as any).experienceYears || 0} {lang === 'ar' ? 'سنوات' : 'Years'}</p>
+                                                <p className="text-xs font-black text-gray-400 uppercase">{lang === 'ar' ? 'سنوات الخبرة' : 'Exp. Years'}</p>
+                                                <p className="text-sm font-bold dark:text-white">{(trainer as any).experienceYears || 0} {lang === 'ar' ? 'سنوات' : 'Years'}</p>
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'العمولة' : 'Commission'}</p>
-                                                <p className="text-[10px] font-bold text-blue-600">{(trainer as any).commissionRate || 0}%</p>
+                                                <p className="text-xs font-black text-gray-400 uppercase">{lang === 'ar' ? 'العمولة' : 'Commission'}</p>
+                                                <p className="text-sm font-bold text-blue-600">{(trainer as any).commissionRate || 0}%</p>
                                             </div>
                                         </>
                                     )}
                                     <div className="space-y-1">
                                         <p className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'الحالة' : 'Status'}</p>
-                                        <span className={`px-2 py-0.5 rounded-md text-[8px] font-black uppercase ${trainer.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                                        <span className={`px-2 py-0.5 rounded-md text-xs font-black uppercase ${trainer.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                                             {trainer.status === 'active' ? (lang === 'ar' ? 'نشط' : 'Active') : (lang === 'ar' ? 'غير نشط' : 'Inactive')}
                                         </span>
                                     </div>
@@ -140,17 +140,17 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                     </h4>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
-                                            <p className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'تاريخ الميلاد' : 'Date of Birth'}</p>
-                                            <p className="text-[10px] font-bold dark:text-white">{(trainer as any).dob || 'N/A'}</p>
+                                            <p className="text-xs font-black text-gray-400 uppercase">{lang === 'ar' ? 'تاريخ الميلاد' : 'Date of Birth'}</p>
+                                            <p className="text-sm font-bold dark:text-white">{(trainer as any).dob || 'N/A'}</p>
                                         </div>
                                         <div>
-                                            <p className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'الجنس' : 'Gender'}</p>
-                                            <p className="text-[10px] font-bold dark:text-white">{(trainer as any).gender || 'N/A'}</p>
+                                            <p className="text-xs font-black text-gray-400 uppercase">{lang === 'ar' ? 'الجنس' : 'Gender'}</p>
+                                            <p className="text-sm font-bold dark:text-white">{(trainer as any).gender || 'N/A'}</p>
                                         </div>
                                     </div>
                                     <div className="pt-2 border-t dark:border-slate-700/50">
                                         <p className="text-[8px] font-black text-gray-400 uppercase mb-1">{lang === 'ar' ? 'العنوان' : 'Address'}</p>
-                                        <p className="text-[10px] font-bold dark:text-white/80 shrink-0">{(trainer as any).address || (lang === 'ar' ? 'غير مسجل' : 'Not Registered')}</p>
+                                        <p className="text-sm font-bold dark:text-white/80 shrink-0">{(trainer as any).address || (lang === 'ar' ? 'غير مسجل' : 'Not Registered')}</p>
                                     </div>
                                 </div>
 
@@ -162,19 +162,19 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                     <div className="space-y-2.5">
                                         <div className="flex items-center justify-between">
                                             <span className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'رقم الهاتف' : 'Phone'}</span>
-                                            <span className="text-[10px] font-black dark:text-white px-2 py-0.5 bg-gray-50 dark:bg-slate-800 rounded-lg">{trainer.phone}</span>
+                                            <span className="text-sm font-black dark:text-white px-2 py-0.5 bg-gray-50 dark:bg-slate-800 rounded-lg">{trainer.phone}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <span className="text-[8px] font-black text-gray-400 uppercase">{lang === 'ar' ? 'البريد' : 'Email'}</span>
-                                            <span className="text-[10px] font-bold dark:text-white truncate max-w-[140px]">{trainer.email || 'N/A'}</span>
+                                            <span className="text-sm font-bold dark:text-white truncate max-w-[140px]">{trainer.email || 'N/A'}</span>
                                         </div>
                                         <div className="flex items-center justify-between border-t dark:border-slate-700/50 pt-2.5">
                                             <span className="text-[8px] font-black text-blue-500 uppercase">{lang === 'ar' ? 'اسم المستخدم' : 'Username'}</span>
-                                            <span className="text-[10px] font-black text-blue-600 dark:text-blue-400">{(trainer as any).username || 'N/A'}</span>
+                                            <span className="text-sm font-black text-blue-600 dark:text-blue-400">{(trainer as any).username || 'N/A'}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <span className="text-[8px] font-black text-indigo-500 uppercase">{lang === 'ar' ? 'معرف البصمة' : 'Fingerprint ID'}</span>
-                                            <span className="text-[10px] font-mono font-black dark:text-gray-300">{(trainer as any).fingerprintId || 'No Biometric'}</span>
+                                            <span className="text-sm font-mono font-black dark:text-gray-300">{(trainer as any).fingerprintId || 'No Biometric'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -183,8 +183,8 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                             {/* Bio */}
                             {isTrainer && (trainer as any).bio && (
                                 <div className="p-5 bg-amber-50/30 dark:bg-amber-900/10 rounded-[2rem] border border-amber-100 dark:border-amber-900/20">
-                                    <p className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-2 ps-1">{lang === 'ar' ? 'السيرة الذاتية' : 'Biography'}</p>
-                                    <p className="text-[10px] font-bold text-gray-600 dark:text-gray-400 leading-relaxed ps-1">{(trainer as any).bio}</p>
+                                    <p className="text-sm font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-2 ps-1">{lang === 'ar' ? 'السيرة الذاتية' : 'Biography'}</p>
+                                    <p className="text-sm font-bold text-gray-600 dark:text-gray-400 leading-relaxed ps-1">{(trainer as any).bio}</p>
                                 </div>
                             )}
 
@@ -198,7 +198,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                                 <div className="w-5 h-5 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600 shrink-0">
                                                     <Award size={10} />
                                                 </div>
-                                                <span className="text-[9px] font-bold text-gray-700 dark:text-gray-300 truncate">{cert}</span>
+                                                <span className="text-xs font-bold text-gray-700 dark:text-gray-300 truncate">{cert}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -211,7 +211,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                     <p className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-3 ps-1">{lang === 'ar' ? 'الصلاحيات' : 'Permissions'}</p>
                                     <div className="flex flex-wrap gap-2">
                                         {(trainer as any).permissions.map((perm: string) => (
-                                            <span key={perm} className="px-3 py-1 bg-white dark:bg-slate-900 border dark:border-slate-700 rounded-lg text-[9px] font-black text-amber-600 uppercase tracking-widest border-amber-100">
+                                            <span key={perm} className="px-3 py-1 bg-white dark:bg-slate-900 border dark:border-slate-700 rounded-lg text-xs font-black text-amber-600 uppercase tracking-widest border-amber-100">
                                                 {perm}
                                             </span>
                                         ))}
@@ -228,17 +228,17 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-blue-600 shadow-sm"><Clock size={18} /></div>
                                         <div>
-                                            <p className="text-xs font-black dark:text-white">{new Date(log.timestamp).toLocaleDateString()}</p>
+                                            <p className="text-sm font-black dark:text-white">{new Date(log.timestamp).toLocaleDateString()}</p>
                                             <div className="flex items-center gap-2 mt-1">
-                                                <span className="text-[10px] text-green-500 font-bold uppercase">Time: {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                                                <span className={`text-[8px] font-black px-2 py-0.5 rounded-lg uppercase tracking-widest ${log.status === 'GRANTED' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+                                                <span className="text-xs text-green-500 font-bold uppercase">Time: {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                <span className={`text-xs font-black px-2 py-0.5 rounded-lg uppercase tracking-widest ${log.status === 'GRANTED' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
                                                     {log.status}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="text-end">
-                                        <p className="text-[7px] text-gray-400 font-bold uppercase">{log.deviceId}</p>
+                                        <p className="text-[10px] text-gray-400 font-bold uppercase">{log.deviceId}</p>
                                     </div>
                                 </div>
                             ))}
@@ -266,17 +266,17 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                         <div>
                                             <p className="text-sm font-black dark:text-white">{member.name}</p>
                                             <div className="flex items-center gap-2">
-                                                <p className="text-[10px] text-gray-400 font-mono tracking-tighter">{member.phone}</p>
-                                                <span className="text-[8px] text-blue-500/50 dark:text-blue-400/30 font-black uppercase">• {lang === 'ar' ? 'منذ:' : 'Since:'} {member.joinDate}</span>
+                                                <p className="text-sm text-gray-400 font-mono tracking-tighter">{member.phone}</p>
+                                                <span className="text-[11px] text-blue-500/50 dark:text-blue-400/30 font-black uppercase">• {lang === 'ar' ? 'منذ:' : 'Since:'} {member.joinDate}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="text-end">
                                         <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-black">
                                             <DollarSign size={14} />
-                                            <span className="text-base">{member.privateSessionPrice || 0}</span>
+                                            <span className="text-lg">{member.privateSessionPrice || 0}</span>
                                         </div>
-                                        <p className="text-[8px] text-gray-400 uppercase font-black tracking-widest">{lang === 'ar' ? 'السعر / حصة' : 'Price / Session'}</p>
+                                        <p className="text-xs text-gray-400 uppercase font-black tracking-widest">{lang === 'ar' ? 'السعر / حصة' : 'Price / Session'}</p>
                                     </div>
                                 </div>
                             ))}
@@ -292,10 +292,10 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                     {activeTab === 'SCHEDULE' && (
                         <div className="space-y-6 animate-fade-in">
                             <div className="bg-blue-50/50 dark:bg-blue-900/10 p-5 rounded-[2rem] border border-blue-100 dark:border-blue-900/20 space-y-4 shadow-sm">
-                                <h4 className="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 flex items-center gap-2"><Calendar size={16} /> Bulk Update Times</h4>
+                                <h4 className="text-sm font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 flex items-center gap-2"><Calendar size={18} /> Bulk Update Times</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {weekDays.map(day => (
-                                        <button key={day} onClick={() => setSelectedDays(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day])} className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase transition-all flex items-center gap-2 border ${selectedDays.includes(day) ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/20' : 'bg-white dark:bg-slate-800 text-gray-400 border-gray-100 dark:border-slate-700'}`}>
+                                        <button key={day} onClick={() => setSelectedDays(prev => prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day])} className={`px-4 py-2 rounded-xl text-xs font-black uppercase transition-all flex items-center gap-2 border ${selectedDays.includes(day) ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/20' : 'bg-white dark:bg-slate-800 text-gray-400 border-gray-100 dark:border-slate-700'}`}>
                                             {selectedDays.includes(day) ? <CheckSquare size={14} /> : <Square size={14} />} {day}
                                         </button>
                                     ))}
@@ -306,7 +306,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                         <span className="text-gray-300">→</span>
                                         <input type="time" value={bulkEnd} onChange={e => setBulkEnd(e.target.value)} className="w-28 px-3 py-1.5 bg-transparent text-xs font-black dark:text-white outline-none" />
                                     </div>
-                                    <button onClick={() => { onBulkSchedule(selectedDays, bulkStart, bulkEnd); setSelectedDays([]); }} disabled={selectedDays.length === 0} className="w-full sm:w-auto flex-1 px-8 py-3 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase shadow-xl shadow-blue-600/20 disabled:opacity-30 active:scale-95 transition-all">Apply to Days</button>
+                                    <button onClick={() => { onBulkSchedule(selectedDays, bulkStart, bulkEnd); setSelectedDays([]); }} disabled={selectedDays.length === 0} className="w-full sm:w-auto flex-1 px-8 py-3 bg-blue-600 text-white rounded-2xl text-sm font-black uppercase shadow-xl shadow-blue-600/20 disabled:opacity-30 active:scale-95 transition-all">Apply to Days</button>
                                 </div>
                             </div>
 
@@ -315,11 +315,11 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                                     const daySchedule = (trainer.schedule || []).find(s => s.day === day);
                                     return (
                                         <div key={day} className="flex justify-between items-center p-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl border dark:border-slate-700/50">
-                                            <span className="text-[10px] font-black uppercase text-gray-500 tracking-widest">{day}</span>
+                                            <span className="text-xs font-black uppercase text-gray-500 tracking-widest">{day}</span>
                                             <div className="flex items-center gap-2">
-                                                <input type="time" value={daySchedule?.startTime || ''} onChange={(e) => onUpdateSchedule(day, 'startTime', e.target.value)} className="text-[10px] font-black text-blue-600 bg-white dark:bg-slate-800 border dark:border-slate-700/50 rounded-xl px-2 py-1.5 outline-none focus:ring-1 focus:ring-blue-500" />
+                                                <input type="time" value={daySchedule?.startTime || ''} onChange={(e) => onUpdateSchedule(day, 'startTime', e.target.value)} className="text-sm font-black text-blue-600 bg-white dark:bg-slate-800 border dark:border-slate-700/50 rounded-xl px-2 py-1.5 outline-none focus:ring-1 focus:ring-blue-500" />
                                                 <span className="text-gray-300">→</span>
-                                                <input type="time" value={daySchedule?.endTime || ''} onChange={(e) => onUpdateSchedule(day, 'endTime', e.target.value)} className="text-[10px] font-black text-blue-600 bg-white dark:bg-slate-800 border dark:border-slate-700/50 rounded-xl px-2 py-1.5 outline-none focus:ring-1 focus:ring-blue-500" />
+                                                <input type="time" value={daySchedule?.endTime || ''} onChange={(e) => onUpdateSchedule(day, 'endTime', e.target.value)} className="text-sm font-black text-blue-600 bg-white dark:bg-slate-800 border dark:border-slate-700/50 rounded-xl px-2 py-1.5 outline-none focus:ring-1 focus:ring-blue-500" />
                                             </div>
                                         </div>
                                     );
@@ -329,7 +329,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                     )}
                 </div>
                 <div className="p-6 bg-gray-50 dark:bg-slate-950 border-t dark:border-slate-700 shrink-0">
-                    <button onClick={onClose} className="w-full py-4 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-red-500 transition-all shadow-sm">Close Window</button>
+                    <button onClick={onClose} className="w-full py-4 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-2xl text-sm font-black uppercase tracking-widest text-gray-500 hover:text-red-500 transition-all shadow-sm">Close Window</button>
                 </div>
             </div>
         </div>,

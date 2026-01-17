@@ -84,10 +84,10 @@ You can now track your workouts and membership via our app.
                             <CheckCircle2 size={20} className="text-white" />
                         </div>
                         <div>
-                            <h3 className="font-black text-sm text-gray-800 dark:text-white uppercase tracking-tight">
+                            <h3 className="font-black text-lg text-gray-800 dark:text-white uppercase tracking-tight">
                                 {lang === 'ar' ? 'تم الإنشاء بنجاح!' : 'Created Successfully!'}
                             </h3>
-                            <p className="text-[10px] text-gray-500 font-bold">
+                            <p className="text-sm text-gray-500 font-bold mb-1">
                                 {userName} - {gymName}
                             </p>
                         </div>
@@ -100,7 +100,7 @@ You can now track your workouts and membership via our app.
                 {/* Body */}
                 <div className="p-6 space-y-4">
                     <div className="bg-blue-50 dark:bg-slate-950 p-4 rounded-xl border border-blue-200 dark:border-slate-700 space-y-3">
-                        <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                        <p className="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">
                             {lang === 'ar' ? 'بيانات الدخول المسجلة' : 'Login Credentials'}
                         </p>
 
@@ -131,7 +131,7 @@ You can now track your workouts and membership via our app.
                             <div className="flex items-center justify-between gap-2">
                                 <span className="text-[9px] text-gray-500 font-bold">{lang === 'ar' ? 'كلمة المرور' : 'Password'}:</span>
                                 <div className="flex items-center gap-1">
-                                    <code className="text-[10px] font-mono bg-white dark:bg-slate-800 px-2 py-1 rounded font-black text-green-600">{password}</code>
+                                    <code className="text-base font-mono bg-white dark:bg-slate-800 px-2 py-1 rounded font-black text-green-600">{password}</code>
                                     <button onClick={() => copyToClipboard(password)} className="p-1 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded">
                                         <Copy size={12} className="text-blue-600" />
                                     </button>
@@ -144,7 +144,7 @@ You can now track your workouts and membership via our app.
                     <div className="flex gap-2">
                         <button
                             onClick={onClose}
-                            className="flex-1 py-3 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-slate-600 transition-all"
+                            className="flex-1 py-3 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-slate-600 transition-all"
                         >
                             {lang === 'ar' ? 'إغلاق' : 'Close'}
                         </button>
@@ -153,7 +153,7 @@ You can now track your workouts and membership via our app.
                             href={whatsappUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-[2] py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-green-500/20 flex items-center justify-center gap-2"
+                            className="flex-[2] py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg shadow-green-500/20 flex items-center justify-center gap-2"
                         >
                             <MessageCircle size={16} />
                             {lang === 'ar' ? 'إرسال عبر واتساب' : 'Send via WhatsApp'}

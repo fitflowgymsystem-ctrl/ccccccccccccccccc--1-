@@ -59,12 +59,13 @@ const App: React.FC = () => {
         }
     }, [currentUser]);
 
-    // [TRIGGER] Check for expiring memberships
+    // [TRIGGER] Check for expiring memberships and upcoming installments
     useEffect(() => {
         if (data.users && data.users.length > 0) {
             const runChecks = async () => {
-                const { checkAndTriggerExpirations } = await import('./services/notificationService');
+                const { checkAndTriggerExpirations, checkAndNotifyInstallmentsDue } = await import('./services/notificationService');
                 await checkAndTriggerExpirations(data.users);
+                await checkAndNotifyInstallmentsDue(data.users);
             };
             runChecks();
         }

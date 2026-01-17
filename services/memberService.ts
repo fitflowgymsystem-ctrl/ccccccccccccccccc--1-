@@ -98,7 +98,7 @@ export const simulateScan = async (identifier: string, deviceId: string) => {
     return await checkInUser(identifier);
 };
 
-export const updateWaterLog = (userId: number, amountMl: number) => {
+export const updateWaterLog = async (userId: number, amountMl: number) => {
     const users = load<User[]>('users', []);
     const idx = users.findIndex(u => u.id === userId);
     if (idx > -1) {
@@ -108,7 +108,7 @@ export const updateWaterLog = (userId: number, amountMl: number) => {
         if (logIdx > -1) users[idx].waterLogs![logIdx].amountMl = amountMl;
         else users[idx].waterLogs!.push({ date: today, amountMl });
         save('users', users);
-        apiClient.post('/users', users[idx]);
+        await apiClient.post('/users', users[idx]);
     }
 };
 
@@ -124,13 +124,13 @@ export const logPrivateSession = async (userId: number, trainerId: number, price
             users[userIdx].privateLogs!.push(newLog);
             users[userIdx].balance -= price;
             save('users', users);
-            apiClient.post('/users', users[userIdx]);
+            await apiClient.post('/users', users[userIdx]);
 
             const trainerIdx = trainers.findIndex(t => t.id === trainerId);
             if (trainerIdx > -1) {
                 trainers[trainerIdx].totalCommissionEarned += (price * (trainers[trainerIdx].commissionRate / 100));
                 save('trainers', trainers);
-                apiClient.post('/trainers', trainers[trainerIdx]);
+                await apiClient.post('/trainers', trainers[trainerIdx]);
             }
 
             // إضافة سجل مالي للجلسة الخاصة
@@ -171,7 +171,7 @@ export const logServiceSession = async (userId: number, serviceId: number, price
 
         if (subIdx > -1) {
             // Check Payment Status (Skip for PER_SESSION as it is pay-as-you-go)
-            if (subscriptions[subIdx].paymentStatus === 'unpaid' && service.pricingType !== 'PER_SESSION') {
+            if (subscriptions[subIdx].paymentStatus === 'unpaid' && service?.pricingType !== 'PER_SESSION') {
                 throw new Error("UNPAID_SERVICE");
             }
 
@@ -182,12 +182,12 @@ export const logServiceSession = async (userId: number, serviceId: number, price
                 }
             }
             save('serviceSubscriptions', subscriptions);
-            apiClient.post('/serviceSubscriptions', subscriptions[subIdx]);
+            await apiClient.post('/serviceSubscriptions', subscriptions[subIdx]);
         }
 
         // 2. Add to logs
         // For PER_SESSION: Charge now (Price > 0). For others: Prepaid (Price = 0)
-        const sessionPrice = service.pricingType === 'PER_SESSION' ? price : 0;
+        const sessionPrice = service?.pricingType === 'PER_SESSION' ? price : 0;
 
         const newLog: PrivateSessionLog = {
             id: Date.now(),
@@ -200,15 +200,15 @@ export const logServiceSession = async (userId: number, serviceId: number, price
         users[userIdx].privateLogs!.push(newLog);
 
         // Balance Deduction (ONLY for PER_SESSION)
-        if (service.pricingType === 'PER_SESSION') {
+        if (service?.pricingType === 'PER_SESSION') {
             users[userIdx].balance -= sessionPrice;
         }
 
         save('users', users);
-        apiClient.post('/users', users[userIdx]);
+        await apiClient.post('/users', users[userIdx]);
 
         // 3. Financial Record (ONLY for PER_SESSION)
-        if (service.pricingType === 'PER_SESSION') {
+        if (service?.pricingType === 'PER_SESSION') {
             const { addFinancialRecord } = await import('./financeService');
             await addFinancialRecord({
                 id: Date.now(),
@@ -225,15 +225,15 @@ export const logServiceSession = async (userId: number, serviceId: number, price
     }
 };
 
-export const useMockPerk = (userId: number, type: 'InBody' | 'Guest Pass' | 'PT Session' | 'Free Group Class') => {
+export const useMockPerk = async (userId: number, type: 'InBody' | 'Guest Pass' | 'PT Session' | 'Free Group Class') => {
     const users = load<User[]>('users', []);
     const idx = users.findIndex(u => u.id === userId);
     if (idx > -1) {
-        if (type === 'InBody' && users[idx].perks.inbodySessions > 0) {
+        if (type === 'InBody' && (users[idx].perks.inbodySessions || 0) > 0) {
             users[idx].perks.inbodySessions--;
-        } else if (type === 'Guest Pass' && users[idx].perks.guestPasses > 0) {
+        } else if (type === 'Guest Pass' && (users[idx].perks.guestPasses || 0) > 0) {
             users[idx].perks.guestPasses--;
-        } else if (type === 'PT Session' && (users[idx].perks as any).ptSessions > 0) {
+        } else if (type === 'PT Session' && ((users[idx].perks as any).ptSessions || 0) > 0) {
             (users[idx].perks as any).ptSessions--;
         } else if (type === 'Free Group Class' && (users[idx].perks.freeGroupClassCount || 0) > 0) {
             users[idx].perks.freeGroupClassCount!--;
@@ -244,7 +244,7 @@ export const useMockPerk = (userId: number, type: 'InBody' | 'Guest Pass' | 'PT 
         if (!users[idx].perkLogs) users[idx].perkLogs = [];
         users[idx].perkLogs!.push({ id: Date.now(), type, date: new Date().toISOString() } as PerkLog);
         save('users', users);
-        apiClient.post('/users', users[idx]);
+        await apiClient.post('/users', users[idx]);
     }
 };
 
@@ -268,7 +268,7 @@ export const purchaseServiceWithFinance = async (userId: number, service: GymSer
             totalSessions: service.pricingType === 'SUBSCRIPTION' ? 0 : (service.packageSessions || (service.pricingType === 'PER_SESSION' ? 1 : 1)),
             remainingSessions: service.pricingType === 'SUBSCRIPTION' ? 0 : (service.packageSessions || (service.pricingType === 'PER_SESSION' ? 1 : 1)),
             status: 'active',
-            paymentStatus: paymentMethod === 'CASH' ? 'paid' : 'unpaid', // Default to PAID for Cash (Admin Manual Entry)
+            paymentStatus: operator === 'System' ? 'unpaid' : (paymentMethod === 'CASH' ? 'paid' : 'unpaid'),
             price: service.price
         };
 
@@ -309,6 +309,19 @@ export const purchaseServiceWithFinance = async (userId: number, service: GymSer
             } catch (e) { console.error("Stats trigger failed", e); }
         }
 
+        // 4. Send Subscription Confirmation Notification to Member
+        try {
+            import('./notificationService').then(({ notifySubscriptionConfirmation }) => {
+                notifySubscriptionConfirmation(
+                    userId,
+                    users[userIdx].name,
+                    service.name,
+                    newSub.expiryDate,
+                    users[userIdx].branch || 'General'
+                ).catch(e => console.error("Notification error", e));
+            });
+        } catch (e) { console.error("Notification trigger failed", e); }
+
         return newSub;
     }
     throw new Error("User not found");
@@ -316,12 +329,16 @@ export const purchaseServiceWithFinance = async (userId: number, service: GymSer
 
 export const confirmSubscriptionPayment = async (subscriptionId: number) => {
     const subscriptions = load<ServiceSubscription[]>('serviceSubscriptions', []);
-    const idx = subscriptions.findIndex(s => s.id === subscriptionId);
+    console.log(`[MemberService] Confirming payment for sub ID: ${subscriptionId}. Total subs loaded: ${subscriptions.length}`);
+
+    const idx = subscriptions.findIndex(s => String(s.id) === String(subscriptionId));
     if (idx > -1) {
+        console.log(`[MemberService] Found sub: ${subscriptions[idx].serviceName} for user: ${subscriptions[idx].userId}. Current Status: ${subscriptions[idx].paymentStatus}`);
         subscriptions[idx].paymentStatus = 'paid';
         save('serviceSubscriptions', subscriptions);
         await apiClient.post('/serviceSubscriptions', subscriptions[idx]);
         return subscriptions[idx];
     }
+    console.error(`[MemberService] Subscription ${subscriptionId} not found in local cache.`);
     throw new Error("Subscription not found");
 };

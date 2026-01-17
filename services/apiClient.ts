@@ -7,7 +7,8 @@ import {
     deleteDoc,
     query,
     where,
-    Timestamp
+    Timestamp,
+    onSnapshot
 } from "firebase/firestore";
 import { signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
@@ -124,7 +125,20 @@ export const apiClient = {
 
         try {
             const docRef = doc(db, table, docId);
-            await setDoc(docRef, { ...snakeData, updated_at: Timestamp.now() }, { merge: true });
+            const isUserTable = table === 'users';
+            const isMigrationTable = ['users', 'serviceSubscriptions', 'financials'].includes(table);
+
+            if (isUserTable && snakeData.perks) {
+                console.log(`[ApiClient] Updating Perks for user ${docId}:`, {
+                    inbody: snakeData.perks.inbody_sessions,
+                    guest: snakeData.perks.guest_passes,
+                    pt: snakeData.perks.pt_sessions
+                });
+            }
+
+            // Disable merge for migration tables to perform "self-healing" migration (clean up legacy duplicate keys)
+            const options = isMigrationTable ? {} : { merge: true };
+            await setDoc(docRef, { ...snakeData, updated_at: Timestamp.now() }, options);
             return data;
         } catch (e: any) {
             console.error(`[ApiClient] Error updating ${table}/${docId}:`, e);
@@ -192,5 +206,30 @@ export const apiClient = {
 
     async checkHealth() {
         try { await ensureAuth(); return !!db; } catch { return false; }
+    },
+
+    // New helper for real-time subscriptions
+    subscribe(table: string, onUpdate: (data: any[]) => void) {
+        const gymId = getCurrentGymId();
+        if (!gymId) return () => { };
+
+        const colRef = collection(db, table);
+        const q = table === 'saas_config' ? query(colRef) : query(colRef, where("gym_id", "==", gymId));
+
+        return onSnapshot(q, (snapshot: any) => {
+            const results = snapshot.docs.map((d: any) => {
+                const data = d.data();
+                let cleanId = d.id;
+                if (cleanId.startsWith(`${gymId}_`)) {
+                    cleanId = cleanId.replace(`${gymId}_`, '');
+                }
+                return { ...data, id: isNaN(Number(cleanId)) ? cleanId : Number(cleanId) };
+            });
+            const camelResults = toCamel(results);
+            save(table, camelResults);
+            onUpdate(camelResults);
+        }, (error: any) => {
+            console.error(`[Security Access Denied/Subscription Error] for table ${table}:`, error);
+        });
     }
 };

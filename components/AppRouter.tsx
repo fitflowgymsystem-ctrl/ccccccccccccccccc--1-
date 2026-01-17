@@ -99,7 +99,7 @@ export const AppRouter: React.FC<AppRouterProps> = (props) => {
                     branches={props.gymProfile?.branches || []}
                 />
             );
-            case 'logs': return <Logs logs={logs} users={users} trainers={trainers} employees={data.employees} lang={lang} onUpdateUser={actions.updateUser} onUpdateTrainer={actions.updateTrainer} onUpdateEmployee={actions.updateEmployee} onUsePerk={actions.usePerk} onLogSession={actions.logSession} />;
+            case 'logs': return <Logs logs={logs} users={users} trainers={trainers} employees={data.employees} lang={lang} onUpdateUser={actions.updateUser} onUpdateTrainer={actions.updateTrainer} onUpdateEmployee={actions.updateEmployee} onUsePerk={actions.usePerk} onLogSession={actions.logSession} onLogServiceSession={actions.logServiceSession} onConfirmPayment={actions.confirmPayment} />;
             case 'profile': return <Profile currentUser={currentUser} lang={lang} reloadProfile={props.refreshGymProfile} />;
             case 'settings': return <Settings lang={lang} setLang={props.setLang} role={currentUser.role} gymInfo={props.gymInfo} onUpdateGymInfo={props.updateGymInfo} activeTheme={props.activeTheme} onUpdateTheme={props.setActiveTheme} onNavigate={props.setCurrentPage} />;
             case 'access_control': return <AccessControl lang={lang} onBack={() => props.setCurrentPage('settings')} />;

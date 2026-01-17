@@ -25,7 +25,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ total, onConfirm, 
             <div className="p-2 bg-green-500/20 text-green-500 rounded-xl">
               <ReceiptText size={20} />
             </div>
-            <h3 className="font-black text-xs dark:text-white uppercase tracking-widest">
+            <h3 className="font-black text-lg dark:text-white uppercase tracking-widest">
               {t.order_summary}
             </h3>
           </div>
@@ -36,33 +36,33 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ total, onConfirm, 
 
         <div className="p-8 space-y-8">
           <div className="text-center bg-blue-600/5 dark:bg-blue-600/10 py-8 rounded-[2rem] border-2 border-dashed border-blue-200 dark:border-blue-900/30">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-2">{t.total}</p>
+            <p className="text-xs font-black text-gray-400 uppercase tracking-[0.3em] mb-2">{t.total}</p>
             <h2 className="text-5xl font-black text-blue-600 tracking-tighter tabular-nums">${total.toFixed(2)}</h2>
           </div>
 
           <div className="space-y-3">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">{t.select_payment}</p>
+            <p className="text-xs font-black text-gray-400 uppercase tracking-widest text-center">{t.select_payment}</p>
             <div className="grid grid-cols-2 gap-4">
               <button
                 onClick={() => setPaymentMethod('CASH')}
                 className={`p-6 rounded-3xl border-2 flex flex-col items-center justify-center gap-3 transition-all active:scale-95 ${paymentMethod === 'CASH' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-600 shadow-xl' : 'border-gray-100 dark:border-slate-800 text-gray-400 dark:bg-slate-900'}`}
               >
                 <Banknote size={32} />
-                <span className="font-black text-[10px] uppercase tracking-widest">{t.pay_cash}</span>
+                <span className="font-black text-sm uppercase tracking-widest">{t.pay_cash}</span>
               </button>
               <button
                 onClick={() => setPaymentMethod('CARD')}
                 className={`p-6 rounded-3xl border-2 flex flex-col items-center justify-center gap-3 transition-all active:scale-95 ${paymentMethod === 'CARD' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-600 shadow-xl' : 'border-gray-100 dark:border-slate-800 text-gray-400 dark:bg-slate-900'}`}
               >
                 <CreditCard size={32} />
-                <span className="font-black text-[10px] uppercase tracking-widest">{t.pay_card}</span>
+                <span className="font-black text-sm uppercase tracking-widest">{t.pay_card}</span>
               </button>
             </div>
           </div>
 
           <button
             onClick={() => onConfirm(paymentMethod)}
-            className="w-full py-5 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-black shadow-2xl shadow-green-600/30 flex items-center justify-center gap-3 active:scale-95 transition-all uppercase tracking-[0.2em] text-xs"
+            className="w-full py-5 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-black shadow-2xl shadow-green-600/30 flex items-center justify-center gap-3 active:scale-95 transition-all uppercase tracking-[0.2em] text-sm"
           >
             <CheckCircle size={20} />
             {t.confirm}
