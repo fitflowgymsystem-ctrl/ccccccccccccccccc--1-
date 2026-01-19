@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { X, Wrench, Tag, Activity, Calendar, Save } from 'lucide-react';
+import { X, Wrench, Tag, Activity, Calendar, Save, Clock, AlertTriangle } from 'lucide-react';
 import { Language, translations } from '../../utils/translations';
+import { CustomSelect } from '../shared/CustomSelect';
 
 interface EquipmentFormModalProps {
     lang: Language;
@@ -80,18 +81,16 @@ export const EquipmentFormModal: React.FC<EquipmentFormModalProps> = ({ lang, on
                                     className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-950 border-2 border-transparent focus:border-blue-500 rounded-xl text-xs font-bold dark:text-white outline-none transition-all shadow-inner"
                                 />
                             </div>
-                            <div className="space-y-1">
-                                <label className="block text-xs font-black text-gray-500 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الحالة' : 'Status'}</label>
-                                <select
-                                    value={formData.status}
-                                    onChange={e => setFormData({ ...formData, status: e.target.value as any })}
-                                    className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-950 border-2 border-transparent focus:border-blue-500 rounded-xl text-xs font-bold dark:text-white outline-none transition-all shadow-inner"
-                                >
-                                    <option value="Operational">{t.operational}</option>
-                                    <option value="Under Maintenance">{t.maintenance}</option>
-                                    <option value="Broken">{t.broken}</option>
-                                </select>
-                            </div>
+                            <CustomSelect
+                                label={lang === 'ar' ? 'الحالة' : 'Status'}
+                                value={formData.status}
+                                onChange={val => setFormData({ ...formData, status: val as any })}
+                                options={[
+                                    { label: t.operational, value: 'Operational', icon: <Activity size={14} className="text-emerald-500" /> },
+                                    { label: t.maintenance, value: 'Under Maintenance', icon: <Clock size={14} className="text-blue-500" /> },
+                                    { label: t.broken, value: 'Broken', icon: <AlertTriangle size={14} className="text-red-500" /> }
+                                ]}
+                            />
 
                             <div className="space-y-1">
                                 <label className="block text-xs font-black text-gray-500 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الماركة' : 'Brand'}</label>

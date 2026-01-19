@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Megaphone } from 'lucide-react';
+import { X, Megaphone, Building } from 'lucide-react';
 import { Language, translations } from '../../utils/translations';
+import { CustomSelect } from '../shared/CustomSelect';
 import { getAllGyms } from '../../services/gymProfileService';
 
 interface BroadcastModalProps {
@@ -45,13 +46,15 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({ onClose, onSend,
                 </div>
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div className="space-y-4">
-                        <div>
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5 block ps-1">{lang === 'ar' ? 'الوجهة' : 'Target'}</label>
-                            <select value={targetGymId ?? ''} onChange={(e) => setTargetGymId(e.target.value || null)} className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-950 border-none rounded-2xl text-base font-bold outline-none">
-                                <option value="">{lang === 'ar' ? 'جميع الصالات' : 'All Gyms'}</option>
-                                {gyms.map(g => (<option key={g.id} value={g.id}>{g.name}</option>))}
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label={lang === 'ar' ? 'الوجهة' : 'Target'}
+                            value={targetGymId ?? ''}
+                            onChange={val => setTargetGymId(val === '' ? null : val)}
+                            options={[
+                                { label: lang === 'ar' ? 'جميع الصالات' : 'All Gyms', value: '', icon: <Megaphone size={14} className="text-amber-500" /> },
+                                ...gyms.map(g => ({ label: g.name, value: g.id, icon: <Building size={14} className="text-gray-500" /> }))
+                            ]}
+                        />
                         <div>
                             <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5 block ps-1">{t.dev_alert_level}</label>
                             <div className="flex gap-2">

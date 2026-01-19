@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Save, Sparkles, LayoutPanelTop, Wind, Users, DollarSign, Clock, MapPin, User as UserIcon, Calendar } from 'lucide-react';
 import { Language, translations } from '../../utils/translations';
 import { GymService, Branch, ServiceCategory, ServicePricingType, ServiceStatus } from '../../types';
+import { CustomSelect } from '../shared/CustomSelect';
 
 interface ServiceFormModalProps {
     lang: Language;
@@ -100,21 +101,23 @@ export const ServiceFormModal: React.FC<ServiceFormModalProps> = ({ lang, branch
                             <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.service_name}</label>
                             <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-900 border dark:border-slate-700 rounded-lg text-base font-bold outline-none focus:border-blue-500/50 transition-all dark:text-white" />
                         </div>
-                        <div className="col-span-6 md:col-span-3 space-y-1">
-                            <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.service_category}</label>
-                            <select value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value as ServiceCategory })} className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-900 border dark:border-slate-700 rounded-lg text-[11px] font-bold outline-none focus:border-blue-500/50 transition-all dark:text-white">
-                                <option value="Spa">{t.spa_wellness}</option>
-                                <option value="Group Class">{t.group_classes}</option>
-                            </select>
-                        </div>
-                        <div className="col-span-6 md:col-span-3 space-y-1">
-                            <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.branch}</label>
-                            <select value={formData.branchId} onChange={e => setFormData({ ...formData, branchId: e.target.value })} className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-900 border dark:border-slate-700 rounded-lg text-[11px] font-bold outline-none focus:border-blue-500/50 transition-all dark:text-white uppercase">
-                                {branches.map(b => (
-                                    <option key={b.id} value={b.id}>{b.name}</option>
-                                ))}
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label={t.service_category}
+                            value={formData.category}
+                            onChange={val => setFormData({ ...formData, category: val as ServiceCategory })}
+                            options={[
+                                { label: t.spa_wellness, value: 'Spa', icon: <Wind size={14} className="text-blue-500" /> },
+                                { label: t.group_classes, value: 'Group Class', icon: <Users size={14} className="text-orange-500" /> }
+                            ]}
+                            className="col-span-6 md:col-span-3"
+                        />
+                        <CustomSelect
+                            label={t.branch}
+                            value={formData.branchId}
+                            onChange={val => setFormData({ ...formData, branchId: val })}
+                            options={branches.map(b => ({ label: b.name, value: b.id, icon: <MapPin size={14} className="text-emerald-500" /> }))}
+                            className="col-span-6 md:col-span-3"
+                        />
                     </div>
 
                     <div className="grid grid-cols-12 gap-3">
@@ -273,7 +276,7 @@ export const ServiceFormModal: React.FC<ServiceFormModalProps> = ({ lang, branch
                         <Save size={14} /> Save Service
                     </button>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Save, Edit, UserPlus, Camera, Upload, Crown, Fingerprint, Gift, Activity, Shield, Coffee, Dumbbell, Users, Wind, Lock, DollarSign } from 'lucide-react';
+import { X, Save, Edit, UserPlus, Camera, Upload, Crown, Fingerprint, Gift, Activity, Shield, Coffee, Dumbbell, Users, Wind, Lock, DollarSign, MapPin, User as UserIcon } from 'lucide-react';
+import { CustomSelect } from '../shared/CustomSelect';
 import { Language, translations } from '../../utils/translations';
 import { User, MembershipType, Offer, Trainer, Gender, Branch } from '../../types';
 import { calculateExpiry } from '../../utils/dateUtils';
@@ -196,23 +197,21 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.dob || 'Date of Birth'}</label>
                             <input type="date" value={formData.dob} onChange={e => setFormData({ ...formData, dob: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm uppercase font-bold outline-none dark:text-white" />
                         </div>
-                        <div className="space-y-1">
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.gender}</label>
-                            <select value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value as Gender })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm uppercase font-bold outline-none dark:text-white">
-                                <option value={Gender.MALE}>{t.male}</option>
-                                <option value={Gender.FEMALE}>{t.female}</option>
-                            </select>
-                        </div>
-                        <div className="space-y-1 col-span-2">
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.branch || 'Branch'}</label>
-                            <select value={formData.branch} onChange={e => setFormData({ ...formData, branch: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm uppercase font-bold outline-none dark:text-white">
-                                {branches.length > 0 ? (
-                                    branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)
-                                ) : (
-                                    <option value="Main Branch">Main Branch</option>
-                                )}
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label={t.gender}
+                            value={formData.gender}
+                            onChange={val => setFormData({ ...formData, gender: val })}
+                            options={[
+                                { label: t.male, value: Gender.MALE, icon: <UserIcon size={14} className="text-blue-500" /> },
+                                { label: t.female, value: Gender.FEMALE, icon: <UserIcon size={14} className="text-pink-500" /> }
+                            ]}
+                        />
+                        <CustomSelect
+                            label={t.branch || 'Branch'}
+                            value={formData.branch}
+                            onChange={val => setFormData({ ...formData, branch: val })}
+                            options={branches.length > 0 ? branches.map(b => ({ label: b.name, value: b.name, icon: <MapPin size={14} className="text-emerald-500" /> })) : [{ label: 'Main Branch', value: 'Main Branch', icon: <MapPin size={14} className="text-emerald-500" /> }]}
+                        />
                         <div className="col-span-2 grid grid-cols-2 gap-3">
                             <div className="space-y-1">
                                 <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.emergency_name || 'Emergency Contact Name'}</label>
@@ -226,24 +225,26 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.membership}</label>
-                            <select value={formData.membershipType} onChange={(e) => {
-                                const nt = e.target.value as MembershipType;
+                        <CustomSelect
+                            label={t.membership}
+                            value={formData.membershipType}
+                            onChange={val => {
+                                const nt = val as MembershipType;
                                 setFormData(p => ({ ...p, membershipType: nt, expiryDate: calculateExpiry(nt, p.joinDate) }));
-                            }} className="w-full px-2 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white font-bold">
-                                {Object.values(MembershipType).map(v => <option key={v} value={v}>{v}</option>)}
-                            </select>
-                        </div>
-                        <div className="space-y-1">
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.select_offer}</label>
-                            <select value={formData.activeOfferId} onChange={e => setFormData({ ...formData, activeOfferId: e.target.value })} className="w-full px-2 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white font-bold">
-                                <option value="">{t.no_offer_selected}</option>
-                                {offers.map(o => <option key={o.id} value={o.id}>{o.title}</option>)}
-                            </select>
-                        </div>
-                    </div>
+                            }}
+                            options={Object.values(MembershipType).map(v => ({ label: v, value: v, icon: <Crown size={14} className="text-amber-500" /> }))}
+                        />
 
+                        <CustomSelect
+                            label={t.select_offer}
+                            value={formData.activeOfferId}
+                            onChange={val => setFormData({ ...formData, activeOfferId: val })}
+                            options={[
+                                { label: t.no_offer_selected, value: '', icon: <Gift size={14} className="text-gray-400" /> },
+                                ...offers.map(o => ({ label: o.title, value: o.id, icon: <Gift size={14} className="text-orange-500" /> }))
+                            ]}
+                        />
+                    </div>
                     {/* --- Perks & Training --- */}
                     <div className="space-y-3 p-3 bg-indigo-50/30 dark:bg-indigo-900/10 rounded-xl border border-indigo-100 dark:border-slate-700">
                         <label className="text-xs font-black text-indigo-700 dark:text-indigo-400 uppercase tracking-widest flex items-center gap-1.5 mb-1">
@@ -281,16 +282,17 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                                         onChange={e => setFormData({ ...formData, freeGroupClassCount: e.target.value === '' ? null : Number(e.target.value) })}
                                         className="col-span-2 px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white"
                                     />
-                                    <select
+                                    <CustomSelect
                                         value={formData.freeGroupClassId}
-                                        onChange={e => setFormData({ ...formData, freeGroupClassId: e.target.value })}
-                                        className="col-span-3 px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white font-bold"
-                                    >
-                                        <option value="">{lang === 'ar' ? 'اختر الحصة...' : 'Select Class...'}</option>
-                                        {services.filter(s => s.category === 'Group Class').map(s => (
-                                            <option key={s.id} value={s.id}>{s.name}</option>
-                                        ))}
-                                    </select>
+                                        onChange={val => setFormData({ ...formData, freeGroupClassId: val })}
+                                        options={[
+                                            { label: lang === 'ar' ? 'اختر الحصة...' : 'Select Class...', value: '', icon: <Users size={14} className="text-gray-400" /> },
+                                            ...services.filter(s => (s as any).category === 'Group Class').map(s => (
+                                                { label: (s as any).name, value: (s as any).id, icon: <Users size={14} className="text-green-500" /> }
+                                            ))
+                                        ]}
+                                        className="col-span-3"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -340,24 +342,25 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                             <input type="number" placeholder="Fat %" value={formData.fatPercentage ?? ''} onChange={e => setFormData({ ...formData, fatPercentage: e.target.value === '' ? null : Number(e.target.value) })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white" />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
-                            <select value={formData.fitnessGoal} onChange={e => setFormData({ ...formData, fitnessGoal: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white">
-                                <option value="">Select Goal...</option>
-                                <option value="Weight Loss">Weight Loss</option>
-                                <option value="Muscle Gain">Muscle Gain</option>
-                                <option value="General Fitness">General Fitness</option>
-                                <option value="Rehabilitation">Rehabilitation</option>
-                            </select>
-                            <select value={formData.bloodType} onChange={e => setFormData({ ...formData, bloodType: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white">
-                                <option value="">Blood Type...</option>
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="AB-">AB-</option>
-                            </select>
+                            <CustomSelect
+                                value={formData.fitnessGoal}
+                                onChange={val => setFormData({ ...formData, fitnessGoal: val })}
+                                options={[
+                                    { label: 'Select Goal...', value: '', icon: <Activity size={14} className="text-gray-400" /> },
+                                    { label: 'Weight Loss', value: 'Weight Loss', icon: <Activity size={14} className="text-red-500" /> },
+                                    { label: 'Muscle Gain', value: 'Muscle Gain', icon: <Activity size={14} className="text-orange-500" /> },
+                                    { label: 'General Fitness', value: 'General Fitness', icon: <Activity size={14} className="text-green-500" /> },
+                                    { label: 'Rehabilitation', value: 'Rehabilitation', icon: <Activity size={14} className="text-blue-500" /> }
+                                ]}
+                            />
+                            <CustomSelect
+                                value={formData.bloodType}
+                                onChange={val => setFormData({ ...formData, bloodType: val })}
+                                options={[
+                                    { label: 'Blood Type...', value: '', icon: <Shield size={14} className="text-gray-400" /> },
+                                    ...['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map(bt => ({ label: bt, value: bt, icon: <Shield size={14} className="text-red-600" /> }))
+                                ]}
+                            />
                         </div>
                         <textarea placeholder="Medical Conditions / Injuries..." value={formData.medicalConditions} onChange={e => setFormData({ ...formData, medicalConditions: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm outline-none dark:text-white resize-none h-14" />
                     </div>
@@ -379,14 +382,16 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                     {/* --- Financials --- */}
                     {!editingMember && (
                         <div className="grid grid-cols-2 gap-3 p-3 bg-amber-50/50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-800/30">
-                            <div className="space-y-1">
-                                <label className="block text-[8px] font-black text-amber-700 dark:text-amber-500 uppercase tracking-widest ps-1">{t.payment_method || 'Payment Method'}</label>
-                                <select value={formData.paymentMethod} onChange={e => setFormData({ ...formData, paymentMethod: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm font-bold outline-none dark:text-white">
-                                    <option value="CASH">Cash</option>
-                                    <option value="VISA">Visa</option>
-                                    <option value="WALLET">E-Wallet</option>
-                                </select>
-                            </div>
+                            <CustomSelect
+                                label={t.payment_method || 'Payment Method'}
+                                value={formData.paymentMethod}
+                                onChange={val => setFormData({ ...formData, paymentMethod: val })}
+                                options={[
+                                    { label: 'Cash', value: 'CASH', icon: <DollarSign size={14} className="text-green-500" /> },
+                                    { label: 'Visa', value: 'VISA', icon: <DollarSign size={14} className="text-blue-500" /> },
+                                    { label: 'E-Wallet', value: 'WALLET', icon: <DollarSign size={14} className="text-purple-500" /> }
+                                ]}
+                            />
                             <div className="space-y-1">
                                 <label className="block text-[8px] font-black text-amber-700 dark:text-amber-500 uppercase tracking-widest ps-1">{t.amount_paid || 'Amount Paid'}</label>
                                 <input type="number" placeholder="Paid Amount" value={formData.totalPaid ?? ''} onChange={e => setFormData({ ...formData, totalPaid: e.target.value === '' ? undefined : Number(e.target.value) })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-sm font-bold outline-none dark:text-white" />
@@ -426,18 +431,12 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                                             placeholder="0.00"
                                         />
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'عدد الشهور' : 'Months'}</label>
-                                        <select
-                                            value={formData.installmentPlan.months}
-                                            onChange={(e) => setFormData({ ...formData, installmentPlan: { ...formData.installmentPlan, months: Number(e.target.value) } })}
-                                            className="w-full px-3 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-bold outline-none"
-                                        >
-                                            {[1, 2, 3, 4, 5, 6, 10, 12, 18, 24].map(m => (
-                                                <option key={m} value={m}>{m} {lang === 'ar' ? 'شهور' : 'Months'}</option>
-                                            ))}
-                                        </select>
-                                    </div>
+                                    <CustomSelect
+                                        label={lang === 'ar' ? 'عدد الشهور' : 'Months'}
+                                        value={formData.installmentPlan.months}
+                                        onChange={val => setFormData({ ...formData, installmentPlan: { ...formData.installmentPlan, months: val } })}
+                                        options={[1, 2, 3, 4, 5, 6, 10, 12, 18, 24].map(m => ({ label: `${m} ${lang === 'ar' ? 'شهور' : 'Months'}`, value: m }))}
+                                    />
                                 </div>
                                 <input
                                     type="text"
@@ -484,10 +483,12 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                         </div>
                         {formData.isPrivate && (
                             <div className="grid grid-cols-2 gap-2 animate-fade-in">
-                                <select value={formData.assignedTrainerId} onChange={e => setFormData({ ...formData, assignedTrainerId: e.target.value })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border border-amber-200 rounded-lg text-sm outline-none dark:text-white">
-                                    <option value="">Coach</option>
-                                    {trainers.map(tr => <option key={tr.id} value={tr.id}>{tr.name}</option>)}
-                                </select>
+                                <CustomSelect
+                                    placeholder="Coach"
+                                    value={formData.assignedTrainerId}
+                                    onChange={val => setFormData({ ...formData, assignedTrainerId: val })}
+                                    options={trainers.map(tr => ({ label: tr.name, value: tr.id, icon: <UserIcon size={14} className="text-blue-500" /> }))}
+                                />
                                 <input type="number" placeholder="Price" value={formData.privateSessionPrice ?? ''} onChange={e => setFormData({ ...formData, privateSessionPrice: e.target.value === '' ? undefined : Number(e.target.value) })} className="w-full px-2 py-1.5 bg-white dark:bg-slate-950 border border-amber-200 rounded-lg text-sm outline-none dark:text-white font-bold" />
                             </div>
                         )}
@@ -550,8 +551,8 @@ export const MemberFormModal: React.FC<MemberFormModalProps> = ({ editingMember,
                             <Save size={16} /> {t.save}
                         </button>
                     </div>
-                </form>
-            </div>
-        </div>
+                </form >
+            </div >
+        </div >
     );
 };

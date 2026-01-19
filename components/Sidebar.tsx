@@ -173,7 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           )}
           <button onClick={onToggle} className="p-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-all transform active:scale-90">
-            {isOpen ? <X size={18} /> : <ChevronRight size={18} className={lang === 'ar' ? 'rotate-180' : ''} />}
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
 

@@ -3,6 +3,7 @@ import { Equipment, EquipmentLog } from '../../types';
 import { Language, translations } from '../../utils/translations';
 import { Calendar, Wrench, ChevronLeft, ChevronRight, Activity, DollarSign, User, Plus, Search, Filter } from 'lucide-react';
 import { AddEquipmentLogModal } from './AddEquipmentLogModal';
+import { CustomSelect } from '../shared/CustomSelect';
 
 interface EquipmentLogTableProps {
     equipment: Equipment[];
@@ -49,27 +50,27 @@ export const EquipmentLogTable: React.FC<EquipmentLogTableProps> = ({ equipment,
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3">
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+                <div className="flex flex-col sm:flex-row gap-3 items-center">
+                    <div className="relative w-full sm:w-64 group">
+                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={14} />
                         <input
                             type="text"
                             placeholder={lang === 'ar' ? 'بحث في السجل...' : 'Search logs...'}
                             value={searchTerm}
                             onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-                            className="pl-9 pr-4 py-2 bg-white dark:bg-slate-950 border-none ring-1 ring-gray-200 dark:ring-slate-700 rounded-xl text-xs font-bold dark:text-white outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            className="w-full ps-9 pe-4 py-2 bg-white dark:bg-slate-950 border-none ring-1 ring-gray-200 dark:ring-slate-700 rounded-xl text-xs font-bold dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm"
                         />
                     </div>
-                    <div className="relative">
-                        <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-                        <select
+                    <div className="w-full sm:w-48">
+                        <CustomSelect
+                            label=""
                             value={selectedEquipId}
-                            onChange={(e) => { setSelectedEquipId(e.target.value === 'ALL' ? 'ALL' : Number(e.target.value)); setCurrentPage(1); }}
-                            className="pl-9 pr-4 py-2 bg-white dark:bg-slate-950 border-none ring-1 ring-gray-200 dark:ring-slate-700 rounded-xl text-xs font-bold dark:text-white outline-none focus:ring-2 focus:ring-blue-500 appearance-none min-w-[150px]"
-                        >
-                            <option value="ALL">{lang === 'ar' ? 'كل الأجهزة' : 'All Equipment'}</option>
-                            {equipment.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
-                        </select>
+                            onChange={val => { setSelectedEquipId(val === 'ALL' ? 'ALL' : Number(val)); setCurrentPage(1); }}
+                            options={[
+                                { label: lang === 'ar' ? 'كل الأجهزة' : 'All Equipment', value: 'ALL', icon: <Activity size={14} className="text-blue-500" /> },
+                                ...equipment.map(e => ({ label: e.name, value: e.id, icon: <Wrench size={14} className="text-gray-500" /> }))
+                            ]}
+                        />
                     </div>
                 </div>
             </div>

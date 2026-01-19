@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { X, Tag, Save, Calendar, Percent } from 'lucide-react';
+import { X, Tag, Save, Calendar, Percent, DollarSign } from 'lucide-react';
 import { Language, translations } from '../../utils/translations';
+import { CustomSelect } from '../shared/CustomSelect';
 
 interface OfferFormModalProps {
     lang: Language;
@@ -56,13 +57,15 @@ export const OfferFormModal: React.FC<OfferFormModalProps> = ({ lang, onClose, o
                             <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.offer_value}</label>
                             <input type="number" required min="1" placeholder="--" value={offerForm.discountValue ?? ''} onChange={e => setOfferForm({ ...offerForm, discountValue: e.target.value === '' ? undefined : Number(e.target.value) })} className="w-full px-3 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-black dark:text-white outline-none" />
                         </div>
-                        <div className="space-y-1">
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{t.discount_type}</label>
-                            <select value={offerForm.discountType} onChange={e => setOfferForm({ ...offerForm, discountType: e.target.value as any })} className="w-full px-2 py-1.5 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-lg text-base font-black outline-none dark:text-white" >
-                                <option value="PERCENTAGE">{t.percentage}</option>
-                                <option value="FIXED">{t.fixed_amount}</option>
-                            </select>
-                        </div>
+                        <CustomSelect
+                            label={t.discount_type}
+                            value={offerForm.discountType}
+                            onChange={val => setOfferForm({ ...offerForm, discountType: val as any })}
+                            options={[
+                                { label: t.percentage, value: 'PERCENTAGE', icon: <Percent size={14} className="text-purple-500" /> },
+                                { label: t.fixed_amount, value: 'FIXED', icon: <DollarSign size={14} className="text-green-500" /> }
+                            ]}
+                        />
                     </div>
 
                     <div className="space-y-1">

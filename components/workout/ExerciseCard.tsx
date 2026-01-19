@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { Trash2, Clock, CheckCircle2 } from 'lucide-react';
+import { Trash2, Clock, CheckCircle2, Heart, Activity } from 'lucide-react';
 import { Exercise, ExerciseType } from '../../types';
 import { Language, translations } from '../../utils/translations';
+import { CustomSelect } from '../shared/CustomSelect';
 
 interface ExerciseCardProps {
     exercise: Exercise;
@@ -22,16 +23,20 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index, lan
                     <div className="flex-1 space-y-2 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-lg whitespace-nowrap">Ex #{index + 1}</span>
-                            <select 
+                            <CustomSelect
+                                label=""
                                 value={exercise.type}
-                                onChange={(e) => onUpdate(exercise.id, { type: e.target.value as ExerciseType })}
-                                className="bg-transparent border-none text-[9px] font-black text-gray-400 uppercase tracking-tighter cursor-pointer focus:ring-0 p-0"
-                            >
-                                {Object.values(ExerciseType).map(v => <option key={v} value={v} className="bg-white dark:bg-slate-900">{v}</option>)}
-                            </select>
+                                onChange={val => onUpdate(exercise.id, { type: val as ExerciseType })}
+                                options={Object.values(ExerciseType).map(v => ({
+                                    label: v,
+                                    value: v,
+                                    icon: <Activity size={14} className="text-blue-500" />
+                                }))}
+                                className="!border-none !bg-transparent !p-0 !min-h-0 !shadow-none"
+                            />
                         </div>
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             value={exercise.name}
                             onChange={(e) => onUpdate(exercise.id, { name: e.target.value })}
                             className="w-full text-lg sm:text-xl font-black bg-transparent border-none focus:ring-0 p-0 text-gray-900 dark:text-white placeholder-gray-300 truncate"
@@ -68,7 +73,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index, lan
                         <span className="hidden xs:inline">{t.rest}:</span>
                         <input type="text" value={exercise.restTime || '60s'} onChange={(e) => onUpdate(exercise.id, { restTime: e.target.value })} className="bg-transparent border-none p-0 w-10 sm:w-12 focus:ring-0 text-[9px] sm:text-[10px] font-black text-gray-600 dark:text-gray-300" />
                     </div>
-                    <button 
+                    <button
                         onClick={() => onUpdate(exercise.id, { completed: !exercise.completed })}
                         className={`p-2 sm:p-2.5 rounded-xl transition-all active:scale-90 ${exercise.completed ? 'bg-emerald-100 text-emerald-600 shadow-inner' : 'bg-gray-100 text-gray-400 dark:bg-slate-900'}`}
                     >

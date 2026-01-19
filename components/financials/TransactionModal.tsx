@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, DollarSign, Tag, Info, Save, Building2, User, Camera, Upload, Trash2, Search } from 'lucide-react';
+import { X, DollarSign, Tag, Info, Save, Building2, User, Camera, Upload, Trash2, Search, MapPin, Activity, Briefcase, Package, Settings, Wrench } from 'lucide-react';
+import { CustomSelect } from '../shared/CustomSelect';
 import { Language, translations } from '../../utils/translations';
 import { Branch, User as Member } from '../../types';
 
@@ -56,20 +57,18 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
 
         <form onSubmit={onSave} className="p-6 space-y-4 overflow-y-auto code-scroll">
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.type}</label>
-              <select
-                value={formData.type}
-                onChange={e => {
-                  const newType = e.target.value as 'INCOME' | 'EXPENSE';
-                  setFormData({ ...formData, type: newType, category: newType === 'INCOME' ? 'MEMBERSHIP' : 'MAINTENANCE' });
-                }}
-                className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-[10px] font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
-              >
-                <option value="INCOME">{t.income}</option>
-                <option value="EXPENSE">{t.expense}</option>
-              </select>
-            </div>
+            <CustomSelect
+              label={t.type}
+              value={formData.type}
+              onChange={val => {
+                const newType = val as 'INCOME' | 'EXPENSE';
+                setFormData({ ...formData, type: newType, category: newType === 'INCOME' ? 'MEMBERSHIP' : 'MAINTENANCE' });
+              }}
+              options={[
+                { label: t.income, value: 'INCOME', icon: <DollarSign size={14} className="text-green-500" /> },
+                { label: t.expense, value: 'EXPENSE', icon: <DollarSign size={14} className="text-red-500" /> }
+              ]}
+            />
             <div className="space-y-1">
               <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.amount}</label>
               <input
@@ -83,39 +82,27 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ formData, se
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">{t.category}</label>
-              <select
-                value={formData.category}
-                onChange={e => setFormData({ ...formData, category: e.target.value as any })}
-                className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-[10px] font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
-              >
-                {formData.type === 'INCOME' ? (
-                  <>
-                    <option value="MEMBERSHIP">{t.cat_membership}</option>
-                    <option value="PRODUCT">{t.cat_product}</option>
-                    <option value="OTHER">{t.cat_other}</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="MAINTENANCE">{t.cat_maintenance}</option>
-                    <option value="SALARY">{t.cat_salary}</option>
-                    <option value="PRODUCT">{t.cat_product}</option>
-                    <option value="OTHER">{t.cat_other}</option>
-                  </>
-                )}
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الفرع' : 'Branch'}</label>
-              <select
-                value={formData.branch}
-                onChange={e => setFormData({ ...formData, branch: e.target.value })}
-                className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-[10px] font-bold outline-none dark:text-white focus:ring-2 focus:ring-blue-500/20"
-              >
-                {branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
-              </select>
-            </div>
+            <CustomSelect
+              label={t.category}
+              value={formData.category}
+              onChange={val => setFormData({ ...formData, category: val })}
+              options={formData.type === 'INCOME' ? [
+                { label: t.cat_membership, value: 'MEMBERSHIP', icon: <Activity size={14} className="text-blue-500" /> },
+                { label: t.cat_product, value: 'PRODUCT', icon: <Package size={14} className="text-orange-500" /> },
+                { label: t.cat_other, value: 'OTHER', icon: <Briefcase size={14} className="text-gray-500" /> }
+              ] : [
+                { label: t.cat_maintenance, value: 'MAINTENANCE', icon: <Wrench size={14} className="text-red-500" /> },
+                { label: t.cat_salary, value: 'SALARY', icon: <Briefcase size={14} className="text-blue-500" /> },
+                { label: t.cat_product, value: 'PRODUCT', icon: <Package size={14} className="text-orange-500" /> },
+                { label: t.cat_other, value: 'OTHER', icon: <Briefcase size={14} className="text-gray-500" /> }
+              ]}
+            />
+            <CustomSelect
+              label={lang === 'ar' ? 'الفرع' : 'Branch'}
+              value={formData.branch}
+              onChange={val => setFormData({ ...formData, branch: val })}
+              options={branches.map(b => ({ label: b.name, value: b.name, icon: <MapPin size={14} className="text-emerald-500" /> }))}
+            />
           </div>
 
           <div className="space-y-1 relative">

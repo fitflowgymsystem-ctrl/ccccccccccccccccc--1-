@@ -6,6 +6,7 @@ import { FileSpreadsheet, Clock, User as UserIcon, Smartphone, History, CheckCir
 import ExcelJS from 'exceljs';
 import { MemberDetailsModal } from '../components/members/MemberDetailsModal';
 import { TrainerDetailsModal } from '../components/trainers/TrainerDetailsModal';
+import { CustomSelect } from '../components/shared/CustomSelect';
 import { Employee, TrainerSchedule } from '../types';
 
 interface LogsProps {
@@ -306,8 +307,8 @@ export const Logs: React.FC<LogsProps> = ({ logs, users, trainers, employees, la
                 </button>
             </header>
 
-            <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col md:flex-row gap-2">
-                <div className="relative flex-1 group">
+            <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 flex flex-col md:flex-row gap-2 items-center">
+                <div className="relative flex-1 group w-full">
                     <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={14} />
                     <input
                         type="text"
@@ -317,17 +318,18 @@ export const Logs: React.FC<LogsProps> = ({ logs, users, trainers, employees, la
                         className="w-full ps-9 pe-4 py-2 bg-gray-50 dark:bg-slate-950 border-none text-gray-900 dark:text-white rounded-lg text-[10px] font-bold outline-none focus:ring-2 focus:ring-blue-500/20 shadow-inner transition-all"
                     />
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1 bg-gray-50 dark:bg-slate-950 rounded-lg border dark:border-slate-700 shadow-inner">
-                    <Filter size={12} className="text-gray-400" />
-                    <select
+                <div className="w-full md:w-48">
+                    <CustomSelect
+                        label=""
                         value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value as any)}
-                        className="bg-transparent py-1 text-[9px] font-black uppercase outline-none min-w-[100px] dark:text-white"
-                    >
-                        <option value="ALL">{t.filter_all}</option>
-                        <option value={AccessStatus.GRANTED}>{lang === 'ar' ? 'مسموح' : 'Granted'}</option>
-                        <option value={AccessStatus.DENIED}>{lang === 'ar' ? 'مرفوض' : 'Denied'}</option>
-                    </select>
+                        onChange={val => setStatusFilter(val as any)}
+                        options={[
+                            { label: t.filter_all, value: 'ALL' },
+                            { label: lang === 'ar' ? 'مسموح' : 'Granted', value: AccessStatus.GRANTED },
+                            { label: lang === 'ar' ? 'مرفوض' : 'Denied', value: AccessStatus.DENIED }
+                        ]}
+                        className="!min-h-0 !p-1.5 !text-[9px]"
+                    />
                 </div>
             </div>
 

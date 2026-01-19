@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { X, Cpu, Globe, Hash, Save, ShieldCheck } from 'lucide-react';
+import { X, Cpu, Globe, Hash, Save, ShieldCheck, Fingerprint as FingerprintIcon, Scan, CreditCard } from 'lucide-react';
 import { Language, translations } from '../../utils/translations';
+import { CustomSelect } from '../shared/CustomSelect';
 import { AccessDevice } from '../../types';
 
 interface DeviceFormModalProps {
@@ -70,17 +71,16 @@ export const DeviceFormModal: React.FC<DeviceFormModalProps> = ({ editingDevice,
                         </div>
                     </div>
 
-                    <div className="space-y-1">
-                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest ps-1">Biometric Type</label>
-                        <select
-                            value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value as any })}
-                            className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 rounded-xl text-base font-black uppercase outline-none dark:text-white"
-                        >
-                            <option value="Fingerprint">Fingerprint Reader</option>
-                            <option value="FaceID">Face Recognition</option>
-                            <option value="RFID">RFID / Card Scanner</option>
-                        </select>
-                    </div>
+                    <CustomSelect
+                        label="Biometric Type"
+                        value={formData.type}
+                        onChange={val => setFormData({ ...formData, type: val as any })}
+                        options={[
+                            { label: 'Fingerprint Reader', value: 'Fingerprint', icon: <FingerprintIcon size={14} className="text-blue-500" /> },
+                            { label: 'Face Recognition', value: 'FaceID', icon: <Scan size={14} className="text-purple-500" /> },
+                            { label: 'RFID / Card Scanner', value: 'RFID', icon: <CreditCard size={14} className="text-emerald-500" /> }
+                        ]}
+                    />
 
                     <div className="pt-2 flex gap-2">
                         <button type="button" onClick={onClose} className="flex-1 py-3 bg-gray-100 dark:bg-slate-700 text-sm font-black uppercase text-gray-400 rounded-xl">Cancel</button>

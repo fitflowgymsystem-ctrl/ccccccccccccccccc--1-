@@ -1,6 +1,6 @@
 
 import { useState, useMemo } from 'react';
-import { User, MembershipPlan, Offer, Trainer } from '../types';
+import { User, MembershipPlan, Offer, Trainer, MembershipType } from '../types';
 import { logPrivateSession, useMockPerk } from '../services/gymService';
 
 export const useMemberManager = (users: User[], onUpdate?: () => void) => {
@@ -24,6 +24,8 @@ export const useMemberManager = (users: User[], onUpdate?: () => void) => {
         matchesFilter = true;
       } else if (filterType === 'INSTALLMENTS') {
         matchesFilter = !!(user.installmentPlans && user.installmentPlans.length > 0);
+      } else if (filterType === MembershipType.LIFETIME) {
+        matchesFilter = user.membershipType === MembershipType.LIFETIME;
       } else {
         matchesFilter = user.membershipType === filterType;
       }

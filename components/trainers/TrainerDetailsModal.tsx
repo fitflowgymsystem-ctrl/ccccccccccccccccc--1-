@@ -58,7 +58,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                     <button onClick={onClose} className="text-gray-400 hover:text-red-500 p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"><X size={24} /></button>
                 </div>
 
-                <div className="flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-10 shrink-0 px-2">
+                <div className="flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-10 shrink-0 px-2 overflow-x-auto no-scrollbar snap-x snap-mandatory w-full">
                     {[
                         { id: 'PROFILE', label: lang === 'ar' ? 'الملف الشخصي' : 'Profile' },
                         { id: 'ATTENDANCE', label: lang === 'ar' ? 'الحضور' : 'Attendance' },
@@ -68,7 +68,7 @@ export const TrainerDetailsModal: React.FC<TrainerDetailsModalProps> = ({ traine
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id as any)}
-                            className={`flex-1 py-4 text-sm font-black uppercase tracking-widest relative transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`flex-none py-4 px-6 text-xs sm:text-sm font-black uppercase tracking-widest relative transition-all snap-center whitespace-nowrap ${activeTab === tab.id ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
                         >
                             {tab.label}
                             {activeTab === tab.id && <div className="absolute bottom-0 left-4 right-4 h-1 bg-blue-600 rounded-t-full shadow-[0_-2px_10px_rgba(37,99,235,0.4)]"></div>}

@@ -6,8 +6,10 @@ import {
     Flame, X, Calendar, Edit2, Trash2,
     Zap, Ruler, Clock, BarChart3, Percent
 } from 'lucide-react';
+import { getCurrentGymId } from '../services/storage';
 import { calculateCalories, getLatestMeasurement, getMeasurementProgress } from '../services/inbodyService';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { CustomSelect } from '../components/shared/CustomSelect';
 
 interface InBodyProps {
     member: User;
@@ -444,17 +446,16 @@ export const InBody: React.FC<InBodyProps> = ({
                             <label className="text-[8px] font-black uppercase tracking-widest text-white/70 mb-1 block">
                                 {lang === 'ar' ? 'مستوى النشاط' : 'Activity Level'}
                             </label>
-                            <select
+                            <CustomSelect
+                                label=""
                                 value={activityLevel}
-                                onChange={(e) => handleSettingsChange(e.target.value as ActivityLevel, fitnessGoal)}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-[10px] font-bold text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-                            >
-                                {ACTIVITY_OPTIONS.map(opt => (
-                                    <option key={opt.value} value={opt.value} className="text-gray-800">
-                                        {lang === 'ar' ? opt.labelAr : opt.labelEn}
-                                    </option>
-                                ))}
-                            </select>
+                                onChange={val => handleSettingsChange(val as ActivityLevel, fitnessGoal)}
+                                options={ACTIVITY_OPTIONS.map(opt => ({
+                                    label: lang === 'ar' ? opt.labelAr : opt.labelEn,
+                                    value: opt.value
+                                }))}
+                                className="!min-h-0 !p-1.5 !text-[10px] !bg-white/10 !border-white/20 !text-white"
+                            />
                         </div>
 
                         {/* Fitness Goal */}
@@ -462,17 +463,16 @@ export const InBody: React.FC<InBodyProps> = ({
                             <label className="text-[8px] font-black uppercase tracking-widest text-white/70 mb-1 block">
                                 {lang === 'ar' ? 'الهدف' : 'Goal'}
                             </label>
-                            <select
+                            <CustomSelect
+                                label=""
                                 value={fitnessGoal}
-                                onChange={(e) => handleSettingsChange(activityLevel, e.target.value as FitnessGoalType)}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-[10px] font-bold text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-                            >
-                                {GOAL_OPTIONS.map(opt => (
-                                    <option key={opt.value} value={opt.value} className="text-gray-800">
-                                        {lang === 'ar' ? opt.labelAr : opt.labelEn}
-                                    </option>
-                                ))}
-                            </select>
+                                onChange={val => handleSettingsChange(activityLevel, val as FitnessGoalType)}
+                                options={GOAL_OPTIONS.map(opt => ({
+                                    label: lang === 'ar' ? opt.labelAr : opt.labelEn,
+                                    value: opt.value
+                                }))}
+                                className="!min-h-0 !p-1.5 !text-[10px] !bg-white/10 !border-white/20 !text-white"
+                            />
                         </div>
 
                         {/* Calorie Target */}

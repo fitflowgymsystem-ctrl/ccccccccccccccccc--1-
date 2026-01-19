@@ -291,12 +291,12 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                         </div>
 
                         {/* Navigation Tabs */}
-                        <div className="flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-20 px-4">
+                        <div className="flex border-b dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-20 px-2 overflow-x-auto no-scrollbar snap-x snap-mandatory w-full shrink-0">
                             {(['INFO', 'ATTENDANCE', 'PERKS', 'PRIVATE', 'FINANCIALS', 'ACTIONS'] as const).map(tab => (
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`flex-1 py-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === tab ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                                    className={`flex-none py-4 px-6 text-xs sm:text-sm font-black uppercase tracking-widest transition-all relative snap-center whitespace-nowrap ${activeTab === tab ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
                                 >
                                     {tab === 'INFO' ? (lang === 'ar' ? 'المعلومات' : 'Info') :
                                         tab === 'ATTENDANCE' ? (lang === 'ar' ? 'الحضور' : 'Attendance') :

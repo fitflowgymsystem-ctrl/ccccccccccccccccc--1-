@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, AccessLog, FinancialRecord, MembershipPlan, Offer, Trainer, Branch, ServiceSubscription } from '../types';
+import { User, AccessLog, FinancialRecord, MembershipPlan, Offer, Trainer, Branch, ServiceSubscription, MembershipType } from '../types';
 import { UserPlus, Search, MessageCircle, Filter } from 'lucide-react';
 import { Language, translations } from '../utils/translations';
 import { useMemberManager } from '../hooks/useMemberManager';
@@ -12,6 +12,7 @@ import { WhatsAppCampaignModal } from '../components/members/WhatsAppCampaignMod
 import { MemberTable } from '../components/members/MemberTable';
 import { MemberDeleteModal } from '../components/members/MemberDeleteModal';
 import { CredentialsSuccessModal } from '../components/shared/CredentialsSuccessModal';
+import { CustomSelect } from '../components/shared/CustomSelect';
 
 interface MembersProps {
   users: User[];
@@ -269,9 +270,32 @@ export const Members: React.FC<MembersProps> = (props) => {
         </header>
 
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border dark:border-slate-700 overflow-hidden">
-          <div className="p-2 border-b dark:border-slate-700 flex flex-col lg:flex-row gap-2 bg-gray-50/50 dark:bg-slate-900/50">
-            <div className="relative flex-1"><Search className="absolute start-2.5 top-1/2 -translate-y-1/2 text-gray-400" size={12} /><input type="text" placeholder={t.search_placeholder} value={state.searchTerm} onChange={(e) => actions.setSearchTerm(e.target.value)} className="w-full ps-8 pe-3 py-1.5 bg-white dark:bg-slate-950 border-2 border-transparent focus:border-blue-500/30 text-gray-900 dark:text-white rounded-lg text-[10px] font-bold outline-none" /></div>
-            <div className="flex items-center gap-2 px-2 py-0.5 bg-white dark:bg-slate-950 rounded-lg border dark:border-slate-700"><Filter size={10} className="text-gray-400" /><select value={state.filterType} onChange={(e) => actions.setFilterType(e.target.value)} className="bg-transparent py-1 text-[8px] font-black uppercase outline-none min-w-[80px]">{['ALL', 'INSTALLMENTS', ...plans.map(p => p.type)].map(opt => <option key={opt} value={opt}>{opt === 'ALL' ? t.all_types : opt === 'INSTALLMENTS' ? (lang === 'ar' ? 'أقساط' : 'Installments') : opt}</option>)}</select></div>
+          <div className="p-2 border-b dark:border-slate-700 flex flex-col lg:flex-row gap-2 bg-gray-50/50 dark:bg-slate-900/50 items-center">
+            <div className="relative flex-1 group w-full">
+              <Search className="absolute start-2.5 top-1/2 -translate-y-1/2 text-gray-400" size={12} />
+              <input
+                type="text"
+                placeholder={t.search_placeholder}
+                value={state.searchTerm}
+                onChange={(e) => actions.setSearchTerm(e.target.value)}
+                className="w-full ps-8 pe-3 py-1.5 bg-white dark:bg-slate-950 border-2 border-transparent focus:border-blue-500/30 text-gray-900 dark:text-white rounded-lg text-[10px] font-bold outline-none shadow-sm"
+              />
+            </div>
+            <div className="w-full lg:w-48">
+              <CustomSelect
+                label=""
+                value={state.filterType}
+                onChange={val => actions.setFilterType(val)}
+                options={['ALL', 'INSTALLMENTS', MembershipType.LIFETIME, ...plans.map(p => p.type)].map(opt => ({
+                  label: opt === 'ALL' ? t.all_types :
+                    opt === 'INSTALLMENTS' ? (lang === 'ar' ? 'أقساط' : 'Installments') :
+                      opt === MembershipType.LIFETIME ? (lang === 'ar' ? 'اشتراك مدى الحياة' : 'Lifetime Subscription') :
+                        opt,
+                  value: opt
+                }))}
+                className="!min-h-0 !p-1.5 !text-[9px]"
+              />
+            </div>
           </div>
           <MemberTable users={paginatedUsers} lang={lang} onView={(id) => { actions.setViewMemberId(id); actions.setActiveModal('DETAILS'); }} onEdit={actions.handleOpenEdit} onDelete={(user) => actions.setUserToDelete(user)} />
 

@@ -4,6 +4,7 @@ import { getMonthlyStats, getYearlyStats } from '../services/statsService';
 import { MonthlyStats } from '../types/finance.types';
 import { getCurrentGymId } from '../services/storage';
 import { Language, translations } from '../utils/translations';
+import { CustomSelect } from '../components/shared/CustomSelect';
 
 interface ArchiveDashboardProps {
     lang: Language;
@@ -68,26 +69,34 @@ export const ArchiveDashboard: React.FC<ArchiveDashboardProps> = ({ lang }) => {
                     <span className="text-xs font-black text-gray-400 uppercase tracking-widest">{lang === 'ar' ? 'الفترة' : 'Period'}:</span>
                 </div>
 
-                <select
-                    value={selectedMonth}
-                    onChange={e => setSelectedMonth(e.target.value)}
-                    className="bg-gray-50 dark:bg-slate-900 border dark:border-slate-700 rounded-xl px-4 py-2 text-sm font-bold outline-none dark:text-white"
-                >
-                    <option value="ALL" className="font-black text-blue-600">{lang === 'ar' ? 'السنة بالكامل' : 'Whole Year'}</option>
-                    {months.map(m => (
-                        <option key={m} value={m}>{new Date(2000, parseInt(m) - 1, 1).toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-US', { month: 'long' })}</option>
-                    ))}
-                </select>
+                <div className="flex-1 min-w-[150px]">
+                    <CustomSelect
+                        label=""
+                        value={selectedMonth}
+                        onChange={val => setSelectedMonth(val)}
+                        options={[
+                            { label: lang === 'ar' ? 'السنة بالكامل' : 'Whole Year', value: 'ALL' },
+                            ...months.map(m => ({
+                                label: new Date(2000, parseInt(m) - 1, 1).toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-US', { month: 'long' }),
+                                value: m
+                            }))
+                        ]}
+                        className="!min-h-0 !p-2 !text-sm"
+                    />
+                </div>
 
-                <select
-                    value={selectedYear}
-                    onChange={e => setSelectedYear(e.target.value)}
-                    className="bg-gray-50 dark:bg-slate-900 border dark:border-slate-700 rounded-xl px-4 py-2 text-sm font-bold outline-none dark:text-white"
-                >
-                    {years.map(y => (
-                        <option key={y} value={y}>{y}</option>
-                    ))}
-                </select>
+                <div className="flex-1 min-w-[100px]">
+                    <CustomSelect
+                        label=""
+                        value={selectedYear}
+                        onChange={val => setSelectedYear(val)}
+                        options={years.map(y => ({
+                            label: String(y),
+                            value: String(y)
+                        }))}
+                        className="!min-h-0 !p-2 !text-sm"
+                    />
+                </div>
 
                 <button onClick={fetchStats} className="bg-blue-600 text-white p-2 rounded-xl shadow-lg active:scale-95 transition-all">
                     <ChevronRight size={18} className={lang === 'ar' ? 'rotate-180' : ''} />

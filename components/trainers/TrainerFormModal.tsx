@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { X, Save, User as UserIcon, Shield, CreditCard, Briefcase, Dumbbell, Award, History, Lock, Laptop, FileText, Camera, Upload } from 'lucide-react';
+import { X, Save, User as UserIcon, Shield, CreditCard, Briefcase, Dumbbell, Award, History, Lock, Laptop, FileText, Camera, Upload, MapPin } from 'lucide-react';
 import { Language, translations } from '../../utils/translations';
 import { UserRole, Gender, Branch } from '../../types';
+import { CustomSelect } from '../shared/CustomSelect';
 
 interface TeamFormModalProps {
     editingId: number | null;
@@ -172,29 +173,23 @@ export const TrainerFormModal: React.FC<TeamFormModalProps> = ({ editingId, init
                                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'تاريخ الميلاد' : 'Date of Birth'}</label>
                                     <input type="date" value={formData.dob || ''} onChange={e => setFormData({ ...formData, dob: e.target.value })} className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 text-gray-900 dark:text-white rounded-xl text-base font-bold outline-none" />
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الجنس' : 'Gender'}</label>
-                                    <select value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value as Gender })} className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 text-gray-900 dark:text-white rounded-xl text-base font-bold outline-none">
-                                        <option value={Gender.MALE}>{lang === 'ar' ? 'ذكر' : 'Male'}</option>
-                                        <option value={Gender.FEMALE}>{lang === 'ar' ? 'أنثى' : 'Female'}</option>
-                                    </select>
-                                </div>
+                                <CustomSelect
+                                    label={lang === 'ar' ? 'الجنس' : 'Gender'}
+                                    value={formData.gender}
+                                    onChange={val => setFormData({ ...formData, gender: val })}
+                                    options={[
+                                        { label: lang === 'ar' ? 'ذكر' : 'Male', value: Gender.MALE, icon: <UserIcon size={14} className="text-blue-500" /> },
+                                        { label: lang === 'ar' ? 'أنثى' : 'Female', value: Gender.FEMALE, icon: <UserIcon size={14} className="text-pink-500" /> }
+                                    ]}
+                                />
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">{lang === 'ar' ? 'الفرع' : 'Branch'}</label>
-                                <select
-                                    value={formData.branch || ''}
-                                    onChange={e => setFormData({ ...formData, branch: e.target.value })}
-                                    className="w-full px-3 py-2 bg-gray-50 dark:bg-slate-950 border dark:border-slate-700 text-gray-900 dark:text-white rounded-xl text-base font-bold outline-none focus:ring-2 focus:ring-blue-500/20"
-                                >
-                                    {branches.length > 0 ? (
-                                        branches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)
-                                    ) : (
-                                        <option value="Main Branch">Main Branch</option>
-                                    )}
-                                </select>
-                            </div>
+                            <CustomSelect
+                                label={lang === 'ar' ? 'الفرع' : 'Branch'}
+                                value={formData.branch || ''}
+                                onChange={val => setFormData({ ...formData, branch: val })}
+                                options={branches.length > 0 ? branches.map(b => ({ label: b.name, value: b.name, icon: <MapPin size={14} className="text-emerald-500" /> })) : [{ label: 'Main Branch', value: 'Main Branch', icon: <MapPin size={14} className="text-emerald-500" /> }]}
+                            />
 
                             <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-[1.5rem] border border-blue-100 dark:border-blue-900/20">
                                 <label className="block text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-2 flex items-center gap-2"><Lock size={14} /> Current Status</label>
