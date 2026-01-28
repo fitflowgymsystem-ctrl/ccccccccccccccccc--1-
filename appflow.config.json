@@ -4,8 +4,6 @@
       "appId": "1973addc",
       "root": ".",
       "iosPath": "ios/App",
-      "iosProjectName": "App.xcodeproj",
-      "iosScheme": "App",
       "dependencyInstallCommand": "npm install",
       "webBuildCommand": "npm run build && npx cap sync ios"
     }
