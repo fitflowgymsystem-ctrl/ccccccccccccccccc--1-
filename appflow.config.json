@@ -1,6 +1,7 @@
 {
     "apps": [
         {
+            "appId": "com.fitflow.app",
             "root": ".",
             "iosPath": "ios/App"
         }
