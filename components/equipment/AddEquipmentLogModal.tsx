@@ -39,7 +39,7 @@ export const AddEquipmentLogModal: React.FC<AddEquipmentLogModalProps> = ({ equi
     return (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[1300] p-4 animate-scale-in" onClick={onClose}>
             <div
-                className="bg-white dark:bg-slate-800 rounded-[2rem] shadow-2xl w-full max-w-lg border dark:border-slate-700 overflow-hidden flex flex-col"
+                className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md md:max-w-lg border dark:border-slate-700 overflow-hidden flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
@@ -53,7 +53,7 @@ export const AddEquipmentLogModal: React.FC<AddEquipmentLogModalProps> = ({ equi
                     <button onClick={onClose} className="text-gray-400 p-1 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full transition-colors"><X size={20} /></button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                <form onSubmit={handleSubmit} className="p-4 space-y-3">
                     {/* Equipment Info Summary */}
                     <div className="bg-blue-50 dark:bg-blue-900/10 p-3 rounded-xl border border-blue-100 dark:border-blue-800/30 flex items-center gap-3">
                         {equipment.image ? (

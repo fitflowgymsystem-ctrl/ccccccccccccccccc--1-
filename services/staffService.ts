@@ -4,7 +4,7 @@ import { load, save, getCurrentGymId } from './storage';
 
 // --- Trainer Operations ---
 export const getTrainers = async () => {
-    const data = await apiClient.get('/trainers');
+    const data = await apiClient.get<Trainer[]>('/trainers');
     if (data) { save('trainers', data); return data; }
     return load<Trainer[]>('trainers', []);
 };
@@ -26,7 +26,7 @@ export const deleteMockTrainer = async (id: number) => {
 
 // --- Employee Operations ---
 export const getEmployees = async () => {
-    const data = await apiClient.get('/employees');
+    const data = await apiClient.get<Employee[]>('/employees');
     if (data) { save('employees', data); return data; }
     return load<Employee[]>('employees', []);
 };

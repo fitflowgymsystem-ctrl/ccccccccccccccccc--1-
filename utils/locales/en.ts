@@ -401,4 +401,5 @@ export const en = {
   unavailable: "Unavailable",
   spa_wellness: "Spa & Wellness",
   edit: "Edit",
+  no_data: "No items found",
 };

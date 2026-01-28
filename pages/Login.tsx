@@ -16,6 +16,20 @@ interface LoginProps {
 export const Login: React.FC<LoginProps> = ({ onLoginSuccess, lang, gymInfo }) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    React.useEffect(() => {
+        const handleOnline = () => setIsOnline(true);
+        const handleOffline = () => setIsOnline(false);
+
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
 
     const handleLoginSubmit = async (username: string, pass: string, stay: boolean) => {
         setLoading(true);
@@ -43,19 +57,20 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess, lang, gymInfo }) =
             <div className="w-full max-w-[400px] relative z-10 animate-scale-in max-h-screen flex flex-col">
                 <div className="bg-slate-900/60 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_0_60px_rgba(0,0,0,0.4)] border border-white/10 overflow-hidden flex flex-col">
                     <LoginHeader lang={lang} gymInfo={gymInfo} />
-                    
+
                     <div className="overflow-y-auto code-scroll flex-1">
-                        <LoginForm 
-                            lang={lang} 
-                            loading={loading} 
-                            error={error} 
-                            onSubmit={handleLoginSubmit} 
+                        <LoginForm
+                            lang={lang}
+                            loading={loading}
+                            error={error}
+                            isOnline={isOnline}
+                            onSubmit={handleLoginSubmit}
                         />
                     </div>
 
                     <LoginFooter lang={lang} />
                 </div>
-                
+
                 <div className="mt-6 text-center">
                     <span className="text-[8px] font-black text-slate-700 uppercase tracking-[0.6em] pointer-events-none">
                         FitFlow SaaS Enterprise

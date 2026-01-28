@@ -76,10 +76,20 @@ describe('FitFlow SaaS Integration Tests', () => {
         <Subscriptions
           plans={mockPlans}
           offers={[]}
+          services={[]}
+          serviceSubscriptions={[]}
+          users={[]}
+          branches={[]}
           lang="en"
           onUpdatePrice={mockOnUpdatePrice}
           onAddOffer={vi.fn()}
           onDeleteOffer={vi.fn()}
+          onAddService={vi.fn()}
+          onUpdateService={vi.fn()}
+          onDeleteService={vi.fn()}
+          onPurchaseService={vi.fn()}
+          onPurchaseServiceWithFinance={vi.fn()}
+          onDeleteServiceSubscription={vi.fn()}
         />
       );
 
@@ -106,7 +116,26 @@ describe('FitFlow SaaS Integration Tests', () => {
     it('Scenario 4: Validating Multi-Tenant Isolation Constraints', () => {
       // Logic check for cross-gym data visibility (Unit/Integration)
       // This ensures that the components render correct data passed from isolated hooks
-      render(<Subscriptions plans={[]} offers={[]} lang="en" onUpdatePrice={vi.fn()} onAddOffer={vi.fn()} onDeleteOffer={vi.fn()} />);
+      render(
+        <Subscriptions
+          plans={[]}
+          offers={[]}
+          services={[]}
+          serviceSubscriptions={[]}
+          users={[]}
+          branches={[]}
+          lang="en"
+          onUpdatePrice={vi.fn()}
+          onAddOffer={vi.fn()}
+          onDeleteOffer={vi.fn()}
+          onAddService={vi.fn()}
+          onUpdateService={vi.fn()}
+          onDeleteService={vi.fn()}
+          onPurchaseService={vi.fn()}
+          onPurchaseServiceWithFinance={vi.fn()}
+          onDeleteServiceSubscription={vi.fn()}
+        />
+      );
       expect(screen.getByText(/Live Pricing Control/i)).toBeDefined();
     });
   });

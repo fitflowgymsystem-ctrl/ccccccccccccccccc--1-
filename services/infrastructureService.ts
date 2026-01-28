@@ -7,7 +7,7 @@ export const probeDatabase = async () => {
     let connected = false;
     try {
         // Simple read to measure read latency
-        await apiClient.get('/gyms');
+        await apiClient.get<any[]>('/gyms');
         connected = await apiClient.checkHealth();
     } catch (e) {
         connected = false;
@@ -34,7 +34,7 @@ export const checkRlsEnforcement = async () => {
     if (!gymId) return { enforced: false, details: 'No gym session' };
     try {
         // Attempt to read a sample table that should be isolated
-        const users = await apiClient.get('/users');
+        const users = await apiClient.get<any[]>('/users');
         // If any returned record has a different gymId, RLS might be misconfigured
         const leaked = Array.isArray(users) ? users.some((u: any) => u.gymId && String(u.gymId) !== String(gymId)) : false;
         return { enforced: !leaked, details: leaked ? 'Cross-tenant rows detected' : 'RLS looks enforced' };

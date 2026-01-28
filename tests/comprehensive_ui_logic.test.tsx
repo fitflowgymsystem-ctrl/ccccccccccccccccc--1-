@@ -72,7 +72,17 @@ describe('FitFlow SaaS Logic & UI Comprehensive Suite', () => {
         id: 1, name: longName, phone: '01012345678',
         membershipType: MembershipType.MONTHLY, isActive: true,
         gender: Gender.MALE, joinDate: '2025-01-01', expiryDate: '2025-02-01',
-        isFrozen: false, fingerprintId: 'FP_1', balance: 0, perks: { inbodySessions: 1, guestPasses: 1 },
+        isFrozen: false, fingerprintId: 'FP_1', balance: 0,
+        perks: {
+          inbodySessions: 1,
+          guestPasses: 1,
+          ptSessions: 0,
+          groupClasses: false,
+          spaAccess: false,
+          privateLocker: false,
+          towelService: false,
+          barDiscount: false
+        },
         gymId: 'gym_1'
       }];
 

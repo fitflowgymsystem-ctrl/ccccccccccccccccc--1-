@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Plus, Users, Dumbbell, Briefcase, Calendar, DollarSign, Edit2, CheckCircle, Trash2, X, Loader2, Download } from 'lucide-react';
 import { Trainer, User, TrainerSchedule, AccessDevice, Employee, UserRole, Branch } from '../types';
 import { Language, translations } from '../utils/translations';
@@ -20,7 +21,7 @@ const formatTimeTo12h = (time: string, lang: Language) => {
     const [hours, minutes] = time.split(':').map(Number);
     const period = hours >= 12 ? (lang === 'ar' ? 'مساءً' : 'PM') : (lang === 'ar' ? 'صباحاً' : 'AM');
     const h12 = hours % 12 || 12;
-    return `${h12}:${minutes.toString().padStart(2, '0')} ${period}`;
+    return `${h12}:${minutes.toString().padStart(2, '0')} ${period} `;
 };
 
 const SchedulePopup: React.FC<{ person: any, lang: Language, onClose: () => void }> = ({ person, lang, onClose }) => {
@@ -31,42 +32,68 @@ const SchedulePopup: React.FC<{ person: any, lang: Language, onClose: () => void
         'Wed': 'الأربعاء', 'Thu': 'الخميس', 'Fri': 'الجمعة'
     };
 
-    return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1200] flex items-center justify-center p-2">
-            <div className="bg-white dark:bg-slate-800 rounded-[2rem] w-full max-w-xs overflow-hidden shadow-2xl border dark:border-slate-700 animate-scale-in">
-                <div className="px-5 py-3 border-b dark:border-slate-700 flex justify-between items-center bg-blue-600">
-                    <h3 className="text-white text-xs font-black uppercase tracking-tight flex items-center gap-2">
-                        <Calendar size={16} />
-                        {lang === 'ar' ? `مواعيد : ${person.name}` : `Schedule: ${person.name}`}
-                    </h3>
-                    <button onClick={onClose} className="text-white/80 hover:text-white transition-colors"><X size={20} /></button>
+    return createPortal(
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[2000] flex items-center justify-center p-2 cursor-pointer" onClick={onClose}>
+            <div
+                className="bg-white dark:bg-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border dark:border-slate-700 animate-scale-in cursor-default"
+                onClick={e => e.stopPropagation()}
+            >
+                <div className="px-5 py-4 border-b dark:border-slate-700 flex justify-between items-center bg-gray-50/50 dark:bg-slate-900/50">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-600/20">
+                            <Calendar size={18} />
+                        </div>
+                        <div>
+                            <h3 className="font-black text-lg dark:text-white uppercase tracking-widest leading-none">
+                                {lang === 'ar' ? 'جدول المواعيد' : 'Work Schedule'}
+                            </h3>
+                            <p className="text-sm text-gray-400 font-bold uppercase tracking-tight mt-1">{person.name}</p>
+                        </div>
+                    </div>
+                    <button onClick={onClose} className="text-gray-400 p-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full transition-all">
+                        <X size={20} />
+                    </button>
                 </div>
-                <div className="p-4">
-                    <div className="space-y-1.5">
+
+                <div className="p-5">
+                    <div className="space-y-2">
                         {days.map(day => {
                             const sched = (person.schedule || []).find((s: any) => s.day === day);
                             return (
-                                <div key={day} className="flex justify-between items-center px-3 py-2 rounded-xl bg-gray-50 dark:bg-slate-900/50 border dark:border-slate-700/50">
-                                    <span className="text-[10px] font-black uppercase text-gray-500">{lang === 'ar' ? daysAr[day] : day}</span>
+                                <div key={day} className="flex justify-between items-center px-4 py-2.5 rounded-2xl bg-gray-50/80 dark:bg-slate-900/50 border border-gray-100 dark:border-slate-700/50 transition-all hover:border-blue-200 dark:hover:border-blue-900/30">
+                                    <span className="text-sm font-black uppercase text-gray-500 tracking-wider">
+                                        {lang === 'ar' ? daysAr[day] : day}
+                                    </span>
                                     {sched ? (
-                                        <span className="text-[10px] font-mono font-bold text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-lg">
-                                            {formatTimeTo12h(sched.startTime, lang)} - {formatTimeTo12h(sched.endTime, lang)}
-                                        </span>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm font-mono font-black text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2.5 py-1 rounded-lg">
+                                                {formatTimeTo12h(sched.startTime, lang)}
+                                            </span>
+                                            <span className="text-gray-300 dark:text-gray-600 font-black">-</span>
+                                            <span className="text-sm font-mono font-black text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2.5 py-1 rounded-lg">
+                                                {formatTimeTo12h(sched.endTime, lang)}
+                                            </span>
+                                        </div>
                                     ) : (
-                                        <span className="text-[9px] font-bold text-gray-400 uppercase italic">
-                                            {lang === 'ar' ? 'إجازة' : 'Off'}
+                                        <span className="text-sm font-black text-gray-400 uppercase tracking-widest opacity-60">
+                                            {lang === 'ar' ? 'إجازة' : 'Off Duty'}
                                         </span>
                                     )}
                                 </div>
                             );
                         })}
                     </div>
-                    <button onClick={onClose} className="w-full mt-4 py-3 bg-gray-900 dark:bg-slate-700 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all">
-                        {lang === 'ar' ? 'إغلاق' : 'Close'}
+
+                    <button
+                        onClick={onClose}
+                        className="w-full mt-6 py-3.5 bg-gray-900 dark:bg-slate-700 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-black dark:hover:bg-slate-600 transition-all shadow-lg active:scale-95"
+                    >
+                        {lang === 'ar' ? 'إغلاق النافذة' : 'Close Schedule'}
                     </button>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
@@ -84,7 +111,7 @@ const ScheduleTab: React.FC<{ allStaff: any[], lang: Language, onOpenDetails: (p
                     <button
                         key={f}
                         onClick={() => setFilter(f as any)}
-                        className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${filter === f ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'}`}
+                        className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${filter === f ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'} `}
                     >
                         {f === 'ALL' ? (lang === 'ar' ? 'الكل' : 'All') : (f === 'TRAINER' ? (lang === 'ar' ? 'المدربون' : 'Coaches') : (lang === 'ar' ? 'الموظفون' : 'Staff'))}
                     </button>
@@ -113,7 +140,7 @@ const ScheduleTab: React.FC<{ allStaff: any[], lang: Language, onOpenDetails: (p
                                         </div>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase ${person.role === 'TRAINER' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30'}`}>
+                                        <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase ${person.role === 'TRAINER' ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30'} `}>
                                             {person.role === 'TRAINER' ? (lang === 'ar' ? 'مدرب' : 'Coach') : (lang === 'ar' ? 'موظف' : 'Staff')}
                                         </span>
                                     </td>
@@ -222,7 +249,7 @@ export const Trainers: React.FC<TrainersProps> = ({
                 [lang === 'ar' ? 'الوظيفة' : 'Role']: person.role,
                 [lang === 'ar' ? 'الراتب الأساسي' : 'Base Salary']: p.baseSalary || 0,
                 [lang === 'ar' ? 'العمولة المستحقة' : 'Due Commission']: calculatedComm.toFixed(0),
-                [lang === 'ar' ? 'نسبة العمولة' : 'Comm. Rate']: `${rate}%`,
+                [lang === 'ar' ? 'نسبة العمولة' : 'Comm. Rate']: `${rate}% `,
                 [lang === 'ar' ? 'صافي المبلغ' : 'Net Total']: net.toFixed(0),
                 [lang === 'ar' ? 'حالة الدفع' : 'Payment Status']: isPaid ? (lang === 'ar' ? 'تم الدفع' : 'Paid') : (lang === 'ar' ? 'لم يدفع' : 'Unpaid')
             };
@@ -374,16 +401,16 @@ export const Trainers: React.FC<TrainersProps> = ({
                 </header>
 
                 <div className="flex bg-white/50 dark:bg-slate-800/50 p-1.5 rounded-2xl border dark:border-slate-700 w-fit overflow-x-auto max-w-full">
-                    <button onClick={() => setActiveTab('TRAINERS')} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace-nowrap ${activeTab === 'TRAINERS' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'}`}>
+                    <button onClick={() => setActiveTab('TRAINERS')} className={`flex items - center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace - nowrap ${activeTab === 'TRAINERS' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'} `}>
                         <Dumbbell size={16} /> {lang === 'ar' ? 'المدربون' : 'Coaches'}
                     </button>
-                    <button onClick={() => setActiveTab('STAFF')} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace-nowrap ${activeTab === 'STAFF' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'}`}>
+                    <button onClick={() => setActiveTab('STAFF')} className={`flex items - center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace - nowrap ${activeTab === 'STAFF' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'} `}>
                         <Briefcase size={16} /> {lang === 'ar' ? 'الموظفون' : 'Staff'}
                     </button>
-                    <button onClick={() => setActiveTab('SCHEDULES')} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace-nowrap ${activeTab === 'SCHEDULES' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'}`}>
+                    <button onClick={() => setActiveTab('SCHEDULES')} className={`flex items - center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace - nowrap ${activeTab === 'SCHEDULES' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'} `}>
                         <Calendar size={16} /> {lang === 'ar' ? 'المواعيد' : 'Schedules'}
                     </button>
-                    <button onClick={() => setActiveTab('PAYROLL')} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace-nowrap ${activeTab === 'PAYROLL' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'}`}>
+                    <button onClick={() => setActiveTab('PAYROLL')} className={`flex items - center gap-2 px-6 py-2.5 rounded-xl text-xs font-black transition-all whitespace - nowrap ${activeTab === 'PAYROLL' ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-gray-400'} `}>
                         <DollarSign size={16} /> {lang === 'ar' ? 'الرواتب والماليات' : 'Payroll'}
                     </button>
                 </div>
@@ -431,10 +458,10 @@ export const Trainers: React.FC<TrainersProps> = ({
                                                     <button
                                                         disabled={isPaid || isPaying === person.id}
                                                         onClick={() => handlePaySalary(person.id)}
-                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 mx-auto transition-all ${isPaid
+                                                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase flex items - center gap-2 mx-auto transition-all ${isPaid
                                                             ? 'bg-gray-100 dark:bg-slate-700 text-gray-400 cursor-not-allowed border dark:border-slate-600'
                                                             : 'bg-green-500 text-white hover:bg-green-600 shadow-lg shadow-green-500/20 active:scale-95'
-                                                            }`}
+                                                            } `}
                                                     >
                                                         {isPaying === person.id ? <Loader2 size={12} className="animate-spin" /> : (isPaid ? <CheckCircle size={12} /> : null)}
                                                         {isPaid ? (lang === 'ar' ? 'تم الدفع' : 'PAID') : (lang === 'ar' ? 'دفع الراتب' : 'PAY NOW')}

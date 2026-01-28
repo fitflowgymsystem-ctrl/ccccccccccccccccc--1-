@@ -18,9 +18,9 @@ export const notifyAllUsers = async (
 
         // Fetch all user types to ensure broad coverage
         const [gyms, members, trainers] = await Promise.all([
-            apiClient.get('/gyms').catch(() => []),
-            apiClient.get('/users').catch(() => []),
-            apiClient.get('/trainers').catch(() => [])
+            apiClient.get<any[]>('/gyms').catch(() => []),
+            apiClient.get<any[]>('/users').catch(() => []),
+            apiClient.get<any[]>('/trainers').catch(() => [])
         ]);
 
         let recipients: { id: string | number }[] = [];

@@ -76,7 +76,7 @@ export const ServiceFormModal: React.FC<ServiceFormModalProps> = ({ lang, branch
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] flex items-center justify-center p-2 sm:p-4 cursor-pointer" onClick={onClose}>
             <div
-                className="bg-white dark:bg-slate-800 rounded-[2rem] shadow-2xl w-full max-w-xl overflow-hidden border dark:border-slate-700 flex flex-col max-h-[85vh] cursor-default"
+                className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl w-full max-w-lg md:max-w-2xl overflow-hidden border dark:border-slate-700 flex flex-col max-h-[90vh] cursor-default"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="px-5 py-3 border-b dark:border-slate-700 flex justify-between items-center bg-gray-50/50 dark:bg-slate-900/50">
@@ -94,7 +94,7 @@ export const ServiceFormModal: React.FC<ServiceFormModalProps> = ({ lang, branch
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4 code-scroll">
+                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 space-y-3 code-scroll">
                     {/* Basic Info - Condensed Grid */}
                     <div className="grid grid-cols-12 gap-3">
                         <div className="col-span-12 md:col-span-6 space-y-1">

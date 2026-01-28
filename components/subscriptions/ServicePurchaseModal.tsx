@@ -24,11 +24,11 @@ export const ServicePurchaseModal: React.FC<ServicePurchaseModalProps> = ({ serv
     return (
         <div className="fixed inset-0 z-[1100] bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-fade-in cursor-pointer" onClick={onClose}>
             <div
-                className="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-2xl w-full max-w-md overflow-hidden border dark:border-slate-700 flex flex-col animate-scale-in cursor-default"
+                className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border dark:border-slate-700 flex flex-col animate-scale-in cursor-default"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="px-6 py-4 border-b dark:border-slate-700 flex justify-between items-center bg-gray-50/50 dark:bg-slate-900/50 text-start">
+                <div className="px-4 py-3 border-b dark:border-slate-700 flex justify-between items-center bg-gray-50/50 dark:bg-slate-900/50 text-start">
                     <div className="flex items-center gap-3">
                         <div className="p-2.5 bg-blue-600 rounded-2xl text-white shadow-lg">
                             <CheckCircle2 size={18} />
@@ -43,7 +43,7 @@ export const ServicePurchaseModal: React.FC<ServicePurchaseModalProps> = ({ serv
                     <button onClick={onClose} className="text-gray-400 p-2 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"><X size={20} /></button>
                 </div>
 
-                <div className="p-6 space-y-6">
+                <div className="p-4 space-y-4">
                     {/* Search Section */}
                     <div className="space-y-2 text-start">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest ps-1">Search Member (Name or Phone)</label>

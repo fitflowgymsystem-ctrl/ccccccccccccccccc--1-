@@ -401,4 +401,5 @@ export const ar = {
   unavailable: "غير متاحة",
   spa_wellness: "السبا (Spa & Wellness)",
   edit: "تعديل",
+  no_data: "لا توجد بيانات ليتم عرضها",
 };

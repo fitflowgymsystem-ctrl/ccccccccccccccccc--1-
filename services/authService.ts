@@ -15,12 +15,12 @@ export const login = async (email: string, pass: string): Promise<UserSession> =
 
     try {
         console.log("Login Attempt:", { cleanEmail, cleanPass }); // DEBUG
-        const gyms = await apiClient.get('/gyms');
+        const gyms = await apiClient.get<any[]>('/gyms'); // Using any[] here as it's a mix of gym objects
         console.log("Loaded Gyms:", gyms.length); // DEBUG
 
         // A. Check SaaS Admin (Super Admin) FIRST
         try {
-            const saasParams = await apiClient.get('/saas_config');
+            const saasParams = await apiClient.get<any>('/saas_config');
             const saasConfig = Array.isArray(saasParams) ? saasParams.find((d: any) => d.id === 'saas_config') : saasParams;
 
             if (saasConfig && (
@@ -82,7 +82,7 @@ export const login = async (email: string, pass: string): Promise<UserSession> =
             for (const gym of gyms) {
                 localStorage.setItem('fitflow_session', JSON.stringify({ gymId: gym.id }));
                 try {
-                    const gymUsers = await apiClient.get('/users');
+                    const gymUsers = await apiClient.get<any[]>('/users');
                     const user = gymUsers.find((u: any) =>
                         (u.phone === cleanEmail) ||
                         (u.email && u.email.toLowerCase() === cleanEmail.toLowerCase())
@@ -114,7 +114,7 @@ export const login = async (email: string, pass: string): Promise<UserSession> =
             for (const gym of gyms) {
                 localStorage.setItem('fitflow_session', JSON.stringify({ gymId: gym.id }));
                 try {
-                    const gymTrainers = await apiClient.get('/trainers');
+                    const gymTrainers = await apiClient.get<any[]>('/trainers');
                     const trainer = gymTrainers.find((t: any) =>
                         (t.username && t.username.toLowerCase() === cleanEmail.toLowerCase()) ||
                         (t.email && t.email.toLowerCase() === cleanEmail.toLowerCase())
@@ -212,16 +212,16 @@ export const login = async (email: string, pass: string): Promise<UserSession> =
 
         // Fallback for standard flow (if lookup somehow missed but Firebase worked - rare but possible)
         const [gyms, users, trainers] = await Promise.all([
-            apiClient.get('/gyms'),
-            apiClient.get('/users'),
-            apiClient.get('/trainers')
+            apiClient.get<any[]>('/gyms'),
+            apiClient.get<any[]>('/users'),
+            apiClient.get<any[]>('/trainers')
         ]);
 
         // ... (Repeating the search logic is redundant if we did it above, but safe for pure email logins that skipped the "password check" part if regex matched immediately?)
 
         // 2a. Check SaaS Admin (Super Admin)
         try {
-            const saasParams = await apiClient.get('/saas_config');
+            const saasParams = await apiClient.get<any>('/saas_config');
             // saasParams might be an array or object depending on apiClient
             const saasConfig = Array.isArray(saasParams) ? saasParams.find((d: any) => d.id === 'saas_config') : saasParams;
 
@@ -261,7 +261,7 @@ export const login = async (email: string, pass: string): Promise<UserSession> =
         for (const gym of gyms) {
             localStorage.setItem('fitflow_session', JSON.stringify({ gymId: gym.id }));
             try {
-                const gymUsers = await apiClient.get('/users');
+                const gymUsers = await apiClient.get<any[]>('/users');
                 const user = gymUsers.find((u: any) => u.email && u.email.toLowerCase() === cleanEmail.toLowerCase());
                 if (user) {
                     const session: UserSession = {
@@ -283,7 +283,7 @@ export const login = async (email: string, pass: string): Promise<UserSession> =
         for (const gym of gyms) {
             localStorage.setItem('fitflow_session', JSON.stringify({ gymId: gym.id }));
             try {
-                const gymTrainers = await apiClient.get('/trainers');
+                const gymTrainers = await apiClient.get<any[]>('/trainers');
                 const trainer = gymTrainers.find((t: any) => t.email && t.email.toLowerCase() === cleanEmail.toLowerCase());
                 if (trainer) {
                     const session: UserSession = {

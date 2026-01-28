@@ -3,13 +3,13 @@ import { apiClient } from './apiClient';
 import { load, save, getCurrentGymId } from './storage';
 
 export const getUsers = async () => {
-    const data = await apiClient.get('/users');
+    const data = await apiClient.get<User[]>('/users');
     if (data) { save('users', data); return data; }
     return load<User[]>('users', []);
 };
 
 export const getLogs = async () => {
-    const data = await apiClient.get('/logs');
+    const data = await apiClient.get<AccessLog[]>('/logs');
     if (data) { save('logs', data); return data; }
     return load<AccessLog[]>('logs', []);
 };

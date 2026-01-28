@@ -21,7 +21,7 @@ export const deleteDevice = (id: string) => {
 };
 
 export const getEquipment = async () => {
-    const data = await apiClient.get('/equipment');
+    const data = await apiClient.get<Equipment[]>('/equipment');
     if (data) { save('equipment', data); return data; }
     return load<Equipment[]>('equipment', []);
 };

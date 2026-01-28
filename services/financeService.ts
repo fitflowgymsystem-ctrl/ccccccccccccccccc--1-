@@ -1,22 +1,17 @@
-import { updateMonthlyStats } from './statsService';
-
-// ...
-
-// Trigger atomic update for Monthly Archive
-try {
-    updateMonthlyStats(finalGymId, record.type, record.amount).catch(e => console.error("Stats bg error", e));
-} catch (e) { console.error("Stats trigger failed", e); }
 import { apiClient } from './apiClient';
 import { load, save, getCurrentGymId } from './storage';
+import { FinancialRecord, Product } from '../types/finance.types';
+import { MembershipPlan, Offer, MembershipType } from '../types/membership.types';
+import { updateMonthlyStats } from './statsService';
 
 export const getFinancials = async () => {
-    const data = await apiClient.get('/financials');
+    const data = await apiClient.get<FinancialRecord[]>('/financials');
     if (data) { save('financials', data); return data; }
     return load<FinancialRecord[]>('financials', []);
 };
 
 export const getProducts = async () => {
-    const data = await apiClient.get('/products');
+    const data = await apiClient.get<Product[]>('/products');
     if (data) { save('products', data); return data; }
     return load<Product[]>('products', []);
 };
@@ -38,7 +33,7 @@ export const processSale = async (items: { product: Product, qty: number }[], pa
 
     const products = await getProducts();
     items.forEach(item => {
-        const p = products.find((x: any) => x.id === item.product.id);
+        const p = products.find((x: Product) => x.id === item.product.id);
         if (p) {
             p.stock -= item.qty;
             apiClient.post('/products', p);
@@ -62,13 +57,13 @@ export const updateProduct = (p: Product) => apiClient.post('/products', p);
 export const deleteProduct = (id: number) => apiClient.delete(`/products/${id}`);
 
 export const getPlans = async () => {
-    const data = await apiClient.get('/plans');
+    const data = await apiClient.get<MembershipPlan[]>('/plans');
     if (data) { save('plans', data); return data; }
     return load<MembershipPlan[]>('plans', []);
 };
 
 export const getOffers = async () => {
-    const data = await apiClient.get('/offers');
+    const data = await apiClient.get<Offer[]>('/offers');
     if (data) { save('offers', data); return data; }
     return load<Offer[]>('offers', []);
 };

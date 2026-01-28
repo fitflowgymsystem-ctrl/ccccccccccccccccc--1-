@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import net from 'net';
@@ -18,7 +19,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
     autoHideMenuBar: true, // Hide the default menu bar
-    icon: path.join(__dirname, '../public/icon.ico') // Ensure you have an icon if needed
+    icon: path.join(__dirname, '../public/icon.ico') // Application icon
   });
 
   // Check if we are in development mode
@@ -108,6 +109,22 @@ app.on('ready', () => {
       client.on('error', () => resolve({ online: false, error: 'Offline' }));
       client.on('timeout', () => { client.destroy(); resolve({ online: false, error: 'Timeout' }); });
     });
+  });
+
+  // --- AUTO UPDATER LOGIC ---
+  autoUpdater.checkForUpdatesAndNotify();
+
+  autoUpdater.on('update-available', () => {
+    console.log('[AutoUpdater] Update available.');
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    console.log('[AutoUpdater] Update downloaded; will install now.');
+    autoUpdater.quitAndInstall();
+  });
+
+  autoUpdater.on('error', (err) => {
+    console.error('[AutoUpdater] Error: ' + err);
   });
 });
 

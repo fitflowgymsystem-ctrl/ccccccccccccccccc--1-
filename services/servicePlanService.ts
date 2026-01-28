@@ -3,7 +3,7 @@ import { GymService } from '../types';
 import { getCurrentGymId, save, load } from './storage';
 
 export const getServices = async () => {
-    const data = await apiClient.get('/services');
+    const data = await apiClient.get<GymService[]>('/services');
     if (data) { save('services', data); return data; }
     return load<GymService[]>('services', []);
 };

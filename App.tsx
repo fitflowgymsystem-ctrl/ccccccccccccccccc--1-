@@ -72,16 +72,20 @@ const App: React.FC = () => {
     }, [data.users]);
 
     const refreshGymProfile = async () => {
-        if (currentUser?.gymId && currentUser.gymId !== 'SYSTEM') {
-            const profile = await getGymProfile(currentUser.gymId);
-            if (profile) {
-                setGymProfile(profile);
-                setIsSubExpired(new Date(profile.subscriptionExpiry) < new Date());
-                const info = { name: profile.name, logo: profile.logoUrl || '', email: profile.email };
-                setGymInfo(info);
-                localStorage.setItem('gymName', info.name);
-                localStorage.setItem('gymLogo', info.logo);
+        try {
+            if (currentUser?.gymId && currentUser.gymId !== 'SYSTEM') {
+                const profile = await getGymProfile(currentUser.gymId);
+                if (profile) {
+                    setGymProfile(profile);
+                    setIsSubExpired(new Date(profile.subscriptionExpiry) < new Date());
+                    const info = { name: profile.name, logo: profile.logoUrl || '', email: profile.email };
+                    setGymInfo(info);
+                    localStorage.setItem('gymName', info.name);
+                    localStorage.setItem('gymLogo', info.logo);
+                }
             }
+        } catch (e) {
+            console.warn("Failed to refresh gym profile (offline?)", e);
         }
     };
 

@@ -21,6 +21,7 @@
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "electron-updater": "^6.7.3",
     "exceljs": "^4.4.0",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
@@ -59,6 +60,13 @@
     "appId": "com.fitflow.app",
     "productName": "FitFlow Gym Manager",
     "copyright": "Copyright © 2025 FitFlow Gym Manager",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "fitflow-team",
+        "repo": "fitflow-app"
+      }
+    ],
     "files": [
       "dist/**/*",
       "electron/**/*",

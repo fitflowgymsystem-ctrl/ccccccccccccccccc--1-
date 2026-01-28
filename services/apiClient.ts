@@ -40,7 +40,7 @@ export const getAPICallCount = () => {
 };
 
 export const apiClient = {
-    async get(endpoint: string) {
+    async get<T>(endpoint: string): Promise<T> {
         incrementAPICallCount();
         await ensureAuth();
         const table = endpoint.replace(/^\//, '').split('?')[0];
@@ -63,12 +63,12 @@ export const apiClient = {
                         return toCamel(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
                     }
                 }
-                return toCamel(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-            } catch { return []; }
+                return toCamel(querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))) as T;
+            } catch { return [] as any as T; }
         }
 
         // Allow global access for admin-only table
-        if (table !== 'saas_config' && (!gymId || gymId === 'SYSTEM')) return [];
+        if (table !== 'saas_config' && (!gymId || gymId === 'SYSTEM')) return [] as any as T;
 
         try {
             const colRef = collection(db, table);
@@ -88,10 +88,10 @@ export const apiClient = {
 
             const camelResults = toCamel(results);
             save(table, camelResults); // تحديث الكاش المحلي للجيم الحالي فقط
-            return camelResults;
+            return camelResults as T;
         } catch (e) {
             console.error(`[Security Access Denied] for table ${table}`);
-            return load<any[]>(table, []);
+            return load<any>(table, []) as T;
         }
     },
 

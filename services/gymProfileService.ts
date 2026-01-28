@@ -5,7 +5,7 @@ import { collection, doc, setDoc, getDocs, Timestamp } from 'firebase/firestore'
 import { db } from './firebase';
 
 export const getAllGyms = async (): Promise<GymProfile[]> => {
-    const data = await apiClient.get('/gyms');
+    const data = await apiClient.get<GymProfile[]>('/gyms');
     if (!data) return [];
 
     // Deduplicate logic to prevent key collisions in UI
@@ -18,7 +18,7 @@ export const getAllGyms = async (): Promise<GymProfile[]> => {
 };
 
 export const getGymProfile = async (gymId: string): Promise<GymProfile | null> => {
-    const data = await apiClient.get('/gyms');
+    const data = await apiClient.get<GymProfile[]>('/gyms');
     if (data && Array.isArray(data)) {
         return data.find((g: any) => String(g.id) === String(gymId)) || null;
     }

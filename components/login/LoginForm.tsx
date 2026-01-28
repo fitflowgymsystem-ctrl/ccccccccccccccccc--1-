@@ -7,12 +7,13 @@ interface LoginFormProps {
     lang: Language;
     loading: boolean;
     error: string;
+    isOnline: boolean;
     onSubmit: (username: string, pass: string, stay: boolean) => void;
 }
 
 type AuthView = 'LOGIN' | 'FORGOT';
 
-export const LoginForm: React.FC<LoginFormProps> = ({ lang, loading, error, onSubmit }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ lang, loading, error, isOnline, onSubmit }) => {
     const t = translations[lang];
     const [view, setView] = useState<AuthView>('LOGIN');
 
@@ -74,6 +75,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ lang, loading, error, onSu
             {error && (
                 <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl text-[10px] text-center font-bold animate-shake flex items-center justify-center gap-2">
                     <ShieldAlert size={14} /> {error}
+                </div>
+            )}
+
+            {!isOnline && (
+                <div className="bg-amber-500/10 border border-amber-500/20 text-amber-500 p-3 rounded-xl text-[10px] text-center font-bold animate-pulse flex items-center justify-center gap-2">
+                    <Zap size={14} className="animate-pulse" />
+                    {lang === 'ar' ? 'أنت غير متصل بالإنترنت - قد لا يعمل الدخول' : 'Offline - Login may not function'}
                 </div>
             )}
 

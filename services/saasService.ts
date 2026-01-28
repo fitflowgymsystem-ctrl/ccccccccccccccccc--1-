@@ -52,7 +52,7 @@ export const updateSaaSPrice = (plan: GymSubscriptionPlan, price: number) => {
 
 export const fetchSaaSConfigFromServer = async (): Promise<SaaSConfig | null> => {
     try {
-        const res = await apiClient.get('/saas_config');
+        const res = await apiClient.get<any>('/saas_config');
         if (!res) return null;
         // If server returns an array of docs, pick the one with id 'saas_config' or first
         const doc = Array.isArray(res) ? (res.find((r: any) => r.id === 'saas_config') || res[0]) : res;
