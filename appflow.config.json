@@ -3,7 +3,9 @@
         {
             "appId": "1973addc",
             "root": ".",
-            "iosPath": "ios/App"
+            "iosPath": "ios/App",
+            "dependencyInstallCommand": "npm install",
+            "webBuildCommand": "npm run build"
         }
     ]
 }
