@@ -551,64 +551,67 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                         const isUnpaid = sub.paymentStatus === 'unpaid';
 
                                         return (
-                                            <div key={sub.id} className={`p-5 bg-white dark:bg-slate-800 rounded-3xl border shadow-md flex justify-between items-center relative overflow-hidden group mb-4 last:mb-0 ${isUnpaid ? 'border-red-200 dark:border-red-900/30 grayscale-[0.3]' : 'border-indigo-200 dark:border-indigo-900/30'}`}>
-                                                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-125 transition-transform"><Sparkles size={60} /></div>
-                                                <div className="relative z-10">
+                                            <div key={sub.id} className={`p-4 sm:p-5 bg-white dark:bg-slate-800 rounded-3xl border shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center relative overflow-hidden group mb-4 last:mb-0 ${isUnpaid ? 'border-red-200 dark:border-red-900/30' : 'border-indigo-200 dark:border-indigo-900/30'}`}>
+                                                <div className="relative z-10 w-full sm:w-auto">
                                                     <div className="flex items-center gap-2 mb-1">
-                                                        <p className="text-xs font-black text-indigo-600 uppercase tracking-widest">{lang === 'ar' ? 'خدمة مفعّلة' : 'Active Service'}</p>
+                                                        <p className="text-[10px] sm:text-xs font-black text-indigo-600 uppercase tracking-widest">{lang === 'ar' ? 'خدمة مفعّلة' : 'Active Service'}</p>
                                                         {isUnpaid && (
                                                             <span className="px-2 py-0.5 bg-red-500 text-white rounded-lg text-[9px] font-black uppercase animate-pulse">
                                                                 {lang === 'ar' ? 'لم يتم الدفع' : 'Unpaid'}
                                                             </span>
                                                         )}
                                                     </div>
-                                                    <h3 className="text-lg font-black dark:text-white uppercase tracking-tighter">{sub.serviceName}</h3>
+                                                    <h3 className="text-base sm:text-lg font-black dark:text-white uppercase tracking-tighter truncate">{sub.serviceName}</h3>
                                                     <div className="flex items-center gap-3 mt-2">
                                                         <div className="flex items-center gap-1 text-green-600 font-black">
                                                             <DollarSign size={14} />
-                                                            <span className="text-lg">{sessionPrice}</span>
+                                                            <span className="text-base sm:text-lg">{sessionPrice}</span>
                                                         </div>
-                                                        <span className="text-xs text-gray-400 font-bold uppercase">{lang === 'ar' ? 'للحصة' : 'Rate / Session'}</span>
-                                                        <div className="h-4 w-[1px] bg-gray-200 dark:bg-slate-700 ml-2"></div>
+                                                        <span className="text-[10px] text-gray-400 font-bold uppercase">{lang === 'ar' ? 'للحصة' : 'Rate / Session'}</span>
+                                                        <div className="h-4 w-[1px] bg-gray-200 dark:bg-slate-700 mx-1 sm:mx-2"></div>
                                                         {sub.totalSessions === 0 ? (
-                                                            <span className="text-sm font-black text-blue-600 uppercase tracking-widest">{lang === 'ar' ? 'اشتراك مفتوح' : 'Unlimited Access'}</span>
+                                                            <span className="text-xs sm:text-sm font-black text-blue-600 uppercase tracking-widest">{lang === 'ar' ? 'اشتراك مفتوح' : 'Unlimited Access'}</span>
                                                         ) : (
-                                                            <span className="text-sm font-black text-blue-600">{sub.remainingSessions} / {sub.totalSessions} {lang === 'ar' ? 'متبقي' : 'Left'}</span>
+                                                            <span className="text-xs sm:text-sm font-black text-blue-600">{sub.remainingSessions} / {sub.totalSessions} {lang === 'ar' ? 'متبقي' : 'Left'}</span>
                                                         )}
                                                     </div>
                                                 </div>
-                                                <button
-                                                    onClick={() => {
-                                                        if (isUnpaid) {
-                                                            showToast(lang === 'ar' ? 'عذراً، يجب تأكيد الدفع أولاً من قسم المالية قبل تسجيل الحصة' : 'Sorry, payment must be confirmed in the Financials section before recording a session', 'error');
-                                                            return;
-                                                        }
-                                                        onLogServiceSession?.(member.id, sub.serviceId, sessionPrice, sub.serviceName);
-                                                    }}
-                                                    className={`relative z-10 px-6 py-3 rounded-2xl text-sm font-black uppercase shadow-lg active:scale-95 transition-all ${isUnpaid ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-indigo-600 text-white shadow-indigo-600/20 hover:bg-indigo-700'}`}
-                                                >
-                                                    {isUnpaid ? (lang === 'ar' ? 'لم يتم الدفع' : 'Unpaid') : (lang === 'ar' ? 'تسجيل حصة' : 'Record Session')}
-                                                </button>
+                                                <div className="mt-4 sm:mt-0 w-full sm:w-auto flex justify-end">
+                                                    <button
+                                                        onClick={() => {
+                                                            if (isUnpaid) {
+                                                                showToast(lang === 'ar' ? 'عذراً، يجب تأكيد الدفع أولاً من قسم المالية قبل تسجيل الحصة' : 'Sorry, payment must be confirmed in the Financials section before recording a session', 'error');
+                                                                return;
+                                                            }
+                                                            onLogServiceSession?.(member.id, sub.serviceId, sessionPrice, sub.serviceName);
+                                                        }}
+                                                        className={`relative z-10 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[10px] sm:text-xs font-black uppercase shadow-lg active:scale-95 transition-all w-full sm:w-auto ${isUnpaid ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-indigo-600 text-white shadow-indigo-600/20 hover:bg-indigo-700'}`}
+                                                    >
+                                                        {isUnpaid ? (lang === 'ar' ? 'لم يتم الدفع' : 'Unpaid') : (lang === 'ar' ? 'تسجيل حصة' : 'Record Session')}
+                                                    </button>
+                                                </div>
                                             </div>
                                         );
                                     })}
 
                                     {member.isPrivate && (
                                         <>
-                                            <div className="p-5 bg-white dark:bg-slate-800 rounded-3xl border border-amber-200 dark:border-amber-900/30 shadow-md flex justify-between items-center relative overflow-hidden group">
+                                            <div className="p-4 sm:p-5 bg-white dark:bg-slate-800 rounded-3xl border border-amber-200 dark:border-amber-900/30 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center relative overflow-hidden group">
                                                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-125 transition-transform"><Crown size={60} /></div>
-                                                <div className="relative z-10">
-                                                    <p className="text-xs font-black text-amber-600 uppercase tracking-widest mb-1">{t.assigned_trainer}</p>
-                                                    <h3 className="text-lg font-black dark:text-white uppercase tracking-tighter">{assignedTrainer?.name || 'Pro Coach'}</h3>
+                                                <div className="relative z-10 w-full sm:w-auto">
+                                                    <p className="text-[10px] sm:text-xs font-black text-amber-600 uppercase tracking-widest mb-1">{t.assigned_trainer}</p>
+                                                    <h3 className="text-base sm:text-lg font-black dark:text-white uppercase tracking-tighter truncate">{assignedTrainer?.name || 'Pro Coach'}</h3>
                                                     <div className="flex items-center gap-3 mt-2">
                                                         <div className="flex items-center gap-1 text-blue-600 font-black">
                                                             <DollarSign size={14} />
-                                                            <span className="text-lg">{member.privateSessionPrice}</span>
+                                                            <span className="text-base sm:text-lg">{member.privateSessionPrice}</span>
                                                         </div>
-                                                        <span className="text-xs text-gray-400 font-bold uppercase">Rate / Session</span>
+                                                        <span className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase">Rate / Session</span>
                                                     </div>
                                                 </div>
-                                                <button onClick={() => onLogSession(member.id, member.assignedTrainerId!, member.privateSessionPrice!)} className="relative z-10 px-6 py-3 bg-amber-600 text-white rounded-2xl text-sm font-black uppercase shadow-lg shadow-amber-600/20 active:scale-95 transition-all hover:bg-amber-700">Record Session</button>
+                                                <div className="mt-4 sm:mt-0 w-full sm:w-auto flex justify-end">
+                                                    <button onClick={() => onLogSession(member.id, member.assignedTrainerId!, member.privateSessionPrice!)} className="relative z-10 px-4 py-2 sm:px-5 sm:py-2.5 bg-amber-600 text-white rounded-xl sm:rounded-2xl text-[10px] sm:text-xs font-black uppercase shadow-lg shadow-amber-600/20 active:scale-95 transition-all hover:bg-amber-700 w-full sm:w-auto">Record Session</button>
+                                                </div>
                                             </div>
                                         </>
                                     )}
@@ -663,20 +666,20 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                             serviceSubscriptions.filter(s => s.userId === member.id).sort((a, b) => b.id - a.id).map(sub => {
                                                 const service = services.find(s => s.id === sub.serviceId);
                                                 return (
-                                                    <div key={sub.id} className="p-4 bg-white dark:bg-slate-800 rounded-[2rem] border dark:border-slate-700 shadow-sm flex items-center justify-between gap-4">
-                                                        <div className="flex items-center gap-4">
-                                                            <div className={`p-3 rounded-2xl ${sub.paymentStatus === 'paid' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                                                                <DollarSign size={20} />
+                                                    <div key={sub.id} className="p-3 sm:p-4 bg-white dark:bg-slate-800 rounded-2xl sm:rounded-[2rem] border dark:border-slate-700 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 relative overflow-hidden">
+                                                        <div className="flex items-center gap-3 sm:gap-4">
+                                                            <div className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl ${sub.paymentStatus === 'paid' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                                                                <DollarSign size={18} className="sm:size-[20px]" />
                                                             </div>
-                                                            <div>
-                                                                <h5 className="text-sm font-black dark:text-white uppercase tracking-tight">{sub.serviceName}</h5>
-                                                                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{sub.purchaseDate}</p>
+                                                            <div className="flex-1 min-w-0">
+                                                                <h5 className="text-[13px] sm:text-sm font-black dark:text-white uppercase tracking-tight truncate">{sub.serviceName}</h5>
+                                                                <p className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest">{sub.purchaseDate}</p>
                                                             </div>
                                                         </div>
-                                                        <div className="flex items-center gap-6">
-                                                            <div className="text-right">
-                                                                <p className="text-base font-black text-green-600">{(sub.price || service?.price || 0)} EGP</p>
-                                                                <p className="text-xs text-gray-400 font-black uppercase tracking-widest">{sub.status}</p>
+                                                        <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 border-t sm:border-t-0 pt-3 sm:pt-0 dark:border-slate-700">
+                                                            <div className="text-left sm:text-right">
+                                                                <p className="text-sm sm:text-base font-black text-green-600">{(sub.price || service?.price || 0)} EGP</p>
+                                                                <p className="text-[10px] sm:text-xs text-gray-400 font-black uppercase tracking-widest">{sub.status}</p>
                                                             </div>
                                                             {sub.paymentStatus === 'unpaid' ? (
                                                                 <button
@@ -684,12 +687,12 @@ export const MemberDetailsModal: React.FC<MemberDetailsModalProps> = ({ member, 
                                                                         await onConfirmPayment?.(sub.id);
                                                                         showToast(lang === 'ar' ? `تم تسجيل مبلغ ${sub.price || service?.price} جنيه` : `Payment of ${sub.price || service?.price} EGP confirmed`, 'success');
                                                                     }}
-                                                                    className="px-5 py-2.5 bg-green-600 text-white rounded-xl text-sm font-black uppercase shadow-lg shadow-green-600/20 hover:bg-green-700 active:scale-95 transition-all"
+                                                                    className="px-4 py-2 sm:px-5 sm:py-2.5 bg-green-600 text-white rounded-xl text-[11px] sm:text-sm font-black uppercase shadow-lg shadow-green-600/20 hover:bg-green-700 active:scale-95 transition-all"
                                                                 >
                                                                     {lang === 'ar' ? 'تم الدفع' : 'Confirm Paid'}
                                                                 </button>
                                                             ) : (
-                                                                <div className="px-5 py-2.5 bg-gray-100 dark:bg-slate-900 text-gray-400 rounded-xl text-sm font-black uppercase flex items-center gap-2">
+                                                                <div className="px-4 py-2 sm:px-5 sm:py-2.5 bg-gray-100 dark:bg-slate-900 text-gray-400 rounded-xl text-[11px] sm:text-sm font-black uppercase flex items-center gap-2">
                                                                     <ShieldCheck size={12} /> {lang === 'ar' ? 'مدفوع' : 'Paid'}
                                                                 </div>
                                                             )}
